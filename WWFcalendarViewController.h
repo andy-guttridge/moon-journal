@@ -12,6 +12,4 @@
 
 @interface WWFcalendarViewController : UITableViewController
 
-@property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
-
 @end

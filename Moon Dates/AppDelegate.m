@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "WWFtabBarController.h"
 
 @interface AppDelegate ()
 
@@ -40,6 +41,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    //Grab a reference to the tab bar controller which is the root view controller, and call the didReceiveNotification: method, passing in the local notification object for handling within the app.
+    WWFtabBarController *theTabBarController = (WWFtabBarController *) self.window.rootViewController;
+    [theTabBarController didReceiveNotification: notification];
 }
 
 @end

@@ -7,7 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AppDelegate.h"
+#import "Constants.h"
+#import "WWFuserDataManager.h"
 
 @interface WWFmoonDatesManager : NSObject
+
+@property (strong, nonatomic, readonly) NSMutableArray *moonDatesArray;
+
++(instancetype)sharedMoonDatesManager;
+
+-(void) generateTestData;
+-(void) scheduleNotifications;
 
 @end

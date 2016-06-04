@@ -9,12 +9,19 @@
 /* Begin PBXBuildFile section */
 		A10577281CFAFBCE00951A27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577271CFAFBCE00951A27 /* main.m */; };
 		A105772B1CFAFBCE00951A27 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A105772A1CFAFBCE00951A27 /* AppDelegate.m */; };
-		A105772E1CFAFBCE00951A27 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A105772D1CFAFBCE00951A27 /* ViewController.m */; };
+		A105772E1CFAFBCE00951A27 /* WWFtabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = A105772D1CFAFBCE00951A27 /* WWFtabBarController.m */; };
 		A10577311CFAFBCE00951A27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A105772F1CFAFBCE00951A27 /* Main.storyboard */; };
 		A10577331CFAFBCE00951A27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10577321CFAFBCE00951A27 /* Assets.xcassets */; };
 		A10577361CFAFBCE00951A27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A10577341CFAFBCE00951A27 /* LaunchScreen.storyboard */; };
 		A10577411CFAFBCF00951A27 /* Moon_DatesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577401CFAFBCF00951A27 /* Moon_DatesTests.m */; };
 		A105774C1CFAFBCF00951A27 /* Moon_DatesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A105774B1CFAFBCF00951A27 /* Moon_DatesUITests.m */; };
+		A105775E1CFAFD3300951A27 /* WWFinfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A105775D1CFAFD3300951A27 /* WWFinfoViewController.m */; };
+		A10577611CFAFD6300951A27 /* WWFsettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577601CFAFD6300951A27 /* WWFsettingsViewController.m */; };
+		A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */; };
+		A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10577651CFB06E500951A27 /* MoonDatesData.plist */; };
+		A145CB091CFB51B500670E79 /* WWFcalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB081CFB51B500670E79 /* WWFcalendarViewController.m */; };
+		A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A145CB0A1CFB63B700670E79 /* UserData.plist */; };
+		A145CB0E1CFB652400670E79 /* WWFuserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +46,8 @@
 		A10577271CFAFBCE00951A27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A10577291CFAFBCE00951A27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A105772A1CFAFBCE00951A27 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		A105772C1CFAFBCE00951A27 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		A105772D1CFAFBCE00951A27 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A105772C1CFAFBCE00951A27 /* WWFtabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWFtabBarController.h; sourceTree = "<group>"; };
+		A105772D1CFAFBCE00951A27 /* WWFtabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWFtabBarController.m; sourceTree = "<group>"; };
 		A10577301CFAFBCE00951A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A10577321CFAFBCE00951A27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A10577351CFAFBCE00951A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +58,19 @@
 		A10577471CFAFBCF00951A27 /* Moon DatesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon DatesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A105774B1CFAFBCF00951A27 /* Moon_DatesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Moon_DatesUITests.m; sourceTree = "<group>"; };
 		A105774D1CFAFBCF00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A105775C1CFAFD3300951A27 /* WWFinfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFinfoViewController.h; sourceTree = "<group>"; };
+		A105775D1CFAFD3300951A27 /* WWFinfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFinfoViewController.m; sourceTree = "<group>"; };
+		A105775F1CFAFD6300951A27 /* WWFsettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFsettingsViewController.h; sourceTree = "<group>"; };
+		A10577601CFAFD6300951A27 /* WWFsettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFsettingsViewController.m; sourceTree = "<group>"; };
+		A10577621CFAFD7900951A27 /* WWFmoonDatesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFmoonDatesManager.h; sourceTree = "<group>"; };
+		A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFmoonDatesManager.m; sourceTree = "<group>"; };
+		A10577651CFB06E500951A27 /* MoonDatesData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MoonDatesData.plist; sourceTree = "<group>"; };
+		A145CB061CFB4D3D00670E79 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		A145CB071CFB51B500670E79 /* WWFcalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WWFcalendarViewController.h; path = ../WWFcalendarViewController.h; sourceTree = "<group>"; };
+		A145CB081CFB51B500670E79 /* WWFcalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WWFcalendarViewController.m; path = ../WWFcalendarViewController.m; sourceTree = "<group>"; };
+		A145CB0A1CFB63B700670E79 /* UserData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserData.plist; sourceTree = "<group>"; };
+		A145CB0C1CFB652400670E79 /* WWFuserDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFuserDataManager.h; sourceTree = "<group>"; };
+		A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFuserDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,12 +123,25 @@
 			children = (
 				A10577291CFAFBCE00951A27 /* AppDelegate.h */,
 				A105772A1CFAFBCE00951A27 /* AppDelegate.m */,
-				A105772C1CFAFBCE00951A27 /* ViewController.h */,
-				A105772D1CFAFBCE00951A27 /* ViewController.m */,
 				A105772F1CFAFBCE00951A27 /* Main.storyboard */,
 				A10577321CFAFBCE00951A27 /* Assets.xcassets */,
 				A10577341CFAFBCE00951A27 /* LaunchScreen.storyboard */,
+				A145CB061CFB4D3D00670E79 /* Constants.h */,
+				A105772C1CFAFBCE00951A27 /* WWFtabBarController.h */,
+				A105772D1CFAFBCE00951A27 /* WWFtabBarController.m */,
+				A145CB071CFB51B500670E79 /* WWFcalendarViewController.h */,
+				A145CB081CFB51B500670E79 /* WWFcalendarViewController.m */,
+				A105775C1CFAFD3300951A27 /* WWFinfoViewController.h */,
+				A105775D1CFAFD3300951A27 /* WWFinfoViewController.m */,
+				A105775F1CFAFD6300951A27 /* WWFsettingsViewController.h */,
+				A10577601CFAFD6300951A27 /* WWFsettingsViewController.m */,
+				A10577621CFAFD7900951A27 /* WWFmoonDatesManager.h */,
+				A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */,
+				A145CB0C1CFB652400670E79 /* WWFuserDataManager.h */,
+				A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */,
 				A10577371CFAFBCE00951A27 /* Info.plist */,
+				A10577651CFB06E500951A27 /* MoonDatesData.plist */,
+				A145CB0A1CFB63B700670E79 /* UserData.plist */,
 				A10577261CFAFBCE00951A27 /* Supporting Files */,
 			);
 			path = "Moon Dates";
@@ -244,8 +277,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10577361CFAFBCE00951A27 /* LaunchScreen.storyboard in Resources */,
+				A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */,
 				A10577331CFAFBCE00951A27 /* Assets.xcassets in Resources */,
 				A10577311CFAFBCE00951A27 /* Main.storyboard in Resources */,
+				A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,9 +305,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A105772E1CFAFBCE00951A27 /* ViewController.m in Sources */,
+				A105775E1CFAFD3300951A27 /* WWFinfoViewController.m in Sources */,
+				A105772E1CFAFBCE00951A27 /* WWFtabBarController.m in Sources */,
 				A105772B1CFAFBCE00951A27 /* AppDelegate.m in Sources */,
 				A10577281CFAFBCE00951A27 /* main.m in Sources */,
+				A10577611CFAFD6300951A27 /* WWFsettingsViewController.m in Sources */,
+				A145CB091CFB51B500670E79 /* WWFcalendarViewController.m in Sources */,
+				A145CB0E1CFB652400670E79 /* WWFuserDataManager.m in Sources */,
+				A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +538,7 @@
 				A10577521CFAFBCF00951A27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A10577531CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon DatesTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +547,7 @@
 				A10577551CFAFBCF00951A27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A10577561CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon DatesUITests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +556,7 @@
 				A10577581CFAFBCF00951A27 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

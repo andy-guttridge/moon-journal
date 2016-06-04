@@ -7,8 +7,13 @@
 //
 
 #import "WWFcalendarViewController.h"
+#import "WWFuserDataManager.h"
 
 @interface WWFcalendarViewController ()
+
+@property NSDateFormatter *dateFormatter;
+@property (weak, nonatomic) WWFuserDataManager *sharedUserDataManager;
+@property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
 
 @end
 
@@ -23,7 +28,19 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    //Create a 20px vertical gap at the top of the table view so that there is a gap between it and the status bar.
+    self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+  
+    
+    //Get the sharedMoonDatesManager, the sharedUserDataManager and create an instance of and do the set up for an NSDateFormatter. The locale for the NSDateFormatter is retrieved from the sharedUserPrefsManager.
     self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager];
+    self.sharedUserDataManager = [WWFuserDataManager sharedUserDataManager];
+    
+    self.dateFormatter = [[NSDateFormatter alloc] init];
+    self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
+    self.dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:[self.sharedUserDataManager.userDataDictionary objectForKey:@"DateFormat"]];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,10 +68,37 @@
     static NSString *CellIdentifier = @"MoonDateCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
-    NSString *cellText = [[self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"MoonDate"] description];
+    // Configure the cell. We use the sharedMoonDatesManager to retreive the moon event date corresponding to the row of the cell, and to retrieve the type of moon event. We then use these to populate the cell.
+    
+    //Firstly, retrieving the NSDate from the moonDatesArray and using the dateFormatter to produce a string from the NSDate to populate the cell.textLabel.text property.
+    
+    NSDate *aMoonDate = [self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"MoonDate"];
+    NSString *cellText = [self.dateFormatter stringFromDate:aMoonDate];
     cell.textLabel.text = cellText;
-    NSLog(@"The cell text is %@", cellText);
+    
+    //Next, retrieving the NSInteger that represents the type of moon event (as per the Moontype enumerated values in Constants.h). This is embedded in a case...swith statement that assigns the appropriate text to an NSString, which is then used to populate the cell.detailTextLabel.text property.
+    
+    NSString *detailText = [[NSString alloc]init];
+    switch ([[self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"Type"]intValue])
+    {
+        case kNoMoonEvent:
+            detailText = @"No moon event";
+            break;
+        
+        case kNewMoon:
+            detailText = @"New Moon";
+            break;
+            
+        case kFullMoon:
+            detailText = @"Full Moon";
+            break;
+            
+        default:
+            detailText = @"Invalid moon event type";
+            break;
+    }
+    
+    cell.detailTextLabel.text = detailText;   
     
     return cell;
 }

@@ -10,7 +10,7 @@
 
 @implementation WWFuserDataManager
 
-+(instancetype)sharedUserPrefsManager
++(instancetype)sharedUserDataManager
 //Create a single instance of WWFuserPrefsManager and return this if it has not been created already. If it has, do not create again and return the single instance already created.
 {
     static WWFuserDataManager *userPrefsManager = nil;
@@ -27,9 +27,12 @@
     
     if (self)
     {
-        //Load the user prefs from the plist file called UserPrefs.plist which is stored in the app bundle.
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"UserPrefs" ofType:@"plist"];
-        self.userPrefsDictionary = [NSDictionary dictionaryWithContentsOfFile:path];
+        //Load the user prefs from the plist file called UserData.plist which is stored in the app bundle.
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"UserData" ofType:@"plist"];
+        if (!(self.userDataDictionary = [NSDictionary dictionaryWithContentsOfFile:path]))
+        {
+            NSLog(@"Failed to open UserData.plist in [WWFuserDatesManager init]");
+        }
     }
     
     return self;

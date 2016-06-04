@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WWFmoonDatesManager.h"
 
 @interface WWFtabBarController : UITabBarController
 
+-(void) didReceiveNotification: (UILocalNotification *) theNotification;
 
 @end
 

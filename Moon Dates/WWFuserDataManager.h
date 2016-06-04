@@ -10,8 +10,8 @@
 
 @interface WWFuserDataManager : NSObject
 
-@property (strong, nonatomic) NSDictionary *userPrefsDictionary;
+@property (strong, nonatomic) NSDictionary *userDataDictionary;
 
-+(instancetype)sharedUserPrefsManager;
++(instancetype)sharedUserDataManager;
 
 @end
