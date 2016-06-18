@@ -81,7 +81,26 @@
     UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings: notificationSettings];
     
-    [self scheduleNotifications];
+    //If this version of the app is running for the first time, then we want to schedule all of the notifications (the scheduleNotifications method also deletes existing notifications).
+    //Updates to the list of moon events will be included in updates, and at those times the notifications will need to be rescheduled as there will be new dates further into the future included.
+    //We hard code a version number and store this using NSUserDefaults, so that we can then do a comparison and see if the hard coded and the stored version numbers match. If they don't then we know our app has been updated and we need to schedule the notifications.
+    
+    NSInteger currentVersion = 0; //This needs to be incremented with each new version of the app.
+    
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HasLaunchedForVersion"] < currentVersion)
+    {
+        [[NSUserDefaults standardUserDefaults] setInteger:currentVersion forKey:@"HasLaunchedForVersion"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self scheduleNotifications];
+        NSLog(@"This version of the app has run for the first time. Notifications scheduled");
+    }
+    
+    else
+    {
+        NSLog(@"This version of the app has run before. Notifications not scheduled");
+    }
+    
+    
     
     
     return self;    
@@ -106,71 +125,98 @@
     //Not sure whether we will end up cancelling all local notifications in the final app. We may end up removing individual notifications after they have occurred.
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
+    /* Creat two NSDateFormatters, one will be used to extract the date from an NSDate in the form of a string, while the other will be used to extract the time from the NSDate. */
     NSDateFormatter *dateFormatterForDate = [[NSDateFormatter alloc] init];
     NSDateFormatter *dateFormatterForTime = [[NSDateFormatter alloc] init];
     dateFormatterForDate.locale = [[NSLocale alloc] initWithLocaleIdentifier:[self.sharedUserDataManager.userDataDictionary objectForKey:@"DateFormat"]];
     dateFormatterForTime.locale = dateFormatterForDate.locale;
     
+    //Set up the NSDateFormatters so that one formats the NSDate as only a date without a time, and the other formats it as only a time without a date.
     dateFormatterForDate.dateStyle = NSDateFormatterMediumStyle;
     dateFormatterForDate.timeStyle = NSDateFormatterNoStyle;
     dateFormatterForTime.dateStyle = NSDateFormatterNoStyle;
     dateFormatterForTime.timeStyle = NSDateFormatterShortStyle;
     
+    NSDate *todaysDate = [NSDate date]; //Create an NSDate using the current date and time for use in a comparison below.
+    
+    //Iterate through the array of NSDates in the moonDatesDictionary, and schedule a notification for each one.
     for (NSMutableDictionary *moonDatesDictionary in self.moonDatesArray)
     {
-        NSString *moonEventTypeText = [[NSString alloc]init];
-        switch ([[moonDatesDictionary objectForKey:@"Type"]intValue])
+        
+        //Compare the moon event date with today's date, and only execute the code to register notifications if the moon event has not already occurred.
+        //Registering notifications for moon dates that have already occurred would end up cluttering the user's notificaitons screen with notifications for events that have alread passed.
+        
+        NSComparisonResult dateComparison = [[moonDatesDictionary objectForKey:@"MoonDate"] compare:todaysDate];
+        if (dateComparison != NSOrderedAscending)
         {
-            case kNoMoonEvent:
-                moonEventTypeText = @"No moon event";
-                break;
-                
-            case kNewMoon:
-                moonEventTypeText = @"New Moon";
-                break;
-                
-            case kFullMoon:
-                moonEventTypeText = @"Full Moon";
-                break;
-                
-            default:
-                moonEventTypeText = @"Invalid moon event type";
-                break;
+            //Create a string to describe the type of moon event, for use in the notification text.
+            
+            NSString *moonEventTypeText = [[NSString alloc]init];
+            switch ([[moonDatesDictionary objectForKey:@"Type"]intValue])
+            {
+                case kNoMoonEvent:
+                    moonEventTypeText = @"No moon event";
+                    break;
+                    
+                case kNewMoon:
+                    moonEventTypeText = @"New Moon";
+                    break;
+                    
+                case kFullMoon:
+                    moonEventTypeText = @"Full Moon";
+                    break;
+                    
+                default:
+                    moonEventTypeText = @"Invalid moon event type";
+                    break;
+            }
+            
+           
+            //Create two notifications for each moon event in the array. One is a pre-notification to notify that a moon event is coming up (timing to be determined by user preferences), and the second is to notify when the actual moon event occurs.
+            UILocalNotification *moonDatePreNotification = [[UILocalNotification alloc] init];
+            if (moonDatePreNotification == nil)
+                return;
+            UILocalNotification *moonDateActualNotification = [[UILocalNotification alloc] init];
+            if (moonDatePreNotification == nil)
+                return;
+            
+            //Use the two NSDateFormatters to create a string representing the date of the moon event and another representing the time of the moon event.
+            NSString *moonDateString = [dateFormatterForDate stringFromDate:[moonDatesDictionary objectForKey:@"MoonDate"]];
+            NSString *moonDateTimeString = [dateFormatterForTime stringFromDate:[moonDatesDictionary objectForKey:@"MoonDate"]];
+            
+            //Set the fire date of the pre-notification and the actual notification.
+            moonDatePreNotification.fireDate = [moonDatesDictionary objectForKey:@"NotificationDate"];
+            moonDateActualNotification.fireDate = [moonDatesDictionary objectForKey:@"MoonDate"];
+            
+            //Set the alert body text for the pre-notification and the actual notification.
+            moonDatePreNotification.alertBody = [NSString stringWithFormat:@"Advance notification of %@ at %@ on %@", moonEventTypeText, moonDateTimeString, moonDateString];
+            moonDateActualNotification.alertBody = [NSString stringWithFormat:@"It's happened! %@ at %@ on %@", moonEventTypeText, moonDateTimeString, moonDateString];
+            
+            //Set the text for the notification alert action for the pre notification and the actual notification.
+            moonDatePreNotification.alertAction = @"Open Moon Dates app";
+            moonDateActualNotification.alertAction = @"Open Moon Dates app";
+            
+            //Set the text for the alert title for the pre-notification and the actual notification.
+            moonDatePreNotification.alertTitle = @"Upcoming moon event!";
+            moonDateActualNotification.alertTitle = @"A moon event has occurred";
+            
+            //Set the pre-notification and the actual notification to use the detail local notification sound.
+            moonDatePreNotification.soundName = UILocalNotificationDefaultSoundName;
+            moonDateActualNotification.soundName = UILocalNotificationDefaultSoundName;
+            
+            //Create an NSDictionary for the pre-notification and the actual notification, to be stored as the userInfo property of each notification.
+            //These hold the date of the moon event, and a string to describe the type of notification (e.g. pre-notificaiton or actual notification).
+            //We can use this data later when the notifications fire.
+            NSDictionary *moonDatePreNotificationDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[moonDatesDictionary objectForKey:@"MoonDate"], @"MoonDate", @"PreNotification", @"NotificationType", nil];
+            NSDictionary *moonDateActualNotificationDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[moonDatesDictionary objectForKey:@"MoonDate"], @"MoonDate", @"ActualNotification", @"NotificationType", nil];
+            
+            moonDatePreNotification.userInfo = moonDatePreNotificationDictionary;
+            moonDateActualNotification.userInfo = moonDateActualNotificationDictionary;
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification: moonDatePreNotification];
+            [[UIApplication sharedApplication] scheduleLocalNotification: moonDateActualNotification];
+            
         }
-        
-        UILocalNotification *moonDatePreNotification = [[UILocalNotification alloc] init];
-        if (moonDatePreNotification == nil)
-            return;
-        UILocalNotification *moonDateActualNotification = [[UILocalNotification alloc] init];
-        if (moonDatePreNotification == nil)
-            return;
-        
-        NSString *moonDateString = [dateFormatterForDate stringFromDate:[moonDatesDictionary objectForKey:@"MoonDate"]];
-        NSString *moonDateTimeString = [dateFormatterForTime stringFromDate:[moonDatesDictionary objectForKey:@"MoonDate"]];
-        
-        moonDatePreNotification.fireDate = [moonDatesDictionary objectForKey:@"NotificationDate"];
-        moonDateActualNotification.fireDate = [moonDatesDictionary objectForKey:@"MoonDate"];
-        
-        moonDatePreNotification.alertBody = [NSString stringWithFormat:@"Advance notification of %@ at %@ on %@", moonEventTypeText, moonDateTimeString, moonDateString];
-        moonDateActualNotification.alertBody = [NSString stringWithFormat:@"It's happened! %@ at %@ on %@", moonEventTypeText, moonDateTimeString, moonDateString];
-        
-        moonDatePreNotification.alertAction = @"Open Moon Dates app";
-        moonDateActualNotification.alertAction = @"Open Moon Dates app";
-        
-        moonDatePreNotification.alertTitle = @"Upcoming moon event!";
-        moonDateActualNotification.alertTitle = @"A moon event has occurred";
-        
-        moonDatePreNotification.soundName = UILocalNotificationDefaultSoundName;
-        moonDateActualNotification.soundName = UILocalNotificationDefaultSoundName;
-        
-        NSDictionary *moonDatePreNotificationDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[moonDatesDictionary objectForKey:@"MoonDate"], @"MoonDate", @"PreNotification", @"NotificationType", nil];
-        NSDictionary *moonDateActualNotificationDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[moonDatesDictionary objectForKey:@"MoonDate"], @"MoonDate", @"ActualNotification", @"NotificationType", nil];
-        
-        moonDatePreNotification.userInfo = moonDatePreNotificationDictionary;
-        moonDateActualNotification.userInfo = moonDateActualNotificationDictionary;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification: moonDatePreNotification];
-        [[UIApplication sharedApplication] scheduleLocalNotification: moonDateActualNotification];
    
     }
 }

@@ -45,6 +45,7 @@
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+    //This method handles notifications that are received when the app is running.
     //Grab a reference to the tab bar controller which is the root view controller, and call the didReceiveNotification: method, passing in the local notification object for handling within the app.
     WWFtabBarController *theTabBarController = (WWFtabBarController *) self.window.rootViewController;
     [theTabBarController didReceiveNotification: notification];
