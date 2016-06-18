@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Constants.h"
 #import "WWFmoonDatesManager.h"
+#import "WWFjournalViewController.h"
 
 @interface WWFcalendarViewController : UITableViewController
 

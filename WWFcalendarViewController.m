@@ -103,6 +103,13 @@
     return cell;
 }
 
+#pragma mark - Navigation
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    //This is where we are going to set the properties of the journal view controller, pass it any information it needs, etc.
+}
+
 
 /*
 // Override to support conditional editing of the table view.

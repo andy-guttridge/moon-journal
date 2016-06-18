@@ -22,6 +22,7 @@
 		A145CB091CFB51B500670E79 /* WWFcalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB081CFB51B500670E79 /* WWFcalendarViewController.m */; };
 		A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A145CB0A1CFB63B700670E79 /* UserData.plist */; };
 		A145CB0E1CFB652400670E79 /* WWFuserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */; };
+		A1743E601D15D11100DE328B /* WWFjournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,8 @@
 		A145CB0A1CFB63B700670E79 /* UserData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserData.plist; sourceTree = "<group>"; };
 		A145CB0C1CFB652400670E79 /* WWFuserDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFuserDataManager.h; sourceTree = "<group>"; };
 		A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFuserDataManager.m; sourceTree = "<group>"; };
+		A1743E5E1D15D11100DE328B /* WWFjournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFjournalViewController.h; sourceTree = "<group>"; };
+		A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFjournalViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +138,8 @@
 				A105775D1CFAFD3300951A27 /* WWFinfoViewController.m */,
 				A105775F1CFAFD6300951A27 /* WWFsettingsViewController.h */,
 				A10577601CFAFD6300951A27 /* WWFsettingsViewController.m */,
+				A1743E5E1D15D11100DE328B /* WWFjournalViewController.h */,
+				A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */,
 				A10577621CFAFD7900951A27 /* WWFmoonDatesManager.h */,
 				A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */,
 				A145CB0C1CFB652400670E79 /* WWFuserDataManager.h */,
@@ -308,6 +313,7 @@
 			files = (
 				A105775E1CFAFD3300951A27 /* WWFinfoViewController.m in Sources */,
 				A105772E1CFAFBCE00951A27 /* WWFtabBarController.m in Sources */,
+				A1743E601D15D11100DE328B /* WWFjournalViewController.m in Sources */,
 				A105772B1CFAFBCE00951A27 /* AppDelegate.m in Sources */,
 				A10577281CFAFBCE00951A27 /* main.m in Sources */,
 				A10577611CFAFD6300951A27 /* WWFsettingsViewController.m in Sources */,

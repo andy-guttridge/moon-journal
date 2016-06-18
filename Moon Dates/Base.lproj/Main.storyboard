@@ -3,8 +3,26 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Calendar-->
+        <scene sceneID="W81-kA-unj">
+            <objects>
+                <navigationController id="LCb-pQ-ePJ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Calendar" id="AO0-bw-zc8"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kiW-ul-hrM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="FCH-bJ-kNL" kind="relationship" relationship="rootViewController" id="NLy-xm-oWe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KNP-LT-7gi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1034" y="-252"/>
+        </scene>
         <!--Calendar-->
         <scene sceneID="0wn-Yp-3K8">
             <objects>
@@ -15,7 +33,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MoonDateCell" textLabel="nRd-aE-BYW" detailTextLabel="bG5-8x-zzC" style="IBUITableViewCellStyleSubtitle" id="PSw-hO-b34">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PSw-hO-b34" id="8cq-PC-n2X">
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
@@ -37,6 +55,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="WWw-Xg-vDF" kind="show" id="S5J-wl-331"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -45,10 +66,43 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Calendar" id="dVg-Ir-dqC"/>
+                    <navigationItem key="navigationItem" id="nld-w4-9nG"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tI8-ma-Fhj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1027" y="-176"/>
+            <point key="canvasLocation" x="1855" y="-252"/>
+        </scene>
+        <!--Fjournal View Controller-->
+        <scene sceneID="cvE-HT-tGZ">
+            <objects>
+                <viewController id="WWw-Xg-vDF" customClass="WWFjournalViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0dt-Gg-5zx"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Ea-11-Ijf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="170-JD-HBb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Moon date journal text to go here." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qua-0l-WW5">
+                                <rect key="frame" x="20" y="64" width="560" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="top" secondItem="0dt-Gg-5zx" secondAttribute="bottom" id="5Lg-Os-FXa"/>
+                            <constraint firstItem="8Ea-11-Ijf" firstAttribute="top" secondItem="qua-0l-WW5" secondAttribute="bottom" id="Fq3-i9-O1g"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="leading" secondItem="170-JD-HBb" secondAttribute="leadingMargin" id="Yaj-Ii-jCp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qua-0l-WW5" secondAttribute="trailing" id="cfs-He-P9A"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zeL-YT-RUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2622" y="-252"/>
         </scene>
         <!--Info-->
         <scene sceneID="DYg-xg-5jd">
@@ -122,7 +176,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="FCH-bJ-kNL" kind="relationship" relationship="viewControllers" id="yAU-GU-WJn"/>
+                        <segue destination="LCb-pQ-ePJ" kind="relationship" relationship="viewControllers" id="BtJ-eh-3gT"/>
                         <segue destination="XL8-lE-3DB" kind="relationship" relationship="viewControllers" id="gst-ua-dBj"/>
                         <segue destination="HS3-S3-hwA" kind="relationship" relationship="viewControllers" id="iMh-08-7mu"/>
                     </connections>
