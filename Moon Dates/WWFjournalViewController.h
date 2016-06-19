@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WWFmoonDatesManager.h"
 
-@interface WWFjournalViewController : UIViewController
+@interface WWFjournalViewController : UIViewController <UITextViewDelegate>
+
+@property NSUInteger indexForMoonDatesArray;
 
 @end

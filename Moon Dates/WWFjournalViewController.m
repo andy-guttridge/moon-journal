@@ -10,13 +10,38 @@
 
 @interface WWFjournalViewController ()
 
+@property IBOutlet UILabel *moonTypeLabel;
+@property IBOutlet UITextView *journalTextView;
+@property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
+
 @end
 
 @implementation WWFjournalViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    //Get a reference to the shared Moon Dates Manager.
+    self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager];
+    
+    //Retrieve any journal text already entered for the current date and display it in the journalTextView
+    
+    self.journalTextView.text = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"JournalText"];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    //When the user has finished editing the text view, update the JournalText entry in the moon date dictionary within the moon dates array, and save the moon dates array to ensure the data is kept.
+    NSLog(@"Journal text view did end editing");
+    NSString *newJournalText = self.journalTextView.text;
+    [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:newJournalText forKey:@"JournalText"];
+    [self.sharedMoonDatesManager saveMoonDatesData];
+}
+
+- (IBAction)releaseJournalEntryButtonPressed: (id)sender
+{
+    //This is where we will handle the 'Let it go' button being pressed.
 }
 
 - (void)didReceiveMemoryWarning {

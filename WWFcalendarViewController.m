@@ -107,7 +107,13 @@
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //This is where we are going to set the properties of the journal view controller, pass it any information it needs, etc.
+    //This is where we set the properties of the journal view controller, pass it any information it needs, etc.
+    //For now, we simply pass the index row of the selected cell from the calendar view to the journalViewController, so that the journalViewController can use this as an index into the
+    //Moon Dates array in the sharedMoonDatesManager. This system might have to change later if we change the approach to managed the moon dates or journal data.
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    WWFjournalViewController *journalViewController = segue.destinationViewController;
+    journalViewController.indexForMoonDatesArray = indexPath.row;
 }
 
 

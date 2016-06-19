@@ -19,5 +19,6 @@
 
 -(void) generateTestData;
 -(void) scheduleNotifications;
+-(void) saveMoonDatesData;
 
 @end

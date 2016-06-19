@@ -35,9 +35,29 @@
     
     if (self)
     {
-        //Load the moon dates data from the plist file called MoonDatesData.plist which is stored in the app bundle.
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"MoonDatesData" ofType:@"plist"];
-        if (!(self.moonDatesArray = [NSMutableArray arrayWithContentsOfFile:path]))
+        //We need to load the moon dates data from the plist file called MoonDatesData.plist which is stored in the documents folder. If the file doesn't exist, then we
+        //first make a copy of the file with the same name that is stored within the app bundle (this is likely to be the case when the app is run for the first time).
+        //The necessary moon dates data is initially provided within the plist file in the app bundle, but we need to be able to write to this file as the user adds
+        //journal data, which is why we copy it to the documents folder.
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSArray *pathsArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        
+        NSString *documentDirectoryPath = [pathsArray objectAtIndex:0];
+        NSString *moonDatesPath = [documentDirectoryPath stringByAppendingString:@"MoonDatesData.plist"];
+        
+        if (![fileManager fileExistsAtPath:moonDatesPath])
+        {
+            NSLog(@"MoonDatesData.plist did not exist in documents folder. Attempting to copy from app bundle");
+            NSString *sourcePath = [[NSBundle mainBundle] pathForResource:@"MoonDatesData" ofType:@"plist"];
+            [fileManager copyItemAtPath:sourcePath toPath:moonDatesPath error:nil]; //We may want to think about retrieving the error data here in future.
+        }
+        else
+        {
+            NSLog(@"MoonDatesData.plist exists in documents folder.");
+        }
+        
+        if (!(self.moonDatesArray = [NSMutableArray arrayWithContentsOfFile:moonDatesPath]))
         {
             NSLog(@"Failed to open MoonDatesData.plist in [WWFMoonDatesManager init]");
         }
@@ -85,9 +105,9 @@
     //Updates to the list of moon events will be included in updates, and at those times the notifications will need to be rescheduled as there will be new dates further into the future included.
     //We hard code a version number and store this using NSUserDefaults, so that we can then do a comparison and see if the hard coded and the stored version numbers match. If they don't then we know our app has been updated and we need to schedule the notifications.
     
-    NSInteger currentVersion = 0; //This needs to be incremented with each new version of the app.
+    NSInteger currentVersion = 0; //This needs to be incremented with each new version of the app. A value of zero will always cause notifications to be scheduled and is to be used for testing purposes.
     
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HasLaunchedForVersion"] < currentVersion)
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HasLaunchedForVersion"] < currentVersion || currentVersion == 0)
     {
         [[NSUserDefaults standardUserDefaults] setInteger:currentVersion forKey:@"HasLaunchedForVersion"];
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -100,8 +120,11 @@
         NSLog(@"This version of the app has run before. Notifications not scheduled");
     }
     
+    //Next we register to receive an OS notification when the Home button is pressed, so that we can save our data at that point. When we receive this notification,
+    //the applicationWillResignActive: method within this class is called.
     
-    
+    UIApplication *app = [UIApplication sharedApplication];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:app];
     
     return self;    
 }
@@ -114,7 +137,8 @@
     {
         NSDate *newMoonDate = [NSDate dateWithTimeInterval:i*60 sinceDate:todaysDatePlusThreeDays];
         NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon];
-        NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:newMoonDate, @"MoonDate", newMoonDateType, @"Type", nil];
+        NSString *newMoonDateJournalString = @"Test data - journal text entry";
+        NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:newMoonDate, @"MoonDate", newMoonDateType, @"Type", newMoonDateJournalString, @"JournalText", nil];
         [self.moonDatesArray addObject:newMoonDateDictionary];
     }
     
@@ -219,6 +243,32 @@
         }
    
     }
+}
+
+- (void) saveMoonDatesData
+{
+    //Save the moon dates array in the MoonDatesData.plist file in the documents folder.
+    
+    NSArray *pathsArray = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentDirectoryPath = [pathsArray objectAtIndex:0];
+    NSString *moonDatesPath = [documentDirectoryPath stringByAppendingString:@"MoonDatesData.plist"];
+    
+    if ([self.moonDatesArray writeToFile:moonDatesPath atomically:YES])
+    {
+        NSLog (@"Moon dates array saved.");
+    }
+    
+    else
+    {
+        NSLog(@"Moon dates array did not save");
+    }
+}
+
+- (void) applicationWillResignActive: (NSNotification *) notification
+{
+    //At the moment, all we do is save the moon dates data. It may be necessary to do more work in this method eventually. 
+    [self saveMoonDatesData];
 }
 
 -(NSString*) description

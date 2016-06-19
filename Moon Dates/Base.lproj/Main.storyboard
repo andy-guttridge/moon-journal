@@ -84,21 +84,84 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLF-U7-wlq">
+                                <rect key="frame" x="20" y="72" width="487" height="50"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qym-FE-3vM">
+                                <rect key="frame" x="515" y="82" width="65" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="RJO-yE-NqL"/>
+                                </constraints>
+                                <state key="normal" title="Let it go"/>
+                                <connections>
+                                    <action selector="releaseJournalEntryButtonPressed:" destination="WWw-Xg-vDF" eventType="touchUpInside" id="pKn-f0-Qgw"/>
+                                </connections>
+                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Moon date journal text to go here." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qua-0l-WW5">
-                                <rect key="frame" x="20" y="64" width="560" height="487"/>
+                                <rect key="frame" x="20" y="135" width="560" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="WWw-Xg-vDF" id="vlg-DT-D70"/>
+                                </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="qym-FE-3vM" firstAttribute="top" secondItem="0dt-Gg-5zx" secondAttribute="bottom" constant="18" id="0d5-6g-GKB"/>
                             <constraint firstItem="qua-0l-WW5" firstAttribute="top" secondItem="0dt-Gg-5zx" secondAttribute="bottom" id="5Lg-Os-FXa"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="trailing" secondItem="qym-FE-3vM" secondAttribute="trailing" id="B0b-NC-X0p"/>
                             <constraint firstItem="8Ea-11-Ijf" firstAttribute="top" secondItem="qua-0l-WW5" secondAttribute="bottom" id="Fq3-i9-O1g"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="trailing" secondItem="170-JD-HBb" secondAttribute="trailingMargin" id="GCN-Ee-ZzF"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="leading" secondItem="170-JD-HBb" secondAttribute="leadingMargin" id="IoB-Og-9rK"/>
+                            <constraint firstItem="qym-FE-3vM" firstAttribute="top" secondItem="0dt-Gg-5zx" secondAttribute="bottom" constant="18" id="Kje-lR-gAH"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="trailing" secondItem="170-JD-HBb" secondAttribute="trailingMargin" id="L8O-Sz-KR8"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="leading" secondItem="WLF-U7-wlq" secondAttribute="leading" id="PpG-es-qRk"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="top" secondItem="WLF-U7-wlq" secondAttribute="bottom" constant="13" id="TiX-90-GHC"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="top" secondItem="WLF-U7-wlq" secondAttribute="bottom" constant="8" id="U43-xd-65V"/>
                             <constraint firstItem="qua-0l-WW5" firstAttribute="leading" secondItem="170-JD-HBb" secondAttribute="leadingMargin" id="Yaj-Ii-jCp"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="qua-0l-WW5" secondAttribute="bottom" constant="15" id="bpL-P7-Ygn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qua-0l-WW5" secondAttribute="trailing" id="cfs-He-P9A"/>
+                            <constraint firstItem="8Ea-11-Ijf" firstAttribute="top" secondItem="qua-0l-WW5" secondAttribute="bottom" id="eKT-5Y-YG3"/>
+                            <constraint firstItem="WLF-U7-wlq" firstAttribute="top" secondItem="0dt-Gg-5zx" secondAttribute="bottom" constant="8" symbolic="YES" id="eyS-BD-dX2"/>
+                            <constraint firstItem="WLF-U7-wlq" firstAttribute="top" secondItem="0dt-Gg-5zx" secondAttribute="bottom" constant="8" id="fw7-dr-fdH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qym-FE-3vM" secondAttribute="trailing" constant="-2" id="hhc-hI-wCW"/>
+                            <constraint firstItem="WLF-U7-wlq" firstAttribute="leading" secondItem="170-JD-HBb" secondAttribute="leadingMargin" id="hoe-9f-8nl"/>
+                            <constraint firstItem="qym-FE-3vM" firstAttribute="leading" secondItem="WLF-U7-wlq" secondAttribute="trailing" constant="8" id="jJ8-9o-PGM"/>
+                            <constraint firstItem="WLF-U7-wlq" firstAttribute="centerY" secondItem="qym-FE-3vM" secondAttribute="centerY" id="kJA-Um-I0T"/>
+                            <constraint firstItem="qym-FE-3vM" firstAttribute="trailing" secondItem="170-JD-HBb" secondAttribute="trailingMargin" id="n6C-nl-Qn3"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="leading" secondItem="170-JD-HBb" secondAttribute="leadingMargin" id="rCD-SV-ers"/>
+                            <constraint firstItem="qua-0l-WW5" firstAttribute="top" secondItem="WLF-U7-wlq" secondAttribute="bottom" constant="8" id="snT-SK-zEY"/>
+                            <constraint firstItem="qym-FE-3vM" firstAttribute="leading" secondItem="WLF-U7-wlq" secondAttribute="trailing" constant="8" symbolic="YES" id="yaa-vC-5O2"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="fw7-dr-fdH"/>
+                                <exclude reference="hoe-9f-8nl"/>
+                                <exclude reference="5Lg-Os-FXa"/>
+                                <exclude reference="IoB-Og-9rK"/>
+                                <exclude reference="L8O-Sz-KR8"/>
+                                <exclude reference="U43-xd-65V"/>
+                                <exclude reference="Yaj-Ii-jCp"/>
+                                <exclude reference="cfs-He-P9A"/>
+                                <exclude reference="snT-SK-zEY"/>
+                                <exclude reference="Kje-lR-gAH"/>
+                                <exclude reference="hhc-hI-wCW"/>
+                                <exclude reference="jJ8-9o-PGM"/>
+                                <exclude reference="n6C-nl-Qn3"/>
+                                <exclude reference="Fq3-i9-O1g"/>
+                                <exclude reference="eKT-5Y-YG3"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="journalTextView" destination="qua-0l-WW5" id="E50-Yi-4tx"/>
+                        <outlet property="moonTypeLabel" destination="WLF-U7-wlq" id="auV-Kd-hOQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zeL-YT-RUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
