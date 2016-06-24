@@ -28,10 +28,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    //Create a 20px vertical gap at the top of the table view so that there is a gap between it and the status bar.
-    self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
-  
-    
+
     //Get the sharedMoonDatesManager, the sharedUserDataManager and create an instance of and do the set up for an NSDateFormatter. The locale for the NSDateFormatter is retrieved from the sharedUserPrefsManager.
     self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager];
     self.sharedUserDataManager = [WWFuserDataManager sharedUserDataManager];

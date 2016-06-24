@@ -28,6 +28,8 @@
     //Retrieve any journal text already entered for the current date and display it in the journalTextView
     
     self.journalTextView.text = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"JournalText"];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
