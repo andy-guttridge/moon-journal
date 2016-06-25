@@ -14,6 +14,7 @@
 @interface WWFmoonDatesManager : NSObject
 
 @property (strong, nonatomic, readonly) NSMutableArray *moonDatesArray;
+@property NSInteger notificationOffset;
 
 +(instancetype)sharedMoonDatesManager;
 

@@ -71,9 +71,10 @@
         
         //Use the sharedUserDataManager to retrieve the time offset for user notification of moon events. Then iterate through the array of moonDatesArray of dictionaries, and create a new NSDate for the notification time for each of them based on the time offset. Insert each of these NSDate objects into the moonDatesArray with the key "NotificationDate". This method also replaces all of the NSDictionaries within the array with mutable copies, otherwise we would not be able to add the notification times to them.
         
+        //Even if we move the code to offset the notifications and stop storing them in the dictionary, we will still need to load the notification offset from the plist file, as it is used elsewhere.
         self.sharedUserDataManager = [WWFuserDataManager sharedUserDataManager];
-        NSInteger NotificationOffset = [[self.sharedUserDataManager.userDataDictionary objectForKey:@"NotificationInterval"] integerValue];
-        if (NotificationOffset == 0)
+        self.notificationOffset = [[self.sharedUserDataManager.userDataDictionary objectForKey:@"NotificationInterval"] integerValue];
+        if (self.notificationOffset == 0)
         {
             NSLog(@"Could not retrieve objectForKey NotificationInterval from userDataDictionary");
         }
@@ -89,7 +90,7 @@
             [copyOfMoonDatesArray replaceObjectAtIndex:i withObject:mutableMoonDatesDictionary];
             
             NSDate *theMoonEventDate = [mutableMoonDatesDictionary objectForKey:@"MoonDate"];
-            NSDate *theNotificationDate = [NSDate dateWithTimeInterval:NotificationOffset sinceDate:theMoonEventDate];
+            NSDate *theNotificationDate = [NSDate dateWithTimeInterval:self.notificationOffset sinceDate:theMoonEventDate];
             [copyOfMoonDatesArray [i] setObject:theNotificationDate forKey:@"NotificationDate"];
         }
         self.moonDatesArray = [copyOfMoonDatesArray mutableCopy]; //Copy the contents of copyOfMoonDates array back into the proper version of the array.

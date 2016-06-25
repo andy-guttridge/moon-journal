@@ -95,7 +95,27 @@
             break;
     }
     
-    cell.detailTextLabel.text = detailText;   
+    cell.detailTextLabel.text = detailText;
+    
+    //Change the colour of the cell to blue with white text if the current time is within and before the 'notification window'.
+    
+    NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[aMoonDate timeIntervalSinceNow]]; //The amount of time until the moon date.
+    NSNumber *notificationOffset = [NSNumber numberWithInteger: labs (self.sharedMoonDatesManager.notificationOffset)]; //Get the notification offset from the sharedMoonDatesManager, and use the C labs function to convert it to an absolute (unsigned) value. This is because the notification system needs a negative number for the pre-notifications, but we need a positive value here to use the intervalUntilDate method of NSDate to compare the amount of time until the moon event with the notification offset.
+    if (([intervalUntilDate compare:notificationOffset] == NSOrderedAscending) && [intervalUntilDate intValue] >= 0)
+    {
+        cell.backgroundColor = [UIColor blueColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
+    }
+    
+    else //Ensure that cells are set to normal colours if not within notification range, otherwise we can end up with incorrectly coloured cells when they are dequeued and reused.
+    {
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.textLabel.textColor = [UIColor blackColor];
+        cell.detailTextLabel.textColor = [UIColor blackColor];
+    }
+    
+    
     
     return cell;
 }
