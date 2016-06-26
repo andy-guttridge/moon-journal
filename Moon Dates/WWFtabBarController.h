@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WWFmoonDatesManager.h"
+#import "WWFcalendarViewController.h"
 
 @interface WWFtabBarController : UITabBarController
 

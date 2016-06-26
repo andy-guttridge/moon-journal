@@ -55,11 +55,23 @@
     
     self.moonTypeLabel.text = moonTypeLabelText;
     
+    //Make text uneditable if the relevant moon event date has passed and we are outside of the 'allowed Let It Go interval', and colour the text grey.
+    
+    NSDate *theMoonDate = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"]; //Get the moon date this journal entry relates to.
+    NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[theMoonDate timeIntervalSinceNow]]; //The amount of time until or after the moon date.
+    NSNumber *letItGoAllowedInterval = [NSNumber numberWithInt:kAllowedLetItGoInterval]; //Turn the pre-defined constant into an NSNumber.
+    
+    if (([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedAscending) && [intervalUntilDate intValue] < 0)
+    {
+        self.journalTextView.editable = NO;
+        self.journalTextView.textColor = [UIColor lightGrayColor];
+    }
+    
     //Enable letItGoButton if the relevant moon event date has passed, but we are within 12 hours of the moon event having passed.
     
     NSTimeInterval intervalSinceMoonDate = [[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"] timeIntervalSinceNow]; //Get the amount of time since the relevant moon event.
     
-    NSLog(@"%f", intervalSinceMoonDate);
+    NSLog(@"Interval since moon date in the journal view is: %f", intervalSinceMoonDate);
     
     if (intervalSinceMoonDate >= kAllowedLetItGoInterval && intervalSinceMoonDate < 0)
     {

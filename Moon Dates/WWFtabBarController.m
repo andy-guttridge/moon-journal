@@ -34,6 +34,23 @@
 
 -(void) didReceiveNotification:(UILocalNotification *)theNotification
 {
+    if (self.selectedIndex == 0) //Ensure the calendar view redraws itself if a notification is received while it is displayed. This ensures the cells change colour appropriately.
+    {
+        UINavigationController *calendarViewNavigationController = self.viewControllers [0]; //Grab a reference to the UINavigationController that displays our calendar and journal views.
+        UIViewController *theCurrentViewController = calendarViewNavigationController.topViewController; //Grab a reference to the view controller currently at the top of the UINavigationController stack.
+        
+        NSString *classOfViewController = NSStringFromClass([theCurrentViewController class]); //Determine the class of the currently visible view controller.
+        if ([classOfViewController  isEqual: @"WWFcalendarViewController"])
+            {
+                WWFcalendarViewController *theCalendarViewController = (WWFcalendarViewController *) theCurrentViewController; //Cast theCurrentViewController to WWFcalednarViewController, as we have have now already positively identified that it is of this class.
+                [theCalendarViewController.tableView reloadData]; //Get the calendar view controller to reload its data.
+                
+                NSLog(@"Called tableview reload from WWFtabBarController");
+            }
+    }
+    
+    //Show an alert to indicate that a notification has been received.
+    
     NSString *title = @"Moon Date Notification";
     NSString *message = theNotification.alertBody;
     

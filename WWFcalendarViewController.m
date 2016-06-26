@@ -40,6 +40,13 @@
     
 }
 
+- (void) viewWillAppear:(BOOL)animated
+//This method is implemented to ensure that tableview cells are highlighted correctly if anything has changed after switching back from another view.
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -97,15 +104,31 @@
     
     cell.detailTextLabel.text = detailText;
     
-    //Change the colour of the cell to blue with white text if the current time is within and before the 'notification window'.
+    //Change the colour of the cell to blue with white text if the current time is within and before the 'notification window',  to orange with white text if the current time is within a specified time after the moon event (kLetItGoAllowedInterval), or to white but with grey text if the moon date has already passed.
     
-    NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[aMoonDate timeIntervalSinceNow]]; //The amount of time until the moon date.
+    NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[aMoonDate timeIntervalSinceNow]]; //The amount of time until or after the moon date.
     NSNumber *notificationOffset = [NSNumber numberWithInteger: labs (self.sharedMoonDatesManager.notificationOffset)]; //Get the notification offset from the sharedMoonDatesManager, and use the C labs function to convert it to an absolute (unsigned) value. This is because the notification system needs a negative number for the pre-notifications, but we need a positive value here to use the intervalUntilDate method of NSDate to compare the amount of time until the moon event with the notification offset.
-    if (([intervalUntilDate compare:notificationOffset] == NSOrderedAscending) && [intervalUntilDate intValue] >= 0)
+    NSNumber *letItGoAllowedInterval = [NSNumber numberWithInt:kAllowedLetItGoInterval]; //Turn the pre-defined constant into an NSNumber.
+    
+    if (([intervalUntilDate compare:notificationOffset] == NSOrderedAscending) && [intervalUntilDate floatValue] >= 0)
     {
         cell.backgroundColor = [UIColor blueColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.textColor = [UIColor whiteColor];
+    }
+    
+    else if (([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedDescending) && [intervalUntilDate floatValue] <= 0)
+    {
+        cell.backgroundColor = [UIColor orangeColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.detailTextLabel.textColor = [UIColor whiteColor];
+    }
+    
+    else if (([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedAscending) && [intervalUntilDate floatValue] < 0)
+    {
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.textLabel.textColor = [UIColor lightGrayColor];
+        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
     }
     
     else //Ensure that cells are set to normal colours if not within notification range, otherwise we can end up with incorrectly coloured cells when they are dequeued and reused.
