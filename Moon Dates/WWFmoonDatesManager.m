@@ -134,7 +134,7 @@
 //Get todays date plus three days, and use this to generate and add some test dates to some Dictionaries, set the "Type" key to new moon (just for the sake of having some test data), and then add the Dictionaries to our moonDatesArray. The notification dates will be generated in the init method, and if we have the notification interval set to the default three days, then we end up with some very convenient notification dates for testing purposes.
 {
     NSDate *todaysDatePlusThreeDays = [NSDate dateWithTimeIntervalSinceNow: 120]; //259200 is the number of seconds in three 24 hour days.
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 10; i++)
     {
         NSDate *newMoonDate = [NSDate dateWithTimeInterval:i*60 sinceDate:todaysDatePlusThreeDays];
         NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon];

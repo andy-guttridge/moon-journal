@@ -12,7 +12,8 @@
 
 @interface WWFtabBarController : UITabBarController
 
--(void) didReceiveNotification: (UILocalNotification *) theNotification;
+-(void) didReceiveNotificationWhileAppRunning: (UILocalNotification *) theNotification;
+-(void) didReceiveNotificationOnAppLaunch: (UILocalNotification *) theNotification;
 
 @end
 

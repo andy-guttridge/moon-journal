@@ -16,8 +16,16 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    //This is where we receive local notifications is the app isn't running. If there is a notification, we pass it elsewhere for handling.
+    UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (notification)
+    {
+        WWFtabBarController *theTabBarController = (WWFtabBarController *) self.window.rootViewController;
+        [theTabBarController didReceiveNotificationOnAppLaunch: notification];
+    }
+    
     return YES;
 }
 
@@ -48,7 +56,7 @@
     //This method handles notifications that are received when the app is running.
     //Grab a reference to the tab bar controller which is the root view controller, and call the didReceiveNotification: method, passing in the local notification object for handling within the app.
     WWFtabBarController *theTabBarController = (WWFtabBarController *) self.window.rootViewController;
-    [theTabBarController didReceiveNotification: notification];
+    [theTabBarController didReceiveNotificationWhileAppRunning: notification];
 }
 
 @end

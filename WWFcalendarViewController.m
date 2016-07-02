@@ -138,8 +138,6 @@
         cell.detailTextLabel.textColor = [UIColor blackColor];
     }
     
-    
-    
     return cell;
 }
 
