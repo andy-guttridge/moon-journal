@@ -38,18 +38,22 @@
     {
         case kNoMoonEvent:
             moonTypeLabelText = @"No moon event";
+            self.letItGoButton.title =@"No event";
             break;
             
         case kNewMoon:
             moonTypeLabelText = @"New Moon: new themes, ideas and concepts; a time to listen to your inner self.";
+            self.letItGoButton.title =@"Set intention";
             break;
             
         case kFullMoon:
             moonTypeLabelText = @"Full Moon: heightened emotions. A time to envision dreams manifesting, meditate and send blessings to those in need.";
+            self.letItGoButton.title =@"Release";
             break;
             
         default:
             moonTypeLabelText = @"Invalid moon event type";
+            self.letItGoButton.title =@"Error";
             break;
     }
     

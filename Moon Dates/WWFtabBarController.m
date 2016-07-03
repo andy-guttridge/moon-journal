@@ -34,11 +34,11 @@
 
 -(void) didReceiveNotificationWhileAppRunning:(UILocalNotification *)theNotification
 {
-    if (self.selectedIndex == 0) //Ensure the calendar view redraws itself if a notification is received while it is displayed. This ensures the cells change colour appropriately.
+    UINavigationController *calendarViewNavigationController = self.viewControllers [0]; //Grab a reference to the UINavigationController that displays our calendar and journal views.
+    
+    if (self.selectedIndex == 0) //Ensure the calendar view redraws itself if a notification is received and it is already displayed. This ensures the cells change colour appropriately.
     {
-        UINavigationController *calendarViewNavigationController = self.viewControllers [0]; //Grab a reference to the UINavigationController that displays our calendar and journal views.
         UIViewController *theCurrentViewController = calendarViewNavigationController.topViewController; //Grab a reference to the view controller currently at the top of the UINavigationController stack.
-        
         NSString *classOfViewController = NSStringFromClass([theCurrentViewController class]); //Determine the class of the currently visible view controller.
         if ([classOfViewController  isEqual: @"WWFcalendarViewController"])
             {
@@ -51,12 +51,10 @@
        
         }
     
-    //Next we smake the calendar view visible and scroll the table view to ensure that the appropriate moon date is visible.
+    //Next we make the calendar view visible and scroll the table view to ensure that the appropriate moon date is visible. The above chunk of code to redraw the table could have been combined with the below, but decided only to ask the table to refresh its data if it is already displayed, as a small optimisation.
     
     NSDate *notificationMoonDate; //To hold the Moon Date associated with this notification.
     NSUInteger i = 0; //Counter, matching the index of the moon date array for each moon date, which we can use to tell the table view which view to scroll to.
-    UINavigationController *calendarViewNavigationController = self.viewControllers [0]; //Grab a reference to the UINavigationController that displays our calendar and journal views.
-    UIViewController *theCurrentViewController = calendarViewNavigationController.topViewController; //Grab a reference to the view controller currently at the top of the UINavigationController stack.
     
     if ((notificationMoonDate = [theNotification.userInfo objectForKey:@"MoonDate"])) //Get the moon date from the local notification object.
     {
@@ -67,9 +65,9 @@
             {
                 self.selectedIndex = 0; //Ensure the calendar view is selected.
                 [calendarViewNavigationController popToRootViewControllerAnimated:YES]; //Make sure the calendar view is displayed (rather than the journal view).
-                
+                UIViewController *theCurrentViewController = calendarViewNavigationController.topViewController; //Grab a reference to the view controller currently at the top of the UINavigationController stack. Doing this again for safety, as the current view controller could have changed since the beginning of the method.
                 NSString *classOfViewController = NSStringFromClass([theCurrentViewController class]); //Determine the class of the currently visible view controller.
-                if ([classOfViewController  isEqual: @"WWFcalendarViewController"])
+                if ([classOfViewController  isEqual: @"WWFcalendarViewController"]) //We have just asked the calendar view to be displayed, so shouldn't need to do this check, but just in case...
                 {
                     WWFcalendarViewController *theCalendarViewController = (WWFcalendarViewController *) theCurrentViewController; //Cast theCurrentViewController to WWFcalednarViewController, as we have have now already positively identified that it is of this class.
                     
