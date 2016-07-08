@@ -126,8 +126,9 @@
 {
     //This is where we handle the 'Let it go' button being pressed.
     
-    self.journalTextView.text = nil; //Get rid of the text in the journal text view.
-    [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"" forKey:@"JournalText"]; //Get rid of journal text entry in the Moon Dates dictionary.
+    self.journalTextView.text = @"You have performed the moon ritual for this journal entry."; //Update the text in the journal text view.
+    [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"You have performed the moon ritual for this journal entry." forKey:@"JournalText"]; //Update the text in the Moon Dates dictionary.
+    [self.sharedMoonDatesManager saveMoonDatesData]; //Save the updated journal entry.
     
     //Next, configure and show an alert message with an OK button.
     
