@@ -29,8 +29,49 @@
     //Ensure text is displayed at the very top of the UITextView
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    //Make text uneditable if the relevant moon event date has passed and we are outside of the 'allowed Let It Go interval'.
+    
+    NSDate *theMoonDate = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"]; //Get the moon date this journal entry relates to.
+    NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[theMoonDate timeIntervalSinceNow]]; //The amount of time until or after the moon date.
+    NSNumber *letItGoAllowedInterval = [NSNumber numberWithInt:kAllowedLetItGoInterval]; //Turn the pre-defined constant into an NSNumber.
+    
+    if (([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedAscending) && [intervalUntilDate intValue] < 0)
+    {
+        self.journalTextView.editable = NO;
+    }
+    
     //Retrieve any journal text already entered for the current date and display it in the journalTextView
+    
     self.journalTextView.text = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"JournalText"];
+    if (self.journalTextView.editable == NO) //Colour the text grey if we have made the textview uneditable (because the moon date has already passed).
+    {
+        self.journalTextView.textColor = [UIColor lightGrayColor];
+    }
+    
+    else //Otherwise, colour the text black.
+    {
+        self.journalTextView.textColor = [UIColor blackColor];
+    }
+    
+    self.journalTextView.tag = 1; //We set the journalTextView tag to 1, to indicate that the textview holds text entered by the user. This is for the benefit of the textViewShouldBeginEditing: and textViewDidChange: methods, which use this tag to determine whether to show some placeholder text.
+    
+    //Check to see if the journal text is empty (or already holds the placeholder text), because if it is we want to retain the default text for the text view, which is a placeholder to show where to enter text. If the text view is locked (i.e. uneditable) then the moon date has already passed and text cannot be edited, so we show a different placeholder message.
+    
+    if ([self.journalTextView.text isEqual:@""] || [self.journalTextView.text isEqual:@"Enter journal text here"])
+    {
+        if (self.journalTextView.editable == NO)
+        {
+            self.journalTextView.text = @"Journal text locked";
+        }
+        
+        else
+        {
+            self.journalTextView.text = @"Enter journal text here";
+        }
+        self.journalTextView.textColor = [UIColor lightGrayColor];
+        self.journalTextView.tag = 0;
+        NSLog(@"Set journal text to default");
+    }
     
     //Display text to prompt the user in the moonTypeLabel, to indicate the type of moon event and provide a brief description of the properties associated with whichever type of moon event.
     NSString *moonTypeLabelText = [[NSString alloc]init];
@@ -59,18 +100,6 @@
     
     self.moonTypeLabel.text = moonTypeLabelText;
     
-    //Make text uneditable if the relevant moon event date has passed and we are outside of the 'allowed Let It Go interval', and colour the text grey.
-    
-    NSDate *theMoonDate = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"]; //Get the moon date this journal entry relates to.
-    NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[theMoonDate timeIntervalSinceNow]]; //The amount of time until or after the moon date.
-    NSNumber *letItGoAllowedInterval = [NSNumber numberWithInt:kAllowedLetItGoInterval]; //Turn the pre-defined constant into an NSNumber.
-    
-    if (([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedAscending) && [intervalUntilDate intValue] < 0)
-    {
-        self.journalTextView.editable = NO;
-        self.journalTextView.textColor = [UIColor lightGrayColor];
-    }
-    
     //Enable letItGoButton if the relevant moon event date has passed, but we are within 12 hours of the moon event having passed.
     
     NSTimeInterval intervalSinceMoonDate = [[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"] timeIntervalSinceNow]; //Get the amount of time since the relevant moon event.
@@ -82,8 +111,6 @@
         self.letItGoButton.enabled = YES;
     }
     
-   
-   
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
@@ -110,6 +137,30 @@
     UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [letItGoAlertController addAction:OKAction];
     [self presentViewController:letItGoAlertController animated:YES completion:nil];
+}
+
+- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
+//If the textview's tag = 0, we know it didn't contain user text. Now the user has started editing, we clear the text view (to get rid of the placeholder text), turn the text black and change the tag to 1 so that we know it contains the user's text.
+{
+    if(textView.tag == 0)
+    {
+        textView.text=@"";
+        textView.textColor = [UIColor blackColor];
+        textView.tag = 1;
+    }
+    
+    return YES;
+}
+
+-(void) textViewDidChange:(UITextView *)textView
+// If the textview's text has changed, and the length of the string is zero, we know it is empty, so we change the text to display the placeholder, make the text grey, and change the tag to zero, so that textViewShouldBeginEditing: knows that the textview does not contain any text entered by the user.
+{
+    if ([textView.text length] == 0)
+    {
+        textView.text = @"Enter journal text here";
+        textView.textColor = [UIColor lightGrayColor];
+        textView.tag = 0;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

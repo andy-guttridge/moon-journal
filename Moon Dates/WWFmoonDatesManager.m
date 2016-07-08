@@ -138,7 +138,7 @@
     {
         NSDate *newMoonDate = [NSDate dateWithTimeInterval:i*60 sinceDate:todaysDatePlusThreeDays];
         NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon];
-        NSString *newMoonDateJournalString = @"Test data - journal text entry";
+        NSString *newMoonDateJournalString = @"";
         NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:newMoonDate, @"MoonDate", newMoonDateType, @"Type", newMoonDateJournalString, @"JournalText", nil];
         [self.moonDatesArray addObject:newMoonDateDictionary];
     }
