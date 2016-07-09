@@ -9,6 +9,8 @@
 		<date>2016-06-06T09:00:00Z</date>
 		<key>JournalText</key>
 		<string></string>
+		<key>Released</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>Type</key>
@@ -17,6 +19,8 @@
 		<date>2016-06-06T11:00:00Z</date>
 		<key>JournalText</key>
 		<string></string>
+		<key>Released</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>Type</key>
@@ -25,6 +29,8 @@
 		<date>2016-06-06T13:00:00Z</date>
 		<key>JournalText</key>
 		<string></string>
+		<key>Released</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>Type</key>
@@ -33,6 +39,8 @@
 		<date>2016-06-06T15:00:00Z</date>
 		<key>JournalText</key>
 		<string></string>
+		<key>Released</key>
+		<false/>
 	</dict>
 </array>
 </plist>

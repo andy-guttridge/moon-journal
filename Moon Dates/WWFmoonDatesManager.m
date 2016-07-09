@@ -81,17 +81,12 @@
         
         NSMutableArray *copyOfMoonDatesArray = [[NSMutableArray alloc]initWithArray:self.moonDatesArray copyItems:YES]; //Create a mutable copy of the moonDatesArray, as we cannot make changes to a NSMutableArray while using fast enumeration.
         
-        //Next we iterate through moonDatesArray, pulling out each moonDatesDictionary, creating a mutable copy, and replacing the original dictionary in the array with the mutable copy. Then we calculate the notification date and add this to the mutable moonDatesDictionary using "NotificationDate" as the key.
-        
+        //Next we iterate through moonDatesArray, pulling out each moonDatesDictionary, creating a mutable copy, and replacing the original dictionary in the array with the mutable copy.
         for (NSDictionary *moonDatesDictionary in self.moonDatesArray)
         {
             NSMutableDictionary *mutableMoonDatesDictionary = [[NSMutableDictionary alloc] initWithDictionary:moonDatesDictionary copyItems:YES];
             NSUInteger i = [copyOfMoonDatesArray indexOfObject:moonDatesDictionary];
             [copyOfMoonDatesArray replaceObjectAtIndex:i withObject:mutableMoonDatesDictionary];
-            
-            NSDate *theMoonEventDate = [mutableMoonDatesDictionary objectForKey:@"MoonDate"];
-            NSDate *theNotificationDate = [NSDate dateWithTimeInterval:self.notificationOffset sinceDate:theMoonEventDate];
-            [copyOfMoonDatesArray [i] setObject:theNotificationDate forKey:@"NotificationDate"];
         }
         self.moonDatesArray = [copyOfMoonDatesArray mutableCopy]; //Copy the contents of copyOfMoonDates array back into the proper version of the array.
     }
@@ -131,7 +126,7 @@
 }
 
 -(void) generateTestData
-//Get todays date plus three days, and use this to generate and add some test dates to some Dictionaries, set the "Type" key to new moon (just for the sake of having some test data), and then add the Dictionaries to our moonDatesArray. The notification dates will be generated in the init method, and if we have the notification interval set to the default three days, then we end up with some very convenient notification dates for testing purposes.
+//Get todays date plus three days, and use this to generate and add some test dates to some Dictionaries, set the "Type" key to new moon (just for the sake of having some test data), add a BOOL with the key 'Released' (this is used to keep a record of whether the journal entry has been 'released') and then add the Dictionaries to our moonDatesArray. The notification dates will be generated in the init method, and if we have the notification interval set to the default three days, then we end up with some very convenient notification dates for testing purposes.
 {
     NSDate *todaysDatePlusThreeDays = [NSDate dateWithTimeIntervalSinceNow: 120]; //259200 is the number of seconds in three 24 hour days.
     for (int i = 0; i < 10; i++)
@@ -139,7 +134,8 @@
         NSDate *newMoonDate = [NSDate dateWithTimeInterval:i*60 sinceDate:todaysDatePlusThreeDays];
         NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon];
         NSString *newMoonDateJournalString = @"";
-        NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:newMoonDate, @"MoonDate", newMoonDateType, @"Type", newMoonDateJournalString, @"JournalText", nil];
+        NSNumber *released = [NSNumber numberWithBool:NO];
+        NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:newMoonDate, @"MoonDate", newMoonDateType, @"Type", newMoonDateJournalString, @"JournalText", released, @"Released", nil];
         [self.moonDatesArray addObject:newMoonDateDictionary];
     }
     
@@ -209,8 +205,10 @@
             NSString *moonDateString = [dateFormatterForDate stringFromDate:[moonDatesDictionary objectForKey:@"MoonDate"]];
             NSString *moonDateTimeString = [dateFormatterForTime stringFromDate:[moonDatesDictionary objectForKey:@"MoonDate"]];
             
-            //Set the fire date of the pre-notification and the actual notification.
-            moonDatePreNotification.fireDate = [moonDatesDictionary objectForKey:@"NotificationDate"];
+            //Set the fire date of the pre-notification and the actual notification. We also calculate the notification date here, using the notificationOffset.
+            
+            NSDate *theNotificationDate = [NSDate dateWithTimeInterval:self.notificationOffset sinceDate:[moonDatesDictionary objectForKey:@"MoonDate"]]; //Calculate the notificaiton date.
+            moonDatePreNotification.fireDate = theNotificationDate;
             moonDateActualNotification.fireDate = [moonDatesDictionary objectForKey:@"MoonDate"];
             
             //Set the alert body text for the pre-notification and the actual notification.

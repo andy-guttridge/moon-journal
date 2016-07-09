@@ -26,6 +26,8 @@
         [theTabBarController didReceiveNotificationOnAppLaunch: notification];
     }
     
+   // NSLog(@"%@", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]);
+    
     return YES;
 }
 

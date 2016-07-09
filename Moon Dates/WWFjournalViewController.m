@@ -29,13 +29,18 @@
     //Ensure text is displayed at the very top of the UITextView
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    //Make text uneditable if the relevant moon event date has passed and we are outside of the 'allowed Let It Go interval'.
+    //Add a UITapGestureRecognizer to the view, so that we can dismiss the keyboard if the user taps within the view outside of the editing area. In the event this happens, the endEditing: method on the UITextView is called
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
+    [self.view addGestureRecognizer:tap];
+    
+    //Make text uneditable if the relevant moon event date has passed and we are outside of the 'allowed Let It Go interval', or if the journal text has already been released (even if we are within the 'allowed Let It Go interval'.
     
     NSDate *theMoonDate = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"]; //Get the moon date this journal entry relates to.
     NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[theMoonDate timeIntervalSinceNow]]; //The amount of time until or after the moon date.
     NSNumber *letItGoAllowedInterval = [NSNumber numberWithInt:kAllowedLetItGoInterval]; //Turn the pre-defined constant into an NSNumber.
+    BOOL hasBeenReleased = [[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"Released"] boolValue]; //This BOOL in the moondates dictionary is used to record whether the journal entry has already been released with the letItGoButton.
     
-    if (([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedAscending) && [intervalUntilDate intValue] < 0)
+    if ((([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedAscending) && [intervalUntilDate intValue] < 0) || hasBeenReleased == YES)
     {
         self.journalTextView.editable = NO;
     }
@@ -100,13 +105,13 @@
     
     self.moonTypeLabel.text = moonTypeLabelText;
     
-    //Enable letItGoButton if the relevant moon event date has passed, but we are within 12 hours of the moon event having passed.
+    //Enable letItGoButton if the relevant moon event date has passed, if we are within kAllowedLetItGoInterval of the moon event having passed, and if the journal entry has not already been released.
     
     NSTimeInterval intervalSinceMoonDate = [[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"] timeIntervalSinceNow]; //Get the amount of time since the relevant moon event.
     
     NSLog(@"Interval since moon date in the journal view is: %f", intervalSinceMoonDate);
     
-    if (intervalSinceMoonDate >= kAllowedLetItGoInterval && intervalSinceMoonDate < 0)
+    if (intervalSinceMoonDate >= kAllowedLetItGoInterval && intervalSinceMoonDate < 0 && hasBeenReleased == NO)
     {
         self.letItGoButton.enabled = YES;
     }
@@ -128,7 +133,9 @@
     
     self.journalTextView.text = @"You have performed the moon ritual for this journal entry."; //Update the text in the journal text view.
     [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"You have performed the moon ritual for this journal entry." forKey:@"JournalText"]; //Update the text in the Moon Dates dictionary.
+    [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:[NSNumber numberWithBool:YES] forKey: @"Released"]; //Set the Released flag in the moonDatesArray to YES so that we know this journal entry has now been releasd, and the LetItGoButton will now not be enabled.
     [self.sharedMoonDatesManager saveMoonDatesData]; //Save the updated journal entry.
+    self.journalTextView.editable = NO; //Now make the journal view uneditable.
     
     //Next, configure and show an alert message with an OK button.
     
@@ -138,6 +145,7 @@
     UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [letItGoAlertController addAction:OKAction];
     [self presentViewController:letItGoAlertController animated:YES completion:nil];
+    self.letItGoButton.enabled = NO; //Disavle the letItGoButton, now that the journal entry has been released.
 }
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
@@ -163,6 +171,7 @@
         textView.tag = 0;
     }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
