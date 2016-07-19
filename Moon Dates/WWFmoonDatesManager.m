@@ -126,6 +126,14 @@
 }
 
 -(void) generateTestData
+{
+    
+
+/*
+// Use the following chunk of code to generate some test events that are only minutes apart for quick and immediate testing
+ 
+// ________________________________________________________________________________________________________________________________________________________________
+ 
 //Get todays date plus three days, and use this to generate and add some test dates to some Dictionaries, set the "Type" key to new moon (just for the sake of having some test data), add a BOOL with the key 'Released' (this is used to keep a record of whether the journal entry has been 'released') and then add the Dictionaries to our moonDatesArray. The notification dates will be generated in the init method, and if we have the notification interval set to the default three days, then we end up with some very convenient notification dates for testing purposes.
 {
     NSDate *todaysDatePlusThreeDays = [NSDate dateWithTimeIntervalSinceNow: 120]; //259200 is the number of seconds in three 24 hour days.
@@ -140,6 +148,54 @@
     }
     
 }
+ 
+//  ________________________________________________________________________________________________________________________________________________________________
+ 
+*/
+
+// Use the following chunk of code to generate alternating new moon and full moon test dates from a fixed base date. Full moons will be three days after a new moon, with the next new moon four days after a full moon.
+
+//  ________________________________________________________________________________________________________________________________________________________________
+    
+    //Set up a date formatter which we use to create a date from a string.
+    NSDateFormatter *aDateFormatter = [[NSDateFormatter alloc] init];
+    aDateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:[self.sharedUserDataManager.userDataDictionary objectForKey:@"DateFormat"]];
+    aDateFormatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT:0];
+    aDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    
+    NSString *baseTestDateString = @kTestDataDateString; //A string to use to create an NSDate which will be the base date used to calculate the test dates.
+    NSDate *baseTestDate = [aDateFormatter dateFromString:baseTestDateString]; //Use the NSDateFormatter to create a base date from a string.
+    
+    NSNumber *released = [NSNumber numberWithBool:NO]; //Create an NSNumber containing a Bool set to No, for adding to our moon date dictionaries that will hold the test dates.
+    NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon]; //Create an NSNumber containing an integer denoting a new moon, for adding to our moon date dictionaries that will hold the test dates.
+    NSNumber *fullMoonDateType = [NSNumber numberWithInt:kFullMoon]; ///Create an NSNumber containing an integer denoting a full moon, for adding to our moon date dictionaries that will hold the test dates.
+    NSString *moonDateJournalString = @""; //Create an empty journal string for adding to our moon date dictionaries that will hold the test dates.
+    
+    NSUInteger secondsFromBaseDate = 0; //This integer will be incremented after each test date is created and used to calculate the next date.
+    
+    for (NSUInteger i = 0; i < 11; i++)
+    {
+        
+        //Create the next new moon test date using the baseTestDate and adding secondsFromBaseDate. Create a new moon dates dictionary and add it to our array of moon dates.
+        NSDate *nextNewMoonTestDate = [baseTestDate dateByAddingTimeInterval:secondsFromBaseDate];
+        NSDictionary *nextNewMoonTestDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:nextNewMoonTestDate, @"MoonDate", newMoonDateType, @"Type", moonDateJournalString, @"JournalText", released, @"Released", nil];
+        [self.moonDatesArray addObject:nextNewMoonTestDateDictionary];
+        
+        secondsFromBaseDate = secondsFromBaseDate + (kNumberOfSecondsInADay * 3); //Increment secondsFromBaseDate ready for calculating the next full moon.
+        
+        //Create the next full moon test date using the baseTestDate and adding secondsFromBaseDate. Create a new moon dates dictionary and add it to our array of moon dates.
+        NSDate *nextFullMoonTestDate = [baseTestDate dateByAddingTimeInterval:secondsFromBaseDate];
+        NSDictionary *nextFullMoonTestDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:nextFullMoonTestDate, @"MoonDate", fullMoonDateType, @"Type", moonDateJournalString, @"JournalText", released, @"Released", nil];
+        [self.moonDatesArray addObject:nextFullMoonTestDateDictionary];
+        
+        secondsFromBaseDate = secondsFromBaseDate + (kNumberOfSecondsInADay * 4); //Increment secondsFromBaseDate ready for calculating the next new moon.
+        
+    }
+    
+//  ________________________________________________________________________________________________________________________________________________________________  
+
+}
+
 
 -(void) scheduleNotifications
 {

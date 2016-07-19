@@ -9,11 +9,14 @@
 #ifndef Constants_h
 #define Constants_h
 
-#define kDefaultNotificationOffset -259200 //The number of seconds in three 24 hour days
+#define kNumberOfSecondsInADay 86400
+
 typedef enum {kNoMoonEvent, kFullMoon, kNewMoon} moonType;
 
-//#define kAllowedLetItGoInterval -43200 //The amount of time after a moon event within which the relevant journal entry can be released in seconds. Currently 12 hours.
-#define kAllowedLetItGoInterval -60
+//#define kAllowedLetItGoInterval -43200 //The amount of time after a moon event within which the relevant journal entry can be released in seconds. Use this for 12 hours.
+#define kAllowedLetItGoInterval -172800 //The amount of time after a moon event within which the relevant journal entry can be released in seconds. Use this for 2 days.
+//#define kAllowedLetItGoInterval -60 //The amount of time after a moon event within which the relevant journal entry can be released in seconds. Use this for one minute.
 
+#define kTestDataDateString "2016-07-18 11:00:00" //A string to use with an NSDateFormatter to generate an NSDate from a string, when generating test data.
 
 #endif /* Constants_h */
