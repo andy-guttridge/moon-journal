@@ -141,7 +141,7 @@
     
     NSString *letItGoMessage = @"This sacred ritual is now complete";
     
-    UIAlertController *letItGoAlertController = [UIAlertController alertControllerWithTitle:@"Let It Go!" message:letItGoMessage preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *letItGoAlertController = [UIAlertController alertControllerWithTitle:@"Ritual Complete" message:letItGoMessage preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [letItGoAlertController addAction:OKAction];
     [self presentViewController:letItGoAlertController animated:YES completion:nil];

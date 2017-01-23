@@ -199,6 +199,7 @@
     
     
 // Use the following chunk of code to generate alternating new moon and full moon test dates from a fixed base date. Full moons and new moons will be at a fixed time on alternating days.
+/*
     
     //Set up a date formatter which we use to create a date from a string.
     NSDateFormatter *aDateFormatter = [[NSDateFormatter alloc] init];
@@ -236,7 +237,7 @@
     }
 
 //  ________________________________________________________________________________________________________________________________________________________________
-
+*/
 
 }
 
