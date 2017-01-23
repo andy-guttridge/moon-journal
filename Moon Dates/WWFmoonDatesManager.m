@@ -129,7 +129,7 @@
 {
     
 
-/*
+
 // Use the following chunk of code to generate some test events that are only minutes apart for quick and immediate testing
  
 // ________________________________________________________________________________________________________________________________________________________________
@@ -151,7 +151,7 @@
  
 //  ________________________________________________________________________________________________________________________________________________________________
  
-*/
+
 
 // Use the following chunk of code to generate alternating new moon and full moon test dates from a fixed base date. Full moons will be three days after a new moon, with the next new moon four days after a full moon.
 
@@ -313,15 +313,15 @@
             
             //Set the alert body text for the pre-notification and the actual notification.
             moonDatePreNotification.alertBody = [NSString stringWithFormat:@"Advance notification of %@ at %@ on %@", moonEventTypeText, moonDateTimeString, moonDateString];
-            moonDateActualNotification.alertBody = [NSString stringWithFormat:@"It's happened! %@ at %@ on %@", moonEventTypeText, moonDateTimeString, moonDateString];
+            moonDateActualNotification.alertBody = [NSString stringWithFormat:@"%@ at %@", moonEventTypeText, moonDateTimeString];
             
             //Set the text for the notification alert action for the pre notification and the actual notification.
             moonDatePreNotification.alertAction = @"Open Moon Dates app";
             moonDateActualNotification.alertAction = @"Open Moon Dates app";
             
             //Set the text for the alert title for the pre-notification and the actual notification.
-            moonDatePreNotification.alertTitle = @"Upcoming moon event!";
-            moonDateActualNotification.alertTitle = @"A moon event has occurred";
+            moonDatePreNotification.alertTitle = [NSString stringWithFormat:@"%@ Notification", moonEventTypeText];
+            moonDateActualNotification.alertTitle = [NSString stringWithFormat:@"%@ Notification", moonEventTypeText];
             
             //Set the pre-notification and the actual notification to use the detail local notification sound.
             moonDatePreNotification.soundName = UILocalNotificationDefaultSoundName;

@@ -86,7 +86,7 @@
     
     //Show an alert to indicate that a notification has been received.
     
-    NSString *title = @"Moon Date Notification";
+    NSString *title = theNotification.alertTitle;
     NSString *message = theNotification.alertBody;
     
     UIAlertController *notificationAlertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];

@@ -66,7 +66,7 @@
     {
         if (self.journalTextView.editable == NO)
         {
-            self.journalTextView.text = @"Journal text locked";
+            self.journalTextView.text = @"Journal text locked. Please move to currently open journal entry.";
         }
         
         else
@@ -88,12 +88,12 @@
             break;
             
         case kNewMoon:
-            moonTypeLabelText = @"New Moon: new themes, ideas and concepts; a time to listen to your inner self.";
+            moonTypeLabelText = @"New Moon: the time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.";
             self.letItGoButton.title =@"Set intention";
             break;
             
         case kFullMoon:
-            moonTypeLabelText = @"Full Moon: heightened emotions. A time to envision dreams manifesting, meditate and send blessings to those in need.";
+            moonTypeLabelText = @"Full Moon: the time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.";
             self.letItGoButton.title =@"Release";
             break;
             
@@ -131,15 +131,15 @@
 {
     //This is where we handle the 'Let it go' button being pressed.
     
-    self.journalTextView.text = @"You have performed the moon ritual for this journal entry."; //Update the text in the journal text view.
-    [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"You have performed the moon ritual for this journal entry." forKey:@"JournalText"]; //Update the text in the Moon Dates dictionary.
+    self.journalTextView.text = @"The sacred ritual has been completed."; //Update the text in the journal text view.
+    [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"The sacred ritual has been completed." forKey:@"JournalText"]; //Update the text in the Moon Dates dictionary.
     [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:[NSNumber numberWithBool:YES] forKey: @"Released"]; //Set the Released flag in the moonDatesArray to YES so that we know this journal entry has now been releasd, and the LetItGoButton will now not be enabled.
     [self.sharedMoonDatesManager saveMoonDatesData]; //Save the updated journal entry.
     self.journalTextView.editable = NO; //Now make the journal view uneditable.
     
     //Next, configure and show an alert message with an OK button.
     
-    NSString *letItGoMessage = @"The thoughts and feelings you recorded in your journal have now been released into the ether.";
+    NSString *letItGoMessage = @"This sacred ritual is now complete";
     
     UIAlertController *letItGoAlertController = [UIAlertController alertControllerWithTitle:@"Let It Go!" message:letItGoMessage preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
