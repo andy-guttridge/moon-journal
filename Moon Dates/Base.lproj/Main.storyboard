@@ -88,8 +88,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Enter journal text here" translatesAutoresizingMaskIntoConstraints="NO" id="qua-0l-WW5">
-                                <rect key="frame" x="20" y="103" width="560" height="482"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter journal text here" translatesAutoresizingMaskIntoConstraints="NO" id="qua-0l-WW5">
+                                <rect key="frame" x="16" y="103" width="343" height="549"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -98,8 +98,8 @@
                                     <outlet property="delegate" destination="WWw-Xg-vDF" id="vlg-DT-D70"/>
                                 </connections>
                             </textView>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLF-U7-wlq">
-                                <rect key="frame" x="20" y="72" width="560" height="18"/>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLF-U7-wlq">
+                                <rect key="frame" x="16" y="72" width="343" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="c3U-a2-RHL"/>
                                 </constraints>
@@ -165,7 +165,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zeL-YT-RUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2622" y="-252"/>
+            <point key="canvasLocation" x="2621.5999999999999" y="-252.32383808095955"/>
         </scene>
         <!--Info-->
         <scene sceneID="DYg-xg-5jd">
@@ -179,24 +179,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Info will go here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSi-kW-M74">
-                                <rect key="frame" x="240" y="290" width="121" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <textView clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YHj-R2-gdM">
+                                <rect key="frame" x="16" y="28" width="343" height="582"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="SSi-kW-M74" firstAttribute="centerX" secondItem="d5A-hM-yjJ" secondAttribute="centerX" id="Cot-aW-uSZ"/>
-                            <constraint firstItem="SSi-kW-M74" firstAttribute="centerY" secondItem="d5A-hM-yjJ" secondAttribute="centerY" id="uq0-qU-v6O"/>
+                            <constraint firstItem="YHj-R2-gdM" firstAttribute="leading" secondItem="d5A-hM-yjJ" secondAttribute="leadingMargin" id="G2S-69-icg"/>
+                            <constraint firstItem="YHj-R2-gdM" firstAttribute="top" secondItem="fTJ-qX-vM6" secondAttribute="bottom" constant="8" symbolic="YES" id="UpV-6T-R5u"/>
+                            <constraint firstItem="YHj-R2-gdM" firstAttribute="trailing" secondItem="d5A-hM-yjJ" secondAttribute="trailingMargin" id="XaQ-1n-wZL"/>
+                            <constraint firstItem="aiq-IF-FEH" firstAttribute="top" secondItem="YHj-R2-gdM" secondAttribute="bottom" constant="8" symbolic="YES" id="YMX-K1-2HY"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Info" id="t0d-QC-wn9"/>
+                    <connections>
+                        <outlet property="infoView" destination="YHj-R2-gdM" id="XTX-Bi-sCo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j1H-T3-Jge" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1027" y="636"/>
+            <point key="canvasLocation" x="1026.4000000000001" y="635.53223388305855"/>
         </scene>
         <!--Settings-->
         <scene sceneID="75p-1z-t4c">
@@ -210,8 +215,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Settings will go here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gae-bF-fAn">
-                                <rect key="frame" x="223" y="290" width="155" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings will go here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gae-bF-fAn">
+                                <rect key="frame" x="110" y="323" width="155" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>

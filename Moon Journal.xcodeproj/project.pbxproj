@@ -19,6 +19,7 @@
 		A10577611CFAFD6300951A27 /* WWFsettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577601CFAFD6300951A27 /* WWFsettingsViewController.m */; };
 		A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */; };
 		A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10577651CFB06E500951A27 /* MoonDatesData.plist */; };
+		A10A24521E3E378800DEF328 /* mj_app_instructions.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A10A24511E3E378800DEF328 /* mj_app_instructions.rtf */; };
 		A145CB091CFB51B500670E79 /* WWFcalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB081CFB51B500670E79 /* WWFcalendarViewController.m */; };
 		A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A145CB0A1CFB63B700670E79 /* UserData.plist */; };
 		A145CB0E1CFB652400670E79 /* WWFuserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */; };
@@ -66,6 +67,7 @@
 		A10577621CFAFD7900951A27 /* WWFmoonDatesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFmoonDatesManager.h; sourceTree = "<group>"; };
 		A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFmoonDatesManager.m; sourceTree = "<group>"; };
 		A10577651CFB06E500951A27 /* MoonDatesData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MoonDatesData.plist; sourceTree = "<group>"; };
+		A10A24511E3E378800DEF328 /* mj_app_instructions.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = mj_app_instructions.rtf; sourceTree = "<group>"; };
 		A145CB061CFB4D3D00670E79 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A145CB071CFB51B500670E79 /* WWFcalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WWFcalendarViewController.h; path = ../WWFcalendarViewController.h; sourceTree = "<group>"; };
 		A145CB081CFB51B500670E79 /* WWFcalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WWFcalendarViewController.m; path = ../WWFcalendarViewController.m; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				A10577291CFAFBCE00951A27 /* AppDelegate.h */,
 				A105772A1CFAFBCE00951A27 /* AppDelegate.m */,
 				A105772F1CFAFBCE00951A27 /* Main.storyboard */,
+				A10A24511E3E378800DEF328 /* mj_app_instructions.rtf */,
 				A10577321CFAFBCE00951A27 /* Assets.xcassets */,
 				A10577341CFAFBCE00951A27 /* LaunchScreen.storyboard */,
 				A145CB061CFB4D3D00670E79 /* Constants.h */,
@@ -282,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A10A24521E3E378800DEF328 /* mj_app_instructions.rtf in Resources */,
 				A10577361CFAFBCE00951A27 /* LaunchScreen.storyboard in Resources */,
 				A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */,
 				A10577331CFAFBCE00951A27 /* Assets.xcassets in Resources */,
