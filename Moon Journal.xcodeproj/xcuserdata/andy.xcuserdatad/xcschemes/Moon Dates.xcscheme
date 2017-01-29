@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0720"
+   LastUpgradeVersion = "0810"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A10577221CFAFBCE00951A27"
-               BuildableName = "Moon Dates.app"
-               BlueprintName = "Moon Dates"
-               ReferencedContainer = "container:Moon Dates.xcodeproj">
+               BuildableName = "Moon Journal.app"
+               BlueprintName = "Moon Journal"
+               ReferencedContainer = "container:Moon Journal.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A105773B1CFAFBCF00951A27"
-               BuildableName = "Moon DatesTests.xctest"
-               BlueprintName = "Moon DatesTests"
-               ReferencedContainer = "container:Moon Dates.xcodeproj">
+               BuildableName = "Moon JournalTests.xctest"
+               BlueprintName = "Moon JournalTests"
+               ReferencedContainer = "container:Moon Journal.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A10577461CFAFBCF00951A27"
-               BuildableName = "Moon DatesUITests.xctest"
-               BlueprintName = "Moon DatesUITests"
-               ReferencedContainer = "container:Moon Dates.xcodeproj">
+               BuildableName = "Moon JournalUITests.xctest"
+               BlueprintName = "Moon JournalUITests"
+               ReferencedContainer = "container:Moon Journal.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A10577221CFAFBCE00951A27"
-            BuildableName = "Moon Dates.app"
-            BlueprintName = "Moon Dates"
-            ReferencedContainer = "container:Moon Dates.xcodeproj">
+            BuildableName = "Moon Journal.app"
+            BlueprintName = "Moon Journal"
+            ReferencedContainer = "container:Moon Journal.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A10577221CFAFBCE00951A27"
-            BuildableName = "Moon Dates.app"
-            BlueprintName = "Moon Dates"
-            ReferencedContainer = "container:Moon Dates.xcodeproj">
+            BuildableName = "Moon Journal.app"
+            BlueprintName = "Moon Journal"
+            ReferencedContainer = "container:Moon Journal.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A10577221CFAFBCE00951A27"
-            BuildableName = "Moon Dates.app"
-            BlueprintName = "Moon Dates"
-            ReferencedContainer = "container:Moon Dates.xcodeproj">
+            BuildableName = "Moon Journal.app"
+            BlueprintName = "Moon Journal"
+            ReferencedContainer = "container:Moon Journal.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

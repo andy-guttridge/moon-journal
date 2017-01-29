@@ -43,7 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A10577231CFAFBCE00951A27 /* Moon Dates.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moon Dates.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10577231CFAFBCE00951A27 /* Moon Journal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Moon Journal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10577271CFAFBCE00951A27 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A10577291CFAFBCE00951A27 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A105772A1CFAFBCE00951A27 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -53,10 +53,10 @@
 		A10577321CFAFBCE00951A27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A10577351CFAFBCE00951A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A10577371CFAFBCE00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A105773C1CFAFBCF00951A27 /* Moon DatesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon DatesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A105773C1CFAFBCF00951A27 /* Moon JournalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon JournalTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10577401CFAFBCF00951A27 /* Moon_DatesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Moon_DatesTests.m; sourceTree = "<group>"; };
 		A10577421CFAFBCF00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A10577471CFAFBCF00951A27 /* Moon DatesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon DatesUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10577471CFAFBCF00951A27 /* Moon JournalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon JournalUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A105774B1CFAFBCF00951A27 /* Moon_DatesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Moon_DatesUITests.m; sourceTree = "<group>"; };
 		A105774D1CFAFBCF00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A105775C1CFAFD3300951A27 /* WWFinfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFinfoViewController.h; sourceTree = "<group>"; };
@@ -114,9 +114,9 @@
 		A10577241CFAFBCE00951A27 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A10577231CFAFBCE00951A27 /* Moon Dates.app */,
-				A105773C1CFAFBCF00951A27 /* Moon DatesTests.xctest */,
-				A10577471CFAFBCF00951A27 /* Moon DatesUITests.xctest */,
+				A10577231CFAFBCE00951A27 /* Moon Journal.app */,
+				A105773C1CFAFBCF00951A27 /* Moon JournalTests.xctest */,
+				A10577471CFAFBCF00951A27 /* Moon JournalUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -181,9 +181,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A10577221CFAFBCE00951A27 /* Moon Dates */ = {
+		A10577221CFAFBCE00951A27 /* Moon Journal */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A10577501CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon Dates" */;
+			buildConfigurationList = A10577501CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon Journal" */;
 			buildPhases = (
 				A105771F1CFAFBCE00951A27 /* Sources */,
 				A10577201CFAFBCE00951A27 /* Frameworks */,
@@ -193,14 +193,14 @@
 			);
 			dependencies = (
 			);
-			name = "Moon Dates";
+			name = "Moon Journal";
 			productName = "Moon Dates";
-			productReference = A10577231CFAFBCE00951A27 /* Moon Dates.app */;
+			productReference = A10577231CFAFBCE00951A27 /* Moon Journal.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A105773B1CFAFBCF00951A27 /* Moon DatesTests */ = {
+		A105773B1CFAFBCF00951A27 /* Moon JournalTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A10577531CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon DatesTests" */;
+			buildConfigurationList = A10577531CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon JournalTests" */;
 			buildPhases = (
 				A10577381CFAFBCF00951A27 /* Sources */,
 				A10577391CFAFBCF00951A27 /* Frameworks */,
@@ -211,14 +211,14 @@
 			dependencies = (
 				A105773E1CFAFBCF00951A27 /* PBXTargetDependency */,
 			);
-			name = "Moon DatesTests";
+			name = "Moon JournalTests";
 			productName = "Moon DatesTests";
-			productReference = A105773C1CFAFBCF00951A27 /* Moon DatesTests.xctest */;
+			productReference = A105773C1CFAFBCF00951A27 /* Moon JournalTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A10577461CFAFBCF00951A27 /* Moon DatesUITests */ = {
+		A10577461CFAFBCF00951A27 /* Moon JournalUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A10577561CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon DatesUITests" */;
+			buildConfigurationList = A10577561CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon JournalUITests" */;
 			buildPhases = (
 				A10577431CFAFBCF00951A27 /* Sources */,
 				A10577441CFAFBCF00951A27 /* Frameworks */,
@@ -229,9 +229,9 @@
 			dependencies = (
 				A10577491CFAFBCF00951A27 /* PBXTargetDependency */,
 			);
-			name = "Moon DatesUITests";
+			name = "Moon JournalUITests";
 			productName = "Moon DatesUITests";
-			productReference = A10577471CFAFBCF00951A27 /* Moon DatesUITests.xctest */;
+			productReference = A10577471CFAFBCF00951A27 /* Moon JournalUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -240,7 +240,7 @@
 		A105771B1CFAFBCE00951A27 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Andy Guttridge";
 				TargetAttributes = {
 					A10577221CFAFBCE00951A27 = {
@@ -257,7 +257,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A105771E1CFAFBCE00951A27 /* Build configuration list for PBXProject "Moon Dates" */;
+			buildConfigurationList = A105771E1CFAFBCE00951A27 /* Build configuration list for PBXProject "Moon Journal" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -270,9 +270,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A10577221CFAFBCE00951A27 /* Moon Dates */,
-				A105773B1CFAFBCF00951A27 /* Moon DatesTests */,
-				A10577461CFAFBCF00951A27 /* Moon DatesUITests */,
+				A10577221CFAFBCE00951A27 /* Moon Journal */,
+				A105773B1CFAFBCF00951A27 /* Moon JournalTests */,
+				A10577461CFAFBCF00951A27 /* Moon JournalUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -344,12 +344,12 @@
 /* Begin PBXTargetDependency section */
 		A105773E1CFAFBCF00951A27 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A10577221CFAFBCE00951A27 /* Moon Dates */;
+			target = A10577221CFAFBCE00951A27 /* Moon Journal */;
 			targetProxy = A105773D1CFAFBCF00951A27 /* PBXContainerItemProxy */;
 		};
 		A10577491CFAFBCF00951A27 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A10577221CFAFBCE00951A27 /* Moon Dates */;
+			target = A10577221CFAFBCE00951A27 /* Moon Journal */;
 			targetProxy = A10577481CFAFBCF00951A27 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -387,8 +387,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -431,8 +433,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -494,7 +498,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ACG.Moon-DatesTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moon Dates.app/Moon Dates";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moon Journal.app/Moon Journal";
 			};
 			name = Debug;
 		};
@@ -506,7 +510,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ACG.Moon-DatesTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moon Dates.app/Moon Dates";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Moon Journal.app/Moon Journal";
 			};
 			name = Release;
 		};
@@ -537,7 +541,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A105771E1CFAFBCE00951A27 /* Build configuration list for PBXProject "Moon Dates" */ = {
+		A105771E1CFAFBCE00951A27 /* Build configuration list for PBXProject "Moon Journal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A105774E1CFAFBCF00951A27 /* Debug */,
@@ -546,7 +550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A10577501CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon Dates" */ = {
+		A10577501CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon Journal" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A10577511CFAFBCF00951A27 /* Debug */,
@@ -555,7 +559,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A10577531CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon DatesTests" */ = {
+		A10577531CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon JournalTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A10577541CFAFBCF00951A27 /* Debug */,
@@ -564,7 +568,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A10577561CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon DatesUITests" */ = {
+		A10577561CFAFBCF00951A27 /* Build configuration list for PBXNativeTarget "Moon JournalUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A10577571CFAFBCF00951A27 /* Debug */,
