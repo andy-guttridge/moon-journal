@@ -11,7 +11,7 @@
 @interface WWFinfoViewController ()
 
 @property IBOutlet UITextView *infoView; //The UITextView used to display instructions for the app
-@property (copy) NSAttributedString *infoText; //The text for the instructions for the app
+@property NSMutableAttributedString *infoText; //The text for the instructions for the app
 
 @end
 
@@ -26,9 +26,18 @@
     NSData *instructionsRTF = [NSData dataWithContentsOfFile:path]; //Load the RTF file into an NSData object
     NSDictionary *attributesForInitialisingNSAttributedString = @{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType}; //Create a NSDictionary containing an atributes dictionary for use when creating an NSAttributedString. The attribute within this NSDictionary tells NSAttributedString that we are creating an attributed string from a RTF document.
     
-    self.infoText = [[NSAttributedString alloc] initWithData: instructionsRTF options:attributesForInitialisingNSAttributedString documentAttributes:NULL error:NULL]; //Create an NSAttributedString from the RTF.
+    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]; //Extract version number of the app from info.plist
+    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]; //Extract build number of the app from info.plist
     
-    self.infoView.attributedText = _infoText; //Set our UITextViews attributedText property to our NSAttributedString containing the text from our RTF.
+    NSString * appVersionAndBuildStringWithHeadings = [NSString stringWithFormat:@"\n \n Version: %@ \n \n Build Number: %@", appVersionString, appBuildString];
+    
+    self.infoText = [[NSMutableAttributedString alloc] initWithData: instructionsRTF options:attributesForInitialisingNSAttributedString documentAttributes:NULL error:NULL]; //Create an NSMutableAttributedString from the RTF.
+    
+    NSAttributedString *appVersionandBuildNumbers = [[NSAttributedString alloc]initWithString:appVersionAndBuildStringWithHeadings];
+    
+    [self.infoText appendAttributedString:appVersionandBuildNumbers];
+     
+    self.infoView.attributedText = self.infoText; //Set our UITextViews attributedText property to our NSAttributedString containing the text from our RTF.
     
 }
 
