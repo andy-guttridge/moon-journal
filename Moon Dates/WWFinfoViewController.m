@@ -29,13 +29,13 @@
     NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]; //Extract version number of the app from info.plist
     NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]; //Extract build number of the app from info.plist
     
-    NSString * appVersionAndBuildStringWithHeadings = [NSString stringWithFormat:@"\n \n Version: %@ \n \n Build Number: %@", appVersionString, appBuildString];
+    NSString * appVersionAndBuildStringWithHeadings = [NSString stringWithFormat:@"\n \n Version: %@ \n \n Build Number: %@", appVersionString, appBuildString]; //Create a formatted string to display the version and build numbers.
     
     self.infoText = [[NSMutableAttributedString alloc] initWithData: instructionsRTF options:attributesForInitialisingNSAttributedString documentAttributes:NULL error:NULL]; //Create an NSMutableAttributedString from the RTF.
     
-    NSAttributedString *appVersionandBuildNumbers = [[NSAttributedString alloc]initWithString:appVersionAndBuildStringWithHeadings];
+    NSAttributedString *appVersionandBuildNumbers = [[NSAttributedString alloc]initWithString:appVersionAndBuildStringWithHeadings]; //Create an attributed string from the formatted string.
     
-    [self.infoText appendAttributedString:appVersionandBuildNumbers];
+    [self.infoText appendAttributedString:appVersionandBuildNumbers]; //Append the attributed string with the build and version numbers to the main attributed string containing the instructions for the app.
      
     self.infoView.attributedText = self.infoText; //Set our UITextViews attributedText property to our NSAttributedString containing the text from our RTF.
     
