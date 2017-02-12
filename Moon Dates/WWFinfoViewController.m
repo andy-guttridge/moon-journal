@@ -11,7 +11,6 @@
 @interface WWFinfoViewController ()
 
 @property IBOutlet UITextView *infoView; //The UITextView used to display instructions for the app
-@property NSMutableAttributedString *infoText; //The text for the instructions for the app
 
 @end
 
@@ -31,13 +30,13 @@
     
     NSString * appVersionAndBuildStringWithHeadings = [NSString stringWithFormat:@"\n \n Version: %@ \n \n Build Number: %@", appVersionString, appBuildString]; //Create a formatted string to display the version and build numbers.
     
-    self.infoText = [[NSMutableAttributedString alloc] initWithData: instructionsRTF options:attributesForInitialisingNSAttributedString documentAttributes:NULL error:NULL]; //Create an NSMutableAttributedString from the RTF.
+    NSMutableAttributedString *textForInfoView = [[NSMutableAttributedString alloc] initWithData: instructionsRTF options:attributesForInitialisingNSAttributedString documentAttributes:NULL error:NULL]; //Create an NSMutableAttributedString from the RTF.
     
-    NSAttributedString *appVersionandBuildNumbers = [[NSAttributedString alloc]initWithString:appVersionAndBuildStringWithHeadings]; //Create an attributed string from the formatted string.
+    NSAttributedString *appVersionandBuildNumbers = [[NSAttributedString alloc]initWithString:appVersionAndBuildStringWithHeadings]; //Create an attributed string from the formatted version and build numbers string.
     
-    [self.infoText appendAttributedString:appVersionandBuildNumbers]; //Append the attributed string with the build and version numbers to the main attributed string containing the instructions for the app.
-     
-    self.infoView.attributedText = self.infoText; //Set our UITextViews attributedText property to our NSAttributedString containing the text from our RTF.
+    [textForInfoView appendAttributedString:appVersionandBuildNumbers]; //Append the attributed string with the build and version numbers to the main attributed string containing the instructions for the app.
+    
+    self.infoView.attributedText = textForInfoView; //Set our UITextViews attributedText property to our NSMutableAttributedString containing the text from our RTF.
     
 }
 
