@@ -14,6 +14,7 @@
 @property IBOutlet UITextView *journalTextView;
 @property IBOutlet UIBarButtonItem *letItGoButton;
 @property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
+@property (weak, nonatomic) WWFuserDataManager *sharedUserDataManager;
 
 @end
 
@@ -28,6 +29,8 @@
     
     //Ensure text is displayed at the very top of the UITextView
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    self.sharedUserDataManager = [WWFuserDataManager sharedUserDataManager];  //Get a reference to the sharedUserDataManager
     
     //Add a UITapGestureRecognizer to the view, so that we can dismiss the keyboard if the user taps within the view outside of the editing area. In the event this happens, the endEditing: method on the UITextView is called
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
@@ -78,32 +81,56 @@
         NSLog(@"Set journal text to default");
     }
     
-    //Display text to prompt the user in the moonTypeLabel, to indicate the type of moon event and provide a brief description of the properties associated with whichever type of moon event.
-    NSString *moonTypeLabelText = [[NSString alloc]init];
+    //Display text to prompt the user in the moonTypeLabel, to indicate the type of moon event and provide a brief description of the properties associated with whichever type of moon event, along with the deadline by which the ritual must be performed.
+    
+    //moonTypeSpecificLabelText is the for the moonTypeLabel which is dependent on the type of moon event.
+    
+    NSString *moonTypeSpecificLabelText = [[NSString alloc]init];
     switch ([[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"Type"]intValue])
     {
         case kNoMoonEvent:
-            moonTypeLabelText = @"No moon event";
+            moonTypeSpecificLabelText = @"No moon event";
             self.letItGoButton.title =@"No event";
             break;
             
         case kNewMoon:
-            moonTypeLabelText = @"New Moon: the time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.";
+            moonTypeSpecificLabelText = @"New Moon: the time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.";
             self.letItGoButton.title =@"Set intention";
             break;
             
         case kFullMoon:
-            moonTypeLabelText = @"Full Moon: the time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.";
+            moonTypeSpecificLabelText = @"Full Moon: the time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.";
             self.letItGoButton.title =@"Release";
             break;
             
         default:
-            moonTypeLabelText = @"Invalid moon event type";
+            moonTypeSpecificLabelText = @"Invalid moon event type";
             self.letItGoButton.title =@"Error";
             break;
     }
     
-    self.moonTypeLabel.text = moonTypeLabelText;
+    /* Creat two NSDateFormatters, one will be used to extract the date from an NSDate in the form of a string, while the other will be used to extract the time from the NSDate. */
+    NSDateFormatter *dateFormatterForDate = [[NSDateFormatter alloc] init];
+    NSDateFormatter *dateFormatterForTime = [[NSDateFormatter alloc] init];
+    dateFormatterForDate.locale = [[NSLocale alloc] initWithLocaleIdentifier:[self.sharedUserDataManager.userDataDictionary objectForKey:@"DateFormat"]];
+    dateFormatterForTime.locale = dateFormatterForDate.locale;
+    
+    //Set up the NSDateFormatters so that one formats the NSDate as only a date without a time, and the other formats it as only a time without a date.
+    dateFormatterForDate.dateStyle = NSDateFormatterMediumStyle;
+    dateFormatterForDate.timeStyle = NSDateFormatterNoStyle;
+    dateFormatterForTime.dateStyle = NSDateFormatterNoStyle;
+    dateFormatterForTime.timeStyle = NSDateFormatterShortStyle;
+    
+    NSDate *ritualDeadline = [[NSDate alloc] initWithTimeInterval: labs (kAllowedLetItGoInterval) sinceDate:theMoonDate]; //Get the date by which the ritual must be performed. This is used to populate the detail text of the cell to inform the user by when the ritual must be completed. We use the C labs function to convert the letItGoAllowedInterval to an unsigned double.
+    
+    NSString *ritualDeadlineDateString = [dateFormatterForDate stringFromDate:ritualDeadline]; //Get a date string from the ritual deadline date.
+    NSString *ritualDeadlineTimeString = [dateFormatterForTime stringFromDate:ritualDeadline]; //Get a time string from the ritual deadline date.
+    
+    NSString *ritualDeadlineText = [NSString stringWithFormat:@"You have until %@ on %@ to perform the ritual for this journal entry.", ritualDeadlineTimeString, ritualDeadlineDateString]; //Put together a statement of when the moon ritual must be performed using the time and date strings.
+    
+    NSString *textForMoonTypeLabel = [NSString stringWithFormat:@"%@ \n \n%@", moonTypeSpecificLabelText, ritualDeadlineText]; //Create the complete string to display in moonTypeLabel, using the Moon Date Type specific text and the ritual deadline text we have now created.
+    
+    self.moonTypeLabel.text = textForMoonTypeLabel;
     
     //Enable letItGoButton if the relevant moon event date has passed, if we are within kAllowedLetItGoInterval of the moon event having passed, and if the journal entry has not already been released.
     

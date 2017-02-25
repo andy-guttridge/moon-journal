@@ -80,7 +80,7 @@
     NSString *cellText = [self.dateFormatter stringFromDate:aMoonDate];
     cell.textLabel.text = cellText;
     
-    //Next, retrieving the NSInteger that represents the type of moon event (as per the Moontype enumerated values in Constants.h). This is embedded in a case...swith statement that assigns the appropriate text to an NSString, which is then used to populate the cell.detailTextLabel.text property.
+    //Next, retrieving the NSInteger that represents the type of moon event (as per the Moontype enumerated values in Constants.h). This is embedded in a case...switch statement that assigns the appropriate text to an NSString, which will later be used to populate the cell.detailTextLabel.text property.
     
     NSString *detailText = [[NSString alloc]init];
     switch ([[self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"Type"]intValue])
@@ -102,7 +102,8 @@
             break;
     }
     
-    cell.detailTextLabel.text = detailText;
+    
+     cell.detailTextLabel.text = detailText; //Set the detailTextLabel property of the cell to display the moon event type.
     
     //Change the colour of the cell to blue with white text if the current time is within and before the 'notification window',  to orange with white text if the current time is within a specified time after the moon event (kLetItGoAllowedInterval), or to white but with grey text if the moon date has already passed.
     
