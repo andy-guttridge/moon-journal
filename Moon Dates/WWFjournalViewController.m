@@ -158,21 +158,38 @@
 {
     //This is where we handle the 'Let it go' button being pressed.
     
-    self.journalTextView.text = @"The sacred ritual has been completed."; //Update the text in the journal text view.
-    [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"The sacred ritual has been completed." forKey:@"JournalText"]; //Update the text in the Moon Dates dictionary.
-    [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:[NSNumber numberWithBool:YES] forKey: @"Released"]; //Set the Released flag in the moonDatesArray to YES so that we know this journal entry has now been releasd, and the LetItGoButton will now not be enabled.
-    [self.sharedMoonDatesManager saveMoonDatesData]; //Save the updated journal entry.
-    self.journalTextView.editable = NO; //Now make the journal view uneditable.
+    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Are you sure?" message:@"Are you sure you want to perform the ritual for this journal entry now?" preferredStyle:UIAlertControllerStyleActionSheet]; //This UIAlertContoller will be used to ask the user if they are sure they wish to perform the ritual at this time.
     
-    //Next, configure and show an alert message with an OK button.
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]; // Cancel action to add to the UIAlertController. Specifies a nil handler as no action is required if the user chooses this option.
+    [controller addAction:cancelAction]; //Add our cancel action to the controller.
     
-    NSString *letItGoMessage = @"This sacred ritual is now complete";
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) //OK action to add to the UIAlertController. The handler code deals with performing the moon ritual for this journal entry, as the user has stated that they wish to perform the action. We specify UIActionAlertStyleDestructive, as this action deletes the journal entry and is non-reversible.
+    {
+        self.journalTextView.text = @"The sacred ritual has been completed."; //Update the text in the journal text view.
+        [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"The sacred ritual has been completed." forKey:@"JournalText"]; //Update the text in the Moon Dates dictionary.
+        [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:[NSNumber numberWithBool:YES] forKey: @"Released"]; //Set the Released flag in the moonDatesArray to YES so that we know this journal entry has now been releasd, and the LetItGoButton will now not be enabled.
+        [self.sharedMoonDatesManager saveMoonDatesData]; //Save the updated journal entry.
+        self.journalTextView.editable = NO; //Now make the journal view uneditable.
+        
+        //Next, configure and show an alert message with an OK button.
+        
+        NSString *letItGoMessage = @"This sacred ritual is now complete";
+        
+        UIAlertController *letItGoAlertController = [UIAlertController alertControllerWithTitle:@"Ritual Complete" message:letItGoMessage preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [letItGoAlertController addAction:OKAction];
+        [self presentViewController:letItGoAlertController animated:YES completion:nil];
+        self.letItGoButton.enabled = NO; //Disavle the letItGoButton, now that the journal entry has been released.
+    }];
+    [controller addAction:okAction]; //Add the OK action to the controller.
     
-    UIAlertController *letItGoAlertController = [UIAlertController alertControllerWithTitle:@"Ritual Complete" message:letItGoMessage preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-    [letItGoAlertController addAction:OKAction];
-    [self presentViewController:letItGoAlertController animated:YES completion:nil];
-    self.letItGoButton.enabled = NO; //Disavle the letItGoButton, now that the journal entry has been released.
+    UIPopoverPresentationController *ppc = controller.popoverPresentationController; //Get a reference to our UIAlertController's popoverPresentationController, if there is one. This is in case we are running on an iPad.
+    if (ppc != nil)
+    {
+        ppc.barButtonItem = sender; //Set the barButtonItem property of our UIPopoverPresentationController to the button that called this method, i.e. the LetItGo button. This ensures that if we are running on an iPad, the action sheet is presented as a popover pointing at the button.
+ 	}
+    
+    [self presentViewController:controller animated:YES completion:nil]; //Show our UIAlertController
 }
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
