@@ -19,6 +19,11 @@ typedef enum {kNoMoonEvent, kFullMoon, kNewMoon} moonType;
 #define kAllowedLetItGoInterval -345600 //The amount of time after a moon event within which the relevant journal entry can be released in seconds. Use this for 4 days.
 //#define kAllowedLetItGoInterval -60 //The amount of time after a moon event within which the relevant journal entry can be released in seconds. Use this for one minute.
 
+
+
+#define kpreMoonDateLetItGoInterval 86400 //The amount of time before the moon date within which the relevant journal entry can be released in seconds. Use this for 24 hours.
+//#define kpreMoonDateLetItGoInterval 30 //The amount of time before the moon date within which the relevant journal entry can be released in seconds. Use this for 30 seconds for testing.
+
 #define kTestDataDateString "2016-08-20 13:00:00" //A string to use with an NSDateFormatter to generate an NSDate from a string, when generating test data.
 
 #endif /* Constants_h */

@@ -36,6 +36,12 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)];
     [self.view addGestureRecognizer:tap];
     
+    //Register to receive notifications when the keyboard is shown and ask for our keyboardWasShown: method to be called.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+    
+    //Register to receive notifications when the keyboard is hidden and ask for our keyboardWasHidden: method to be called.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     //Make text uneditable if the relevant moon event date has passed and we are outside of the 'allowed Let It Go interval', or if the journal text has already been released (even if we are within the 'allowed Let It Go interval'.
     
     NSDate *theMoonDate = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"]; //Get the moon date this journal entry relates to.
@@ -132,13 +138,13 @@
     
     self.moonTypeLabel.text = textForMoonTypeLabel;
     
-    //Enable letItGoButton if the relevant moon event date has passed, if we are within kAllowedLetItGoInterval of the moon event having passed, and if the journal entry has not already been released.
+    //Enable letItGoButton if the relevant moon event date has passed if we are within kAllowedLetItGoInterval of the moon event having passed, or if we are within the kpreMoonLetItGo interval before the moon event date, and if the journal entry has not already been released.
     
     NSTimeInterval intervalSinceMoonDate = [[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"] timeIntervalSinceNow]; //Get the amount of time since the relevant moon event.
     
     NSLog(@"Interval since moon date in the journal view is: %f", intervalSinceMoonDate);
     
-    if (intervalSinceMoonDate >= kAllowedLetItGoInterval && intervalSinceMoonDate < 0 && hasBeenReleased == NO)
+    if (((intervalSinceMoonDate >= kAllowedLetItGoInterval && intervalSinceMoonDate < 0) || (intervalSinceMoonDate <= kpreMoonDateLetItGoInterval && intervalSinceMoonDate > 0)) && hasBeenReleased == NO)
     {
         self.letItGoButton.enabled = YES;
     }
@@ -214,6 +220,23 @@
         textView.textColor = [UIColor lightGrayColor];
         textView.tag = 0;
     }
+}
+
+- (void)keyboardWasShown:(NSNotification*)notification
+//This method is called when the keyboard is displayed in our UITextView. We scroll the text view to ensure that no text is obscured by the keyboard and adjust the dimensions of the scroll bars to align with the inset.
+{
+    NSDictionary *info = [notification userInfo]; //Get the dictionary passed in by the notification we have received.
+    CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size; //Get the size of the keyboard.
+    
+    self.journalTextView.contentInset = UIEdgeInsetsMake(0, 0, keyboardSize.height, 0); //Use the height of our keyboard to create a UIEdgeInset, which we use to set the contentInset property of our UITextView. This adds some padding to the bottom of the text view equal to the height of our keyboard, and ensures that the user's text is not obscured by the keyboard.
+    self.journalTextView.scrollIndicatorInsets = self.journalTextView.contentInset; //Insets the scroll bars by the same amount as the content.
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification
+//This method is called when the keyboard is about to be hidden in our UITextView. We get rid of any padding at the bottom of the UITextView which would have been added when the keyboard was shown, and adjust the dimensions of the scroll bars back to their full height.
+{
+    self.journalTextView.contentInset = UIEdgeInsetsZero; //Set the contentInset property of our UITextView to zero to get rid of the padding.
+    self.journalTextView.scrollIndicatorInsets = UIEdgeInsetsZero; //Set the contentInset property of our UITextView to zero to align them with the full height of the UITextView content.
 }
 
 
