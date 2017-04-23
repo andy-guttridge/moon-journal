@@ -108,7 +108,7 @@
     //If we find a match, we switch to the calendar view controller and ask its table view to scroll to the row in the table associated with the matching moon date.
     
     NSDate *notificationMoonDate; //To hold the Moon Date associated with this notification.
-    NSUInteger i; //Counter, matching the index of the moon date array for each moon date, which we can use to tell the table view which view to scroll to.
+    NSUInteger i = 0; //Counter, matching the index of the moon date array for each moon date, which we can use to tell the table view which view to scroll to.
     
     if ((notificationMoonDate = [theNotification.userInfo objectForKey:@"MoonDate"])) //Get the moon date from the local notification object.
     {

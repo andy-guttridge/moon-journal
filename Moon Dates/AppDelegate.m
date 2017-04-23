@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //This is where we receive local notifications is the app isn't running. If there is a notification, we pass it elsewhere for handling.
+    //This is where we receive local notifications if the app isn't running. If there is a notification, we pass it elsewhere for handling.
     UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (notification)
     {
@@ -27,6 +27,11 @@
     }
     
    // NSLog(@"%@", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]);
+    
+    //Clear any notification badges from the app icon. We may reinstate them later, however we need to clear them when the app opens because
+    //under some circumstances, there may be a notification badge that is no longer relevant. An example of this would be if the user had failed to perform
+    //the moon ritual before the relevant journal entry locked - the badge is cleared when the ritual is performed, but if the user forgets the badge won't have been cleared.
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     return YES;
 }
@@ -43,6 +48,11 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    //Clear any notification badges from the app icon. We may reinstate them later, however we need to clear them when the app opens because
+    //under some circumstances, there may be a notification badge that is no longer relevant. An example of this would be if the user had failed to perform
+    //the moon ritual before the relevant journal entry locked - the badge is cleared when the ritual is performed, but if the user forgets the badge won't have been cleared.
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

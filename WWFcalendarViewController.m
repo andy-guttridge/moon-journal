@@ -19,7 +19,8 @@
 
 @implementation WWFcalendarViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -37,7 +38,7 @@
     self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
     self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
     self.dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:[self.sharedUserDataManager.userDataDictionary objectForKey:@"DateFormat"]];
-    
+
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -105,7 +106,7 @@
     
      cell.detailTextLabel.text = detailText; //Set the detailTextLabel property of the cell to display the moon event type.
     
-    //Change the colour of the cell to blue with white text if the current time is within and before the 'notification window',  to orange with white text if the current time is within a specified time after the moon event (kLetItGoAllowedInterval), or to white but with grey text if the moon date has already passed.
+    //Change the colour of the cell to blue with white text if the current time is within and before the 'notification window',  to orange with white text if the current time is within a specified time after the moon event (kLetItGoAllowedInterval), or to white but with grey text if the moon date has already passed. If we change the colour of the cell to blue or orange, we also test to see if the moon ritual has already been performed, and if it hasn't we set the applicationIconBadgeNumber to 1, to notify the user that there is a moon ritual that needs to be completed imminently.
     
     NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[aMoonDate timeIntervalSinceNow]]; //The amount of time until or after the moon date.
     NSNumber *notificationOffset = [NSNumber numberWithInteger: labs (self.sharedMoonDatesManager.notificationOffset)]; //Get the notification offset from the sharedMoonDatesManager, and use the C labs function to convert it to an absolute (unsigned) value. This is because the notification system needs a negative number for the pre-notifications, but we need a positive value here to use the intervalUntilDate method of NSDate to compare the amount of time until the moon event with the notification offset.
@@ -116,6 +117,10 @@
         cell.backgroundColor = [UIColor blueColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.textColor = [UIColor whiteColor];
+        if ([self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"Released"] == NO)
+            {
+                [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
+            }
     }
     
     else if (([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedDescending) && [intervalUntilDate floatValue] <= 0)
@@ -123,6 +128,10 @@
         cell.backgroundColor = [UIColor orangeColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.textColor = [UIColor whiteColor];
+        if ([self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"Released"] == NO)
+        {
+            [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
+        }
     }
     
     else if (([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedAscending) && [intervalUntilDate floatValue] < 0)

@@ -69,7 +69,7 @@
     
     self.journalTextView.tag = 1; //We set the journalTextView tag to 1, to indicate that the textview holds text entered by the user. This is for the benefit of the textViewShouldBeginEditing: and textViewDidChange: methods, which use this tag to determine whether to show some placeholder text.
     
-    //Check to see if the journal text is empty (or already holds the placeholder text), because if it is we want to retain the default text for the text view, which is a placeholder to show where to enter text. If the text view is locked (i.e. uneditable) then the moon date has already passed and text cannot be edited, so we show a different placeholder message.
+    //Check to see if the journal text is empty (or already holds the placeholder text), because if it is we want to retain the default text for the text view, which is a placeholder to show where to enter text. If the text view is locked (i.e. uneditable) then the moon date has already passed and text cannot be edited, so we show a different placeholder message. 
     
     if ([self.journalTextView.text isEqual:@""] || [self.journalTextView.text isEqual:@"Enter journal text here"])
     {
@@ -185,7 +185,8 @@
         UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
         [letItGoAlertController addAction:OKAction];
         [self presentViewController:letItGoAlertController animated:YES completion:nil];
-        self.letItGoButton.enabled = NO; //Disavle the letItGoButton, now that the journal entry has been released.
+        self.letItGoButton.enabled = NO; //Disable the letItGoButton, now that the journal entry has been released.
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0; //Here we set the application badge icon number to zero, as the ritual has been performed and therefore there will now be no pending rituals to notify the user of, until the next moon date occurs.
     }];
     [controller addAction:okAction]; //Add the OK action to the controller.
     
