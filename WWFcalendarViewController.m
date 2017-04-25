@@ -117,7 +117,7 @@
         cell.backgroundColor = [UIColor blueColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.textColor = [UIColor whiteColor];
-        if ([self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"Released"] == NO)
+        if ([[self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"Released"] boolValue] == NO)
             {
                 [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
             }
@@ -128,7 +128,7 @@
         cell.backgroundColor = [UIColor orangeColor];
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.textColor = [UIColor whiteColor];
-        if ([self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"Released"] == NO)
+        if ([[self.sharedMoonDatesManager.moonDatesArray [indexPath.row] objectForKey:@"Released"] boolValue] == NO)
         {
             [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
         }
