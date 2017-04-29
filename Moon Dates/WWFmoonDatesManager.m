@@ -82,47 +82,87 @@
         NSMutableArray *copyOfMoonDatesArray = [[NSMutableArray alloc]initWithArray:self.moonDatesArray copyItems:YES]; //Create a mutable copy of the moonDatesArray, as we cannot make changes to a NSMutableArray while using fast enumeration.
         
         //Next we iterate through moonDatesArray, pulling out each moonDatesDictionary, creating a mutable copy, and replacing the original dictionary in the array with the mutable copy.
+        
         for (NSDictionary *moonDatesDictionary in self.moonDatesArray)
         {
+            //Make a mutable copy of each moonDatesDictionary and replace the original in the array with the mutable copy.
             NSMutableDictionary *mutableMoonDatesDictionary = [[NSMutableDictionary alloc] initWithDictionary:moonDatesDictionary copyItems:YES];
             NSUInteger i = [copyOfMoonDatesArray indexOfObject:moonDatesDictionary];
             [copyOfMoonDatesArray replaceObjectAtIndex:i withObject:mutableMoonDatesDictionary];
         }
         self.moonDatesArray = [copyOfMoonDatesArray mutableCopy]; //Copy the contents of copyOfMoonDates array back into the proper version of the array.
+        
+        //Register to receive notifications
+        
+        UIUserNotificationType notificationTypes = (UIUserNotificationType) (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings: notificationSettings];
+        
+        //If this version of the app is running for the first time, then we want to schedule all of the notifications (the scheduleNotifications method also deletes existing notifications).
+        //Updates to the list of moon events will be included in updates, and at those times the notifications will need to be rescheduled as there will be new dates further into the future included.
+        //We hard code a version number and store this using NSUserDefaults, so that we can then do a comparison and see if the hard coded and the stored version numbers match. If they don't then we know our app has been updated and we need to schedule the notifications.
+        
+        NSInteger currentVersion = 0; //This needs to be incremented with each new version of the app. A value of zero will always cause notifications to be scheduled and is to be used for testing purposes.
+        
+        if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HasLaunchedForVersion"] < currentVersion || currentVersion == 0)
+        {
+            [[NSUserDefaults standardUserDefaults] setInteger:currentVersion forKey:@"HasLaunchedForVersion"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self scheduleNotifications];
+            NSLog(@"This version of the app has run for the first time. Notifications scheduled");
+        }
+        
+        else
+        {
+            NSLog(@"This version of the app has run before. Notifications not scheduled");
+        }
+            
+       
+            
+           
+        //Next we register to receive an OS notification when the Home button is pressed, so that we can save our data at that point. When we receive this notification,
+        //the applicationWillResignActive: method within this class is called.
+        
+        UIApplication *app = [UIApplication sharedApplication];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:app];
+        
     }
     
-    //Register to receive notifications
-    
-    UIUserNotificationType notificationTypes = (UIUserNotificationType) (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
-    UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
-    [[UIApplication sharedApplication] registerUserNotificationSettings: notificationSettings];
-    
-    //If this version of the app is running for the first time, then we want to schedule all of the notifications (the scheduleNotifications method also deletes existing notifications).
-    //Updates to the list of moon events will be included in updates, and at those times the notifications will need to be rescheduled as there will be new dates further into the future included.
-    //We hard code a version number and store this using NSUserDefaults, so that we can then do a comparison and see if the hard coded and the stored version numbers match. If they don't then we know our app has been updated and we need to schedule the notifications.
-    
-    NSInteger currentVersion = 0; //This needs to be incremented with each new version of the app. A value of zero will always cause notifications to be scheduled and is to be used for testing purposes.
-    
-    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"HasLaunchedForVersion"] < currentVersion || currentVersion == 0)
+    return self;
+}
+
+-(void) removeOldNotificationBadge
+{
+//Iterate through the moon dates to see if the current date is within the range of time before or after each moon date that the journal entry can be released. If it is and the ritual has not yet been performed for that date, then we take no action, but if not or if it is but the ritual hasn't been performed, we clear any notification badges that are still showing. This is because in the event of the user not releasing their journal entry in time or the ritual having already been performed, we would end up with a notification badge showing that is no longer relevant.
+
+    BOOL foundMoonDateInRange = NO; //We set this flag if we find a moon date within the range that the ritual could be performed AND for which the ritual has not yet been performed.
+    int i = 0;
+    for (NSDictionary *moonDatesDictionary in self.moonDatesArray)
     {
-        [[NSUserDefaults standardUserDefaults] setInteger:currentVersion forKey:@"HasLaunchedForVersion"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        [self scheduleNotifications];
-        NSLog(@"This version of the app has run for the first time. Notifications scheduled");
+        //Check if current moon date is within range that it could be released, and check whether it has been released, and set a flagif we find a date within range for which the ritual has not yet been performed.
+        NSDate *aMoonDate = [self.moonDatesArray [i] objectForKey:@"MoonDate"];
+        NSNumber *intervalUntilDate = [NSNumber numberWithDouble: (double)[aMoonDate timeIntervalSinceNow]]; //The amount of time until or after the moon date.
+        NSNumber *notificationOffset = [NSNumber numberWithInteger: labs (self.notificationOffset)]; //Get the notification offset, and use the C labs function to convert it to an absolute (unsigned) value. This is because the notification system needs a negative number for the pre-notifications, but we need a positive value here to use the intervalUntilDate method of NSDate to compare the amount of time until the moon event with the notification offset.
+        NSNumber *letItGoAllowedInterval = [NSNumber numberWithInt:kAllowedLetItGoInterval]; //Turn the pre-defined constant into an NSNumber.
+        
+        //Here we set the flag if the moon date has not yet passed but we are within range of the notification of the moon date having been issued and the ritual not yet having been performed.
+        if ((([intervalUntilDate compare:notificationOffset] == NSOrderedAscending) && [intervalUntilDate floatValue] >= 0) && ([[self.moonDatesArray [i] objectForKey:@"Released"] boolValue] == NO))
+        {
+            foundMoonDateInRange = YES;
+        }
+        
+        //Here we set the flag if the moon date has passed but we are within range that the ritual can still be performed but hasn't yet.
+        if ((([intervalUntilDate compare:letItGoAllowedInterval] == NSOrderedDescending) && [intervalUntilDate floatValue] <= 0) && ([[self.moonDatesArray [i] objectForKey:@"Released"] boolValue] == NO))
+        {
+            foundMoonDateInRange = YES;
+        }
+        i++;
     }
     
-    else
+    if (foundMoonDateInRange == NO) //If we set our flag to NO then we clear any notification badges that are lingering, as we have determined that it is not possible to perform a moon ritual at this time.
     {
-        NSLog(@"This version of the app has run before. Notifications not scheduled");
+        [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     }
-    
-    //Next we register to receive an OS notification when the Home button is pressed, so that we can save our data at that point. When we receive this notification,
-    //the applicationWillResignActive: method within this class is called.
-    
-    UIApplication *app = [UIApplication sharedApplication];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:app];
-    
-    return self;    
 }
 
 -(void) generateTestData
@@ -136,7 +176,7 @@
  
 //Get todays date plus three days, and use this to generate and add some test dates to some Dictionaries, set the "Type" key to new moon (just for the sake of having some test data), add a BOOL with the key 'Released' (this is used to keep a record of whether the journal entry has been 'released') and then add the Dictionaries to our moonDatesArray. The notification dates will be generated in the init method, and if we have the notification interval set to the default three days, then we end up with some very convenient notification dates for testing purposes.
 {
-    NSDate *todaysDatePlusThreeDays = [NSDate dateWithTimeIntervalSinceNow: 120]; //259200 is the number of seconds in three 24 hour days.
+    NSDate *todaysDatePlusThreeDays = [NSDate dateWithTimeIntervalSinceNow: 60]; //259200 is the number of seconds in three 24 hour days.
     for (int i = 0; i < 30; i++)
     {
         NSDate *newMoonDate = [NSDate dateWithTimeInterval:i*180 sinceDate:todaysDatePlusThreeDays];

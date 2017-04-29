@@ -21,5 +21,6 @@
 -(void) generateTestData;
 -(void) scheduleNotifications;
 -(void) saveMoonDatesData;
+-(void) removeOldNotificationBadge;
 
 @end

@@ -5,6 +5,6 @@
 	<key>DateFormat</key>
 	<string>en_UK</string>
 	<key>NotificationInterval</key>
-	<integer>-259200</integer>
+	<integer>-90</integer>
 </dict>
 </plist>

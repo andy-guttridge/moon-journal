@@ -10,7 +10,7 @@
 
 @interface WWFtabBarController ()
 
-@property (strong, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
+@property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
 @property (strong, nonatomic) WWFuserDataManager *sharedUserDataManager;
 @end
 
