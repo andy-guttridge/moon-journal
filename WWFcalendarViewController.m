@@ -38,13 +38,24 @@
     self.dateFormatter.dateStyle = NSDateFormatterMediumStyle;
     self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
     self.dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:[self.sharedUserDataManager.userDataDictionary objectForKey:@"DateFormat"]];
+    
+    //Here we register to received UIApplicationWillEnterForegroundNotification and call the [self redrawTableView:] method, to ensure that the tableview cells are updated if the user switches back to our app having been using a different app, locked their device etc.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector (redrawTableView:) name:UIApplicationWillEnterForegroundNotification object:nil];
 
 }
 
 - (void) viewWillAppear:(BOOL)animated
 //This method is implemented to ensure that tableview cells are highlighted correctly if anything has changed after switching back from another view.
 {
+    NSLog(@"WWFcalendarViewController viewWillAppear called.");
     [super viewWillAppear:animated];
+    [self redrawTableView: self];
+}
+
+- (void) redrawTableView:(id) sender
+{
+    //Here we redraw the tableview cells. This method is called either from viewWillAppear:, which takes account of changes of view while the app is active, or as a result of a UIApplicationWillEnterForegroundNotification, which ensures the view is updated when the user returns to the app having used a different app, locked their device etc.
+    NSLog(@"WWFcalendarViewController redrawTableView: called");
     [self.tableView reloadData];
 }
 
@@ -155,6 +166,8 @@
     WWFjournalViewController *journalViewController = segue.destinationViewController;
     journalViewController.indexForMoonDatesArray = indexPath.row;
 }
+
+
 
 
 /*

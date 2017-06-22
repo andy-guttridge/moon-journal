@@ -240,7 +240,6 @@
     self.journalTextView.scrollIndicatorInsets = UIEdgeInsetsZero; //Set the contentInset property of our UITextView to zero to align them with the full height of the UITextView content.
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
