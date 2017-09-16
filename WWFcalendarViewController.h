@@ -13,4 +13,6 @@
 
 @interface WWFcalendarViewController : UITableViewController
 
+-(void) redrawTableView: (id) sender;
+
 @end
