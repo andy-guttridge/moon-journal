@@ -112,6 +112,7 @@
 				A10577241CFAFBCE00951A27 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		A10577241CFAFBCE00951A27 /* Products */ = {
 			isa = PBXGroup;
