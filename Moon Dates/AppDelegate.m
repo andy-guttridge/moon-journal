@@ -22,15 +22,16 @@
 {
     self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager]; //Initialise the sharedMoonDatesManager.
     
-    //This is where we receive local notifications if the app isn't running. If there is a notification, we pass it elsewhere for handling.
-    UILocalNotification *notification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
-    if (notification)
-    {
-        WWFtabBarController *theTabBarController = (WWFtabBarController *) self.window.rootViewController;
-        [theTabBarController didReceiveNotificationOnAppLaunch: notification];
-    }
+    //Register to receive notifications
     
-   // NSLog(@"%@", [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]);
+    UNUserNotificationCenter *notificationCenter = [UNUserNotificationCenter currentNotificationCenter];
+    [notificationCenter requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionBadge + UNAuthorizationOptionSound) completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        //Code to respond to allowed types of notification goes here. Do nothing for now, rely on OS behaviour.
+    }];
+    
+    //Set delegate for the UNNotificationCenter
+    WWFtabBarController *theTabBarController = (WWFtabBarController *) self.window.rootViewController;
+    notificationCenter.delegate = theTabBarController;
     
     return YES;
 }
@@ -61,12 +62,5 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
--(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    //This method handles notifications that are received when the app is running.
-    //Grab a reference to the tab bar controller which is the root view controller, and call the didReceiveNotification: method, passing in the local notification object for handling within the app.
-    WWFtabBarController *theTabBarController = (WWFtabBarController *) self.window.rootViewController;
-    [theTabBarController didReceiveNotificationWhileAppRunning: notification];
-}
 
 @end

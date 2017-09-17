@@ -10,10 +10,10 @@
 #import "WWFmoonDatesManager.h"
 #import "WWFcalendarViewController.h"
 
-@interface WWFtabBarController : UITabBarController
+@interface WWFtabBarController : UITabBarController <UNUserNotificationCenterDelegate>
 
--(void) didReceiveNotificationWhileAppRunning: (UILocalNotification *) theNotification;
--(void) didReceiveNotificationOnAppLaunch: (UILocalNotification *) theNotification;
+-(void) userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler;
+-(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler;
 
 @end
 

@@ -5,6 +5,6 @@
 	<key>DateFormat</key>
 	<string>en_UK</string>
 	<key>NotificationInterval</key>
-	<real>-259200</real>
+	<integer>-1800</integer>
 </dict>
 </plist>
