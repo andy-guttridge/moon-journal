@@ -35,8 +35,10 @@
 -(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options)) completionHandler
 
 //This method which is implemented as part of the UNNotificationCenter protocol handles notifications that are received while the app is running.
-                                                                                                                                                
+
+ 
 {
+    /* Commenting this out for now - will need to reimplement when calendar is working
     completionHandler (UNNotificationPresentationOptionSound); //Run the completion handler provided by the system, specifying that we only want the system to provide an alert sound (not to display the alert - we have our own custom response instead).
     
     UINavigationController *calendarViewNavigationController = self.viewControllers [0]; //Grab a reference to the UINavigationController that displays our calendar and journal views.
@@ -102,12 +104,19 @@
         {
             [self presentViewController:notificationAlertController animated:YES completion:nil];
         }
+ 
+ 
 
     }
+*/
 }
 
 -(void) userNotificationCenter:(UNUserNotificationCenter *)notificationCenter didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+
+
+ 
 {
+    /* Commenting out for now - to reimplement when calendar working
     //In this method, which is implemented as part of the UNNotificationCenter protocol, if the user has selected a notification from outside the app, then we iterate through each of the moon dates in the moon dates array, and compare them with the moon date associated with the notification we have received.
     //If we find a match, we switch to the calendar view controller and ask its table view to scroll to the row in the table associated with the matching moon date.
     
@@ -152,6 +161,8 @@
             }
         }];
     }
+ 
+ */
 }
 
 

@@ -56,7 +56,7 @@
 {
     //Here we redraw the tableview cells. This method is called either from viewWillAppear:, which takes account of changes of view while the app is active, or as a result of a UIApplicationWillEnterForegroundNotification, which ensures the view is updated when the user returns to the app having used a different app, locked their device etc.
     NSLog(@"WWFcalendarViewController redrawTableView: called");
-    [self.tableView reloadData];
+   [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
