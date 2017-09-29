@@ -40,7 +40,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Enter journal text here" translatesAutoresizingMaskIntoConstraints="NO" id="qua-0l-WW5">
-                                <rect key="frame" x="16" y="59" width="343" height="593"/>
+                                <rect key="frame" x="16" y="103" width="343" height="549"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -50,7 +50,7 @@
                                 </connections>
                             </textView>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLF-U7-wlq">
-                                <rect key="frame" x="16" y="28" width="343" height="18"/>
+                                <rect key="frame" x="16" y="72" width="343" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="c3U-a2-RHL"/>
                                 </constraints>
@@ -234,6 +234,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KyN-DX-S43"/>
+                    <connections>
+                        <segue destination="WWw-Xg-vDF" kind="show" identifier="journalsegue" id="Hqp-af-AGb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZzW-fe-o7L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

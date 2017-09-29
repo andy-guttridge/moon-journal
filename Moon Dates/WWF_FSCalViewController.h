@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FSCalendar.h"
 #import "WWFmoonDatesManager.h"
+#import "WWFjournalViewController.h"
 
 @interface WWF_FSCalViewController : UIViewController
 <FSCalendarDataSource, FSCalendarDelegate>
