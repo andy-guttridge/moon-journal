@@ -28,6 +28,8 @@
     self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager];
     self.sharedUserDataManager = [WWFuserDataManager sharedUserDataManager];
     self.sharedColoursManager = [WWFcoloursManager sharedColoursManager];
+    
+    self.tabBar.tintColor = self.sharedColoursManager.selectableColour; //Set colour of the selected tab bar item using a colour from the sharedColoursManager.
 }
 
 - (void)didReceiveMemoryWarning {

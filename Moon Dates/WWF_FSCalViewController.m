@@ -33,6 +33,8 @@
     self.theCalendarView.appearance.headerTitleColor = self.sharedColoursManager.headerColour;
     self.theCalendarView.appearance.weekdayTextColor = self.sharedColoursManager.headerColour;
     
+    self.todayButton.tintColor = self.sharedColoursManager.selectableColour;
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -242,6 +242,7 @@
                     <connections>
                         <outlet property="mainView" destination="jbe-kN-hAV" id="4SY-0f-ZCl"/>
                         <outlet property="theCalendarView" destination="RFw-BC-Scr" id="FNe-FP-wjV"/>
+                        <outlet property="todayButton" destination="y2L-wM-WPG" id="L1d-DJ-eeP"/>
                         <segue destination="WWw-Xg-vDF" kind="show" identifier="journalsegue" id="Hqp-af-AGb"/>
                     </connections>
                 </viewController>
