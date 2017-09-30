@@ -23,6 +23,16 @@
     // Do any additional setup after loading the view.
     
     self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager];
+    self.sharedColoursManager = [WWFcoloursManager sharedColoursManager];
+    
+    self.theCalendarView.appearance.imageOffset = CGPointMake(0, 6);
+    
+    self.mainView.backgroundColor = self.sharedColoursManager.backgroundColour;
+    self.theCalendarView.calendarWeekdayView.backgroundColor = self.sharedColoursManager.backgroundColour;
+    self.theCalendarView.appearance.titlePlaceholderColor = self.sharedColoursManager.placeholderDateColour;
+    self.theCalendarView.appearance.headerTitleColor = self.sharedColoursManager.headerColour;
+    self.theCalendarView.appearance.weekdayTextColor = self.sharedColoursManager.headerColour;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,6 +54,7 @@
     return isMoonDate;
     
 }
+
 
 -(void) calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition
 // This method is called if the calendar allowed a date to be selected, in which case we perform a segue to the journal view controller to display the journal entry. The reference to the appropriate journal entry is passed to the journal view controller in - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender .
@@ -81,6 +92,54 @@
     }
     return nil;
 }
+
+- (IBAction)goToToday:(id)sender
+{
+    [self.theCalendarView selectDate:[NSDate date] scrollToDate:YES];
+}
+
+- (nullable UIColor*) calendar: (FSCalendar *) calendar appearance:(nonnull FSCalendarAppearance *)appearance fillDefaultColorForDate:(nonnull NSDate *)date
+{
+    //Here the calendar asks for a default fill colour for dates
+    return self.sharedColoursManager.backgroundColour;
+}
+
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance borderDefaultColorForDate:(NSDate *)date
+{
+    //Here the calendar asks for a default border colour for dates
+    return self.sharedColoursManager.backgroundColour;
+}
+
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(nonnull NSDate *)date:(NSDate *)date
+{
+    //Here the calendar asks for the default text colour for dates
+    return self.sharedColoursManager.textColour;
+}
+
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance borderSelectionColorForDate:(NSDate *)date
+{
+    //Here the calendar asks for a border colour for selected dates
+    return self.sharedColoursManager.selectableColour;
+}
+
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance fillSelectionColorForDate:(NSDate *)date
+{
+    //Here the calendar asks for the fill colour for a selected date
+    return self.sharedColoursManager.textColour;
+}
+
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleSelectionColorForDate:(NSDate *)date
+{
+    //Here the calendar asks for the main text colour for a selected date
+    return self.sharedColoursManager.backgroundColour;
+}
+
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(NSDate *)date
+{
+    //Here the calendar asks for the default text colour for a date
+    return self.sharedColoursManager.textColour;
+}
+
 
 
 /*

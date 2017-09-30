@@ -10,12 +10,17 @@
 #import "FSCalendar.h"
 #import "WWFmoonDatesManager.h"
 #import "WWFjournalViewController.h"
+#import "WWFcoloursManager.h"
 
 @interface WWF_FSCalViewController : UIViewController
-<FSCalendarDataSource, FSCalendarDelegate>
+<FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance>
 
 @property (weak, nonatomic) IBOutlet FSCalendar *theCalendarView;
+@property (weak, nonatomic) WWFcoloursManager *sharedColoursManager;
+@property (strong, nonatomic) IBOutlet UIView *mainView;
 
 - (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition;
+
+- (IBAction)goToToday:(id)sender;
 
 @end

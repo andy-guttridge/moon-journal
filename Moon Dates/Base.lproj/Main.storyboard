@@ -218,7 +218,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFw-BC-Scr" customClass="FSCalendar">
                                 <rect key="frame" x="21" y="69" width="333" height="544"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Y1I-FE-36R" id="3Vn-qL-Pxp"/>
                                     <outlet property="delegate" destination="Y1I-FE-36R" id="zFT-D5-gtw"/>
@@ -233,8 +232,15 @@
                             <constraint firstItem="RFw-BC-Scr" firstAttribute="leading" secondItem="jbe-kN-hAV" secondAttribute="leadingMargin" constant="5" id="rHT-1q-cUU"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="KyN-DX-S43"/>
+                    <navigationItem key="navigationItem" id="KyN-DX-S43">
+                        <barButtonItem key="rightBarButtonItem" title="Today" id="y2L-wM-WPG">
+                            <connections>
+                                <action selector="goToToday:" destination="Y1I-FE-36R" id="OXC-07-hRi"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="mainView" destination="jbe-kN-hAV" id="4SY-0f-ZCl"/>
                         <outlet property="theCalendarView" destination="RFw-BC-Scr" id="FNe-FP-wjV"/>
                         <segue destination="WWw-Xg-vDF" kind="show" identifier="journalsegue" id="Hqp-af-AGb"/>
                     </connections>

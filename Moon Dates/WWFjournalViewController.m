@@ -140,13 +140,17 @@
     
     //Enable letItGoButton if the relevant moon event date has passed if we are within kAllowedLetItGoInterval of the moon event having passed, or if we are within the kpreMoonLetItGo interval before the moon event date, and if the journal entry has not already been released.
     
-    NSTimeInterval intervalSinceMoonDate = [[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"] timeIntervalSinceNow]; //Get the amount of time since the relevant moon event.
-    
-    NSLog(@"Interval since moon date in the journal view is: %f", intervalSinceMoonDate);
-    
-    if (((intervalSinceMoonDate >= kAllowedLetItGoInterval && intervalSinceMoonDate < 0) || (intervalSinceMoonDate <= kpreMoonDateLetItGoInterval && intervalSinceMoonDate > 0)) && hasBeenReleased == NO)
+    NSDictionary *moonDatesInfo = [self.sharedMoonDatesManager moonDateInfo:theMoonDate]; //Get information on the moon date from the sharedMoonDatesManager, which we will use to determine whether the ritual can be performed for the current moon date.
+    NSLog(@"The moon date in journal view is %@", theMoonDate);
+    NSLog(@"%@", moonDatesInfo);
+    if (([[moonDatesInfo objectForKey:@"canLetItGo"] boolValue] == YES) && hasBeenReleased == NO)
     {
         self.letItGoButton.enabled = YES;
+        NSLog (@"Enable Let It Go button");
+    }
+    
+    else{
+        NSLog (@"Did not enable Let It Go button");
     }
     
 }

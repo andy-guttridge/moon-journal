@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
 @property (strong, nonatomic) WWFuserDataManager *sharedUserDataManager;
+@property WWFcoloursManager *sharedColoursManager;
+
 @end
 
 @implementation WWFtabBarController
@@ -21,10 +23,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    //Both of the shared manager objects are 'owned' by this view controller, as it is the root view controller and both manager objects are required all of the time the app is running, therefore it makes sense to instantiate them here with strong references. 
+    //The shared manager objects are 'owned' by this view controller, as it is the root view controller and both manager objects are required all of the time the app is running, therefore it makes sense to instantiate them here with strong references. 
     
     self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager];
     self.sharedUserDataManager = [WWFuserDataManager sharedUserDataManager];
+    self.sharedColoursManager = [WWFcoloursManager sharedColoursManager];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -118,7 +121,7 @@
                 WWF_FSCalViewController *theCalendarViewController = (WWF_FSCalViewController *) theCurrentViewController; //Cast theCurrentViewController to WWF_FSCalViewController, as we have have now already positively identified that it is of this class.
                 
                 [theCalendarViewController.theCalendarView selectDate:notificationMoonDate scrollToDate:YES]; //Ask the calendar to select and scroll to the moon date associated with the notification.
-                [theCalendarViewController.theCalendarView reloadData]; //Ask the calendar to reload its data to prevent some occasional anomalies.
+                [theCalendarViewController.theCalendarView reloadData]; //Ask the calendar to reload its data to prevent some occasional anomalies.x
             }
     }];
 }
