@@ -30,28 +30,16 @@
 }
 
 - (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition;
-    //This calendar method is called when the calendar wants to know if the user should be permitted to select a specific date. We will test whether the date selected corresponds with a moon date. If so then we should allow the user to select the date.
+    //This calendar method is called when the calendar wants to know if the user should be permitted to select a specific date. We use the sharedMoonDatesManager to get a dictionary containing information on whether the date is a moon date, and if so what the index of the moon date is in the moon date array. If the selected date is a moon date then we should allow the user to select the date. The index of the moon date is stored in the journal index property and passed to the journal view controller in the prepareForSegue:segue sender:sender method.
 {
-    BOOL isMoonDate = NO; //This is the bool value we will return to state whether the user should be able to select the date or not.
-    NSUInteger i = 0; // We increment this integer with each pass of the following for loop, and use it as an index into the moondates array to identify the journal entry associated with the relevant moon date if we find one.
+    NSDictionary *dateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
+    BOOL isMoonDate = [[dateInfo objectForKey:@"isMoonDate"] boolValue]; //Find out if the date passed in by the calendar is a moon date.
     
-    //Next we iterate through the moon dates and compare with the date given to us by the calendar to work out if this is a moon date or not.
-    
-    for (NSDictionary *moonDatesDictionary in self.sharedMoonDatesManager.moonDatesArray)
+    if (isMoonDate == YES) //If the date is a moon date, then find out the index of the date in the moon dates array and store the index value.
     {
-        NSDateComponents *moonDateComponents = [[NSCalendar currentCalendar] components: NSCalendarUnitYear | NSCalendarUnitMonth| NSCalendarUnitDay fromDate: [moonDatesDictionary objectForKey:@"MoonDate"]]; //Get the components of the moon date so that we can create a new version without the time included
-        
-        NSDate *theMoonDate = [[NSCalendar currentCalendar] dateFromComponents:moonDateComponents]; //Create a working copy of the moon date without the time included
-        
-        if ([date isEqualToDate:theMoonDate]) //Compare the date provided by the calendar with the moon date in the array. If it is moon date, we return YES, otherwise we return NO (as the BOOL was initially declared with a value of NO)
-            {
-                isMoonDate = YES;
-                self.journalIndex = i; //Set journalIndex to i. Another method will use this value to access the appropriate journal entry.
-                break; // If the date is a moon date, then we break out of the for loop as we have found the moon date we are interested in.
-            }
-        i++; //Increment the integer
+        self.journalIndex = [[dateInfo objectForKey:@"index"] integerValue];
     }
-                                                
+    
     return isMoonDate;
     
 }
@@ -67,6 +55,31 @@
     WWFjournalViewController *journalViewController = (WWFjournalViewController *) [segue destinationViewController]; //Get a reference to the journal view controller via the segue which is passed to this method.
     journalViewController.indexForMoonDatesArray = self.journalIndex; //Pass the index for the journal entry to the journal view controller.
 }
+
+-(nullable UIImage *) calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date
+{
+    NSDictionary *moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date]; //Get the information about this date from the sharedMoonDatesManager
+    NSUInteger type = [[moonDateInfo objectForKey:@"type"] integerValue]; //If the date is a moon date get the type, if not then the value will be 0.
+    
+    if (type == 1)
+    {
+        UIImage *image = [UIImage imageNamed:@"FullMoonIcon"];
+        return image;
+    }
+    
+    else if (type == 2)
+    {
+        UIImage *image = [UIImage imageNamed:@"NewMoonIcon"];
+        return image;
+    }
+    
+    else
+    {
+        
+    }
+    return nil;
+}
+
 
 /*
 #pragma mark - Navigation
