@@ -14,6 +14,8 @@
 @interface WWF_FSCalViewController : UIViewController
 <FSCalendarDataSource, FSCalendarDelegate>
 
+@property (weak, nonatomic) IBOutlet FSCalendar *theCalendarView;
+
 - (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition;
 
 @end

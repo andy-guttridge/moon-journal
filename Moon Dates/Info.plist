@@ -44,6 +44,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>WWF Generate Test Data</key>
-	<false/>
+	<true/>
 </dict>
 </plist>

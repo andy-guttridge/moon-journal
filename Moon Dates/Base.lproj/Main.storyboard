@@ -235,6 +235,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="KyN-DX-S43"/>
                     <connections>
+                        <outlet property="theCalendarView" destination="RFw-BC-Scr" id="FNe-FP-wjV"/>
                         <segue destination="WWw-Xg-vDF" kind="show" identifier="journalsegue" id="Hqp-af-AGb"/>
                     </connections>
                 </viewController>

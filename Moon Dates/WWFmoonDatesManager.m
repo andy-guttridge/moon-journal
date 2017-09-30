@@ -168,7 +168,7 @@
 // ________________________________________________________________________________________________________________________________________________________________
  
 //Get todays date plus 60 seconds, and use this to generate and add some test dates to some Dictionaries, set the "Type" key to new moon (just for the sake of having some test data), add a BOOL with the key 'Released' (this is used to keep a record of whether the journal entry has been 'released') and then add the Dictionaries to our moonDatesArray. The notification dates will be generated in the init method, and if we have the notification interval set to the default three days, then we end up with some very convenient notification dates for testing purposes.
-/*
+
 {
     NSDate *todaysDatePlus60seconds = [NSDate dateWithTimeIntervalSinceNow: 60]; //259200 is the number of seconds in three 24 hour days.
     
@@ -183,11 +183,12 @@
     }
     
 }
-*/
+
     
 //__________________________________________________________________________________________________________________________________________________________________
 
 //Use the following chunk of code to generate some test events that are one hour apart for more realistic testing. The first event will be 15 minutes from the current time.
+    /*
     
     {
         NSDate *todaysDatePlus15minutes = [NSDate dateWithTimeIntervalSinceNow: 900]; //900 is the number of seconds in 15 minutes.
@@ -203,6 +204,7 @@
         }
         
     }
+     */
  
 //  ________________________________________________________________________________________________________________________________________________________________
  

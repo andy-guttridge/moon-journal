@@ -13,6 +13,7 @@
 @property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
 @property NSUInteger journalIndex; //We use this integer to hold an index for the moon dates array to access the correct journal entry.
 
+
 @end
 
 @implementation WWF_FSCalViewController
