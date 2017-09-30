@@ -57,17 +57,18 @@
 }
 
 -(nullable UIImage *) calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date
+//FSCalendar uses this method to ask for an image for each date cell. If the date is a new moon or full moon, then we return an appropriate image to use as an icon, otherwise we return nil.
 {
     NSDictionary *moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date]; //Get the information about this date from the sharedMoonDatesManager
     NSUInteger type = [[moonDateInfo objectForKey:@"type"] integerValue]; //If the date is a moon date get the type, if not then the value will be 0.
     
-    if (type == 1)
+    if (type == kFullMoon) //If the moon date is a full moon, then return the full moon icon to display on the calendar.
     {
         UIImage *image = [UIImage imageNamed:@"FullMoonIcon"];
         return image;
     }
     
-    else if (type == 2)
+    else if (type == kNewMoon) //If the moon date is a new moon, then return the new moon icon to display on the calendar.
     {
         UIImage *image = [UIImage imageNamed:@"NewMoonIcon"];
         return image;
