@@ -11,7 +11,7 @@
 #import "WWFmoonDatesManager.h"
 #import "WWFjournalViewController.h"
 
-@interface WWFcalendarViewController : UITableViewController
+@interface WWFcalendarViewController : UIViewController
 
 -(void) redrawTableView: (id) sender;
 

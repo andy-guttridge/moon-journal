@@ -161,7 +161,14 @@
 -(void) generateTestData
 {
     
+//Use the following chunk of code to generate a single item of test data based on the current date
 
+    NSDate *todaysDatePlus60seconds = [NSDate dateWithTimeIntervalSinceNow: 60];
+    NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon];
+    NSString *newMoonDateJournalString = @"";
+    NSNumber *released = [NSNumber numberWithBool:NO];
+    NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:todaysDatePlus60seconds, @"MoonDate", newMoonDateType, @"Type", newMoonDateJournalString, @"JournalText", released, @"Released", nil];
+    [self.moonDatesArray addObject:newMoonDateDictionary];
 
 // Use the following chunk of code to generate some test events that are only minutes apart for quick and immediate testing
  
@@ -188,6 +195,7 @@
 //__________________________________________________________________________________________________________________________________________________________________
 
 //Use the following chunk of code to generate some test events that are one hour apart for more realistic testing. The first event will be 15 minutes from the current time.
+    /*
     
     {
         NSDate *todaysDatePlus15minutes = [NSDate dateWithTimeIntervalSinceNow: 900]; //900 is the number of seconds in 15 minutes.
@@ -203,6 +211,7 @@
         }
         
     }
+     */
  
 //  ________________________________________________________________________________________________________________________________________________________________
  
@@ -473,5 +482,83 @@
     
     return description;
 }
+
+- (NSDictionary *) moonDateInfo: (NSDate *) date
+{
+    //This method accepts an NSDate and returns an NSDictionary containing info on whether the date is a moon date, and if so its index in the moon date array and the type of moon date.
+    NSLog (@"The date from the calendar is %@", date);
+    BOOL isMoonDate = NO; //This BOOL will state whether the date is a moon date or not.
+    NSUInteger i = 0; //If the date is a moon date, we will use this integer to find and return the index of the moon date in the moon dates dictionary.
+    NSUInteger type = 0; //If the date is a moon date, we will use this integer to return the type of moon date, i.e. full moon or new moon.
+    BOOL letItGo = NO; //This BOOL will tell us whether the moon date is within the 'letItGo' range of the current date, within which the moon ritual can be performed.
+    
+    NSDateComponents *calendarDateComponents = [[NSCalendar currentCalendar] components: NSCalendarUnitYear | NSCalendarUnitMonth| NSCalendarUnitDay fromDate: date]; //Get the components from the date given to us by the calendar to enable us to compare with the moon date.
+    NSDate *calendarDate = [[NSCalendar currentCalendar] dateFromComponents:calendarDateComponents]; //Recompose the calendar date without the time
+    
+    //Next we iterate through the moon dates and compare with the date given to us by the calendar to work out if this is a moon date or not, and find the index and type.
+    
+    NSLog (@"%@", self.moonDatesArray);
+    for (NSDictionary *moonDatesDictionary in self.moonDatesArray)
+    {
+        NSDateComponents *moonDateComponents = [[NSCalendar currentCalendar] components: NSCalendarUnitYear | NSCalendarUnitMonth| NSCalendarUnitDay fromDate: [moonDatesDictionary objectForKey:@"MoonDate"]]; //Get the components of the moon date so that we can create a new version without the time included
+        
+        NSDate *theMoonDate = [[NSCalendar currentCalendar] dateFromComponents:moonDateComponents]; //Create a working copy of the moon date without the time included
+        
+        if ([calendarDate isEqualToDate:theMoonDate]) //Compare the date passed into the method with the moon date in the array. If it is moon date, we set the values we need to return
+        {
+            isMoonDate = YES; //Return a BOOL value of YES to show that this is a moon date.
+            type = [[moonDatesDictionary objectForKey:@"Type"] integerValue]; //Get the type of moon date from the moon dates dictionary.
+            
+            NSTimeInterval intervalSinceMoonDate = [[moonDatesDictionary objectForKey:@"MoonDate"] timeIntervalSinceNow]; //Get the amount of time since the relevant moon event.
+            
+            NSLog(@"Interval since moon date in moon dates manager is: %f", intervalSinceMoonDate);
+            
+            if ((intervalSinceMoonDate >= kAllowedLetItGoInterval && intervalSinceMoonDate < 0) || (intervalSinceMoonDate <= kpreMoonDateLetItGoInterval && intervalSinceMoonDate > 0))
+                //Here we find out if the moon date is within the 'letItGo' range of the current date
+            {
+                letItGo = YES;
+                NSLog(@"Set LetItGo to YES");
+            }
+            
+            break; // If the date is a moon date, then we break out of the for loop as we have found the moon date we are interested in.
+        }
+        
+        
+     i++; // increment the index integer.
+    }
+    
+    
+    NSLog(@"IsMoonDate = %d", isMoonDate);
+      NSLog (@"The date passed in to Moon Dates Manager is %@", date);
+    
+    if (isMoonDate == YES) //If we have found a moon date, we package up our values in NSNumber objects and return them in a dictionary with appropriate keys.
+    {
+        NSNumber *isAMoonDate = [NSNumber numberWithBool:isMoonDate];
+        NSNumber *index = [NSNumber numberWithUnsignedInteger:i];
+        NSNumber *moonDateType = [NSNumber numberWithUnsignedInteger:type];
+        NSNumber *canLetItGo = [NSNumber numberWithBool:letItGo];
+        
+        NSArray *info = @[isAMoonDate, index, moonDateType, canLetItGo];
+        NSArray *keys = @[@"isMoonDate", @"index", @"type", @"canLetItGo"];
+        NSDictionary *moonDateInfoDictionary = [NSDictionary dictionaryWithObjects:info forKeys:keys];
+        
+        return moonDateInfoDictionary;
+    }
+        
+    else //If we did not find a moon date, then we package up our values in NSNumber objects and return the dictionary with information appropriate to not having found one.
+    {
+        NSNumber *isAMoonDate = [NSNumber numberWithBool:isMoonDate];
+        NSNumber *index = [NSNumber numberWithUnsignedInteger:NSNotFound];
+        NSNumber *moonDateType = [NSNumber numberWithInt:0];
+        NSNumber *canLetItGo = [NSNumber numberWithBool:NO];
+        
+        NSArray *info = @[isAMoonDate, index, moonDateType, canLetItGo];
+        NSArray *keys = @[@"isMoonDate", @"index", @"type", @"canLetItGo"];
+        NSDictionary *moonDateInfoDictionary = [NSDictionary dictionaryWithObjects:info forKeys:keys];
+        
+        return moonDateInfoDictionary;
+    }
+}
+
 
 @end
