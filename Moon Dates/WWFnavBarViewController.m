@@ -24,6 +24,10 @@
     self.sharedColoursManager = [WWFcoloursManager sharedColoursManager]; //Get a reference to the shared colours manager
     self.navigationBar.barTintColor = self.sharedColoursManager.backgroundColour; //Colour the navigation bar with the standard background colour from the shared colours manager.
     
+    NSDictionary *titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.headerColour forKey:NSForegroundColorAttributeName];
+    self.navigationBar.titleTextAttributes = titleTextAttributes;    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

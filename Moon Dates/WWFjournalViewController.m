@@ -43,6 +43,9 @@
     self.navigationController.navigationBar.tintColor = self.sharedColoursManager.selectableColour;
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.backgroundColour forKey:NSForegroundColorAttributeName];
     
+    NSDictionary *titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.headerColour forKey:NSForegroundColorAttributeName];
+    self.navigationController.navigationBar.titleTextAttributes = titleTextAttributes;
+    
     //Ensure text is displayed at the very top of the UITextView
     self.automaticallyAdjustsScrollViewInsets = NO;
     
