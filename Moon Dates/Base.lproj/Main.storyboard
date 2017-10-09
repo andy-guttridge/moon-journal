@@ -13,7 +13,7 @@
         <!--Calendar-->
         <scene sceneID="W81-kA-unj">
             <objects>
-                <navigationController id="LCb-pQ-ePJ" sceneMemberID="viewController">
+                <navigationController id="LCb-pQ-ePJ" customClass="WWFnavBarViewController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Calendar" id="AO0-bw-zc8"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kiW-ul-hrM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

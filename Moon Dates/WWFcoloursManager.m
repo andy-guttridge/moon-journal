@@ -30,7 +30,7 @@
        
     self.backgroundColour = [UIColor colorWithRed:0.14 green:0.14 blue:0.25 alpha:1];
     self.textColour = [UIColor colorWithRed:0.91 green:0.85 blue:1 alpha:1];
-    self.selectableColour = [UIColor colorWithRed:0.49 green:0.58 blue:255 alpha:1];
+    self.selectableColour = [UIColor colorWithRed:0.49 green:0.58 blue:1 alpha:1];
     self.placeholderDateColour = [UIColor colorWithRed:0.78 green:0.65 blue:1 alpha:1];
     self.nonSelectableColour = [UIColor colorWithRed:0.65 green:0.60 blue:0.71 alpha:1];
     self.highlightColour = [UIColor colorWithRed:1 green:0.98 blue:0.55 alpha:1];

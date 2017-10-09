@@ -10,8 +10,9 @@
 
 @interface WWF_FSCalViewController ()
 
-@property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
+@property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager; //Used to hold a reference to the shared moon dates manager.
 @property NSUInteger journalIndex; //We use this integer to hold an index for the moon dates array to access the correct journal entry.
+@property NSDictionary *moonDateInfo; //We use this to hold a dictionary containing information about a specific moon date, which is used to inform the FSCalendar of how to format each date cell.
 
 
 @end
@@ -38,6 +39,8 @@
     
     self.todayButton.tintColor = self.sharedColoursManager.selectableColour;
     
+    self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:[NSDate dateWithTimeIntervalSinceNow:0]]; //Initialise our moon date info dictionary
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,12 +51,16 @@
 - (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition;
     //This calendar method is called when the calendar wants to know if the user should be permitted to select a specific date. We use the sharedMoonDatesManager to get a dictionary containing information on whether the date is a moon date, and if so what the index of the moon date is in the moon date array. If the selected date is a moon date then we should allow the user to select the date. The index of the moon date is stored in the journal index property and passed to the journal view controller in the prepareForSegue:segue sender:sender method.
 {
-    NSDictionary *dateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
-    BOOL isMoonDate = [[dateInfo objectForKey:@"isMoonDate"] boolValue]; //Find out if the date passed in by the calendar is a moon date.
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+    {
+        self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
+    }
+    
+    BOOL isMoonDate = [[self.moonDateInfo objectForKey:@"isMoonDate"] boolValue]; //Find out if the date passed in by the calendar is a moon date.
     
     if (isMoonDate == YES) //If the date is a moon date, then find out the index of the date in the moon dates array and store the index value.
     {
-        self.journalIndex = [[dateInfo objectForKey:@"index"] integerValue];
+        self.journalIndex = [[self.moonDateInfo objectForKey:@"index"] integerValue];
     }
     
     return isMoonDate;
@@ -76,9 +83,14 @@
 -(nullable UIImage *) calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date
 //FSCalendar uses this method to ask for an image for each date cell. If the date is a new moon or full moon, then we return an appropriate image to use as an icon, otherwise we return nil.
 {
-    NSDictionary *moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date]; //Get the information about this date from the sharedMoonDatesManager
-    NSUInteger type = [[moonDateInfo objectForKey:@"type"] integerValue]; //If the date is a moon date get the type, if not then the value will be 0.
-    BOOL canLetItGo = [[moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Find out whether the date is within the Let It Go range witin which the ritual can be performed.
+    
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+    {
+        self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
+    }
+    
+    NSUInteger type = [[self.moonDateInfo objectForKey:@"type"] integerValue]; //If the date is a moon date get the type, if not then the value will be 0.
+    BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Find out whether the date is within the Let It Go range witin which the ritual can be performed.
     
     
     
@@ -115,6 +127,7 @@
 
 - (IBAction)goToToday:(id)sender
 {
+    //This method is called when the today button on the calendar is pressed, and selects and scrolls to the current date.
     [self.theCalendarView selectDate:[NSDate date] scrollToDate:YES];
 }
 
@@ -122,9 +135,12 @@
 {
     //Here the calendar asks for a default fill colour for dates
     
-    NSDictionary *moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date]; //Get info on the date passed in by the calendar from the shared Moon Dates Manager.
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+    {
+        self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
+    }
     
-    BOOL canLetItGo = [[moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
+    BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
     
     if (canLetItGo) //If we are within the Let It Go range, then return our highlighted colour to indicate that the ritual can be performed
     {
@@ -149,9 +165,12 @@
 {
     //Here the calendar asks for the default text colour for dates. If the date is within the Let It Go range, then we return the background colour so that the text stands out against the highlighted cell. Otherwise we return our standard text colour.
     
-    NSDictionary *moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date]; //Get info on the date passed in by the calendar from the shared Moon Dates Manager.
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+    {
+        self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
+    }
     
-    BOOL canLetItGo = [[moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
+    BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
     
     if (canLetItGo) //If we are within the Let It Go range, then return our standard background colour
     {
@@ -188,9 +207,13 @@
 {
     //Here the calendar asks for the fill colour for a selected date. If the date is not within the Let It Go range then we return the standard background colour, if it is within the Let It Go range then we return a highlight colour.
     
-    NSDictionary *moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date]; //Get info on the date passed in by the calendar from the shared Moon Dates Manager.
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+    {
+        self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
+    }
     
-    BOOL canLetItGo = [[moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
+    
+    BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
     
     if (canLetItGo) //If we are within the Let It Go range, then return our highlighted colour to indicate that the ritual can be performed
     {
@@ -211,9 +234,13 @@
     
     //Here the calendar asks for a default fill colour for dates
     
-    NSDictionary *moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date]; //Get info on the date passed in by the calendar from the shared Moon Dates Manager.
     
-    BOOL canLetItGo = [[moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+    {
+        self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
+    }
+    
+    BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
     
     if (canLetItGo) //If we are within the Let It Go range, then return our standard background colour to stand out against the highlighted cell
     {
@@ -246,8 +273,6 @@
     
     CGRect theFrame = [self.theCalendarView frameForDate:date]; //Get the frame for our date cell
     CGPoint offsetForImage = CGPointMake(0, (theFrame.size.height /3.5) * -1); //Here we take the height of the date cell, and use it to calculate a negative offset for the image, to position it within the selectable date area.
-    
-    NSLog (@"Frame heifht: %f", theFrame.size.height);
     
     return offsetForImage;
 }

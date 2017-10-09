@@ -20,6 +20,7 @@
 		A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */; };
 		A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10577651CFB06E500951A27 /* MoonDatesData.plist */; };
 		A10A24521E3E378800DEF328 /* mj_app_instructions.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A10A24511E3E378800DEF328 /* mj_app_instructions.rtf */; };
+		A11F28E81F8BF79800533AAB /* WWFnavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A11F28E71F8BF79800533AAB /* WWFnavBarViewController.m */; };
 		A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A145CB0A1CFB63B700670E79 /* UserData.plist */; };
 		A145CB0E1CFB652400670E79 /* WWFuserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */; };
 		A1743E601D15D11100DE328B /* WWFjournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */; };
@@ -85,6 +86,8 @@
 		A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFmoonDatesManager.m; sourceTree = "<group>"; };
 		A10577651CFB06E500951A27 /* MoonDatesData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MoonDatesData.plist; sourceTree = "<group>"; };
 		A10A24511E3E378800DEF328 /* mj_app_instructions.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = mj_app_instructions.rtf; sourceTree = "<group>"; };
+		A11F28E61F8BF79800533AAB /* WWFnavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFnavBarViewController.h; sourceTree = "<group>"; };
+		A11F28E71F8BF79800533AAB /* WWFnavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFnavBarViewController.m; sourceTree = "<group>"; };
 		A145CB061CFB4D3D00670E79 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A145CB0A1CFB63B700670E79 /* UserData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserData.plist; sourceTree = "<group>"; };
 		A145CB0C1CFB652400670E79 /* WWFuserDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFuserDataManager.h; sourceTree = "<group>"; };
@@ -187,6 +190,8 @@
 				A145CB061CFB4D3D00670E79 /* Constants.h */,
 				A105772C1CFAFBCE00951A27 /* WWFtabBarController.h */,
 				A105772D1CFAFBCE00951A27 /* WWFtabBarController.m */,
+				A11F28E61F8BF79800533AAB /* WWFnavBarViewController.h */,
+				A11F28E71F8BF79800533AAB /* WWFnavBarViewController.m */,
 				A1A0C2DA1F76E37900E29DFD /* WWF_FSCalViewController.h */,
 				A1A0C2DB1F76E37900E29DFD /* WWF_FSCalViewController.m */,
 				A105775C1CFAFD3300951A27 /* WWFinfoViewController.h */,
@@ -420,6 +425,7 @@
 				A105772E1CFAFBCE00951A27 /* WWFtabBarController.m in Sources */,
 				A1A0C2D61F76D9D100E29DFD /* FSCalendarStickyHeader.m in Sources */,
 				A1743E601D15D11100DE328B /* WWFjournalViewController.m in Sources */,
+				A11F28E81F8BF79800533AAB /* WWFnavBarViewController.m in Sources */,
 				A1A0C2D41F76D9D100E29DFD /* FSCalendarHeaderView.m in Sources */,
 				A1A0C2D71F76D9D100E29DFD /* FSCalendarTransitionCoordinator.m in Sources */,
 				A1A0C2CA1F76D9D100E29DFD /* FSCalendar+Deprecated.m in Sources */,
