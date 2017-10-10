@@ -35,16 +35,14 @@
     //Get a reference to the shared colours manager.
     self.sharedColoursManager = [WWFcoloursManager sharedColoursManager];
     
-    self.moonTypeLabel.textColor = self.sharedColoursManager.nonSelectableColour;
+    //Set colours of various UI elements using colours from our shared colours manager
+    self.moonTypeLabel.textColor = self.sharedColoursManager.headerColour;
     self.moonTypeLabel.backgroundColor = self.sharedColoursManager.backgroundColour;
     self.journalTextView.textColor = self.sharedColoursManager.textColour;
     self.journalTextView.backgroundColor = self.sharedColoursManager.backgroundColour;
     self.view.backgroundColor = self.sharedColoursManager.backgroundColour;
     self.navigationController.navigationBar.tintColor = self.sharedColoursManager.selectableColour;
-    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.backgroundColour forKey:NSForegroundColorAttributeName];
-    
-    NSDictionary *titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.headerColour forKey:NSForegroundColorAttributeName];
-    self.navigationController.navigationBar.titleTextAttributes = titleTextAttributes;
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.headerColour forKey:NSForegroundColorAttributeName];
     
     //Ensure text is displayed at the very top of the UITextView
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -110,29 +108,6 @@
     
     //moonTypeSpecificLabelText is the for the moonTypeLabel which is dependent on the type of moon event.
     
-    NSString *moonTypeSpecificLabelText = [[NSString alloc]init];
-    switch ([[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"Type"]intValue])
-    {
-        case kNoMoonEvent:
-            moonTypeSpecificLabelText = @"No moon event";
-            self.letItGoButton.title =@"No event";
-            break;
-            
-        case kNewMoon:
-            moonTypeSpecificLabelText = @"New Moon: the time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.";
-            self.letItGoButton.title =@"Set intention";
-            break;
-            
-        case kFullMoon:
-            moonTypeSpecificLabelText = @"Full Moon: the time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.";
-            self.letItGoButton.title =@"Release";
-            break;
-            
-        default:
-            moonTypeSpecificLabelText = @"Invalid moon event type";
-            self.letItGoButton.title =@"Error";
-            break;
-    }
     
     /* Creat two NSDateFormatters, one will be used to extract the date from an NSDate in the form of a string, while the other will be used to extract the time from the NSDate. */
     NSDateFormatter *dateFormatterForDate = [[NSDateFormatter alloc] init];
@@ -145,6 +120,36 @@
     dateFormatterForDate.timeStyle = NSDateFormatterNoStyle;
     dateFormatterForTime.dateStyle = NSDateFormatterNoStyle;
     dateFormatterForTime.timeStyle = NSDateFormatterShortStyle;
+    
+    
+    NSDictionary *moonDatesInfo = [self.sharedMoonDatesManager moonDateInfo:theMoonDate]; //Get information on the moon date from the sharedMoonDatesManager, which we will use to display the moon date in the text label in the journal view, and later to determine whether the ritual can be performed for the current moon date.
+    
+    NSString *moonDateDayString = [dateFormatterForDate stringFromDate:theMoonDate]; //Get a date string from the moon date.
+    NSString *moonDateTimeString = [dateFormatterForTime stringFromDate:theMoonDate]; //Get a time string from the moon date.
+    
+    NSString *moonTypeSpecificLabelText = [[NSString alloc]init];
+    switch ([[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"Type"]intValue])
+    {
+        case kNoMoonEvent:
+            moonTypeSpecificLabelText = @"No moon event";
+            self.letItGoButton.title =@"No event";
+            break;
+            
+        case kNewMoon:
+            moonTypeSpecificLabelText = [NSString stringWithFormat: @"New Moon at %@ on %@. The time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.", moonDateTimeString, moonDateDayString];
+            self.letItGoButton.title =@"Set intention";
+            break;
+            
+        case kFullMoon:
+            moonTypeSpecificLabelText = [NSString stringWithFormat: @"Full Moon at %@ on %@. The time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.", moonDateTimeString, moonDateDayString];
+            self.letItGoButton.title =@"Release";
+            break;
+            
+        default:
+            moonTypeSpecificLabelText = @"Invalid moon event type";
+            self.letItGoButton.title =@"Error";
+            break;
+    }
     
     NSDate *ritualDeadline = [[NSDate alloc] initWithTimeInterval: labs (kAllowedLetItGoInterval) sinceDate:theMoonDate]; //Get the date by which the ritual must be performed. This is used to populate the detail text of the cell to inform the user by when the ritual must be completed. We use the C labs function to convert the letItGoAllowedInterval to an unsigned double.
     
@@ -159,7 +164,6 @@
     
     //Enable letItGoButton if the relevant moon event date has passed if we are within kAllowedLetItGoInterval of the moon event having passed, or if we are within the kpreMoonLetItGo interval before the moon event date, and if the journal entry has not already been released.
     
-    NSDictionary *moonDatesInfo = [self.sharedMoonDatesManager moonDateInfo:theMoonDate]; //Get information on the moon date from the sharedMoonDatesManager, which we will use to determine whether the ritual can be performed for the current moon date.
     NSLog(@"The moon date in journal view is %@", theMoonDate);
     NSLog(@"%@", moonDatesInfo);
     if (([[moonDatesInfo objectForKey:@"canLetItGo"] boolValue] == YES) && hasBeenReleased == NO)
