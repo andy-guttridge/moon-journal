@@ -14,6 +14,7 @@
 @property (strong, nonatomic) WWFuserDataManager *sharedUserDataManager;
 @property WWFcoloursManager *sharedColoursManager;
 
+
 @end
 
 @implementation WWFtabBarController
@@ -30,6 +31,7 @@
     self.sharedColoursManager = [WWFcoloursManager sharedColoursManager];
     
     self.tabBar.tintColor = self.sharedColoursManager.selectableColour; //Set colour of the selected tab bar item using a colour from the sharedColoursManager.
+    self.tabBar.barTintColor = self.sharedColoursManager.backgroundColour; //Set the background colour of the tab bar using the background colour from sharedColoursManager
 }
 
 - (void)didReceiveMemoryWarning {
