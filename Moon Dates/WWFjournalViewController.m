@@ -10,11 +10,9 @@
 
 @interface WWFjournalViewController ()
 
-@property IBOutlet UILabel *moonTypeLabel;
-@property IBOutlet UITextView *journalTextView;
-@property IBOutlet UIBarButtonItem *letItGoButton;
-
-
+@property (weak,nonatomic) IBOutlet UILabel *moonTypeLabel;
+@property (weak, nonatomic) IBOutlet UITextView *journalTextView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *letItGoButton;
 
 @property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
 @property (weak, nonatomic) WWFuserDataManager *sharedUserDataManager;
@@ -136,12 +134,12 @@
             break;
             
         case kNewMoon:
-            moonTypeSpecificLabelText = [NSString stringWithFormat: @"New Moon at %@ on %@. The time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.", moonDateTimeString, moonDateDayString];
+            moonTypeSpecificLabelText = [NSString stringWithFormat: @"New Moon at %@ on %@. \n\nThe time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.", moonDateTimeString, moonDateDayString];
             self.letItGoButton.title =@"Set intention";
             break;
             
         case kFullMoon:
-            moonTypeSpecificLabelText = [NSString stringWithFormat: @"Full Moon at %@ on %@. The time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.", moonDateTimeString, moonDateDayString];
+            moonTypeSpecificLabelText = [NSString stringWithFormat: @"Full Moon at %@ on %@. \n\nThe time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.", moonDateTimeString, moonDateDayString];
             self.letItGoButton.title =@"Release";
             break;
             
@@ -198,20 +196,13 @@
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) //OK action to add to the UIAlertController. The handler code deals with performing the moon ritual for this journal entry, as the user has stated that they wish to perform the action. We specify UIActionAlertStyleDestructive, as this action deletes the journal entry and is non-reversible.
     {
+        [self performSegueWithIdentifier:@"avplayerviewsegue" sender:self];
         self.journalTextView.text = @"The sacred ritual has been completed."; //Update the text in the journal text view.
         [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"The sacred ritual has been completed." forKey:@"JournalText"]; //Update the text in the Moon Dates dictionary.
         [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:[NSNumber numberWithBool:YES] forKey: @"Released"]; //Set the Released flag in the moonDatesArray to YES so that we know this journal entry has now been releasd, and the LetItGoButton will now not be enabled.
         [self.sharedMoonDatesManager saveMoonDatesData]; //Save the updated journal entry.
         self.journalTextView.editable = NO; //Now make the journal view uneditable.
         
-        //Next, configure and show an alert message with an OK button.
-        
-        NSString *letItGoMessage = @"This sacred ritual is now complete";
-        
-        UIAlertController *letItGoAlertController = [UIAlertController alertControllerWithTitle:@"Ritual Complete" message:letItGoMessage preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-        [letItGoAlertController addAction:OKAction];
-        [self presentViewController:letItGoAlertController animated:YES completion:nil];
         self.letItGoButton.enabled = NO; //Disable the letItGoButton, now that the journal entry has been released.
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0; //Here we set the application badge icon number to zero, as the ritual has been performed and therefore there will now be no pending rituals to notify the user of, until the next moon date occurs.
     }];

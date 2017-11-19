@@ -10,4 +10,6 @@
 
 @interface WWFsettingsViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *clearJournalButton;
+
 @end

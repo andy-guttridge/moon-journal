@@ -32,6 +32,8 @@
     //Set delegate for the UNNotificationCenter
     WWFtabBarController *theTabBarController = (WWFtabBarController *) self.window.rootViewController;
     notificationCenter.delegate = theTabBarController;
+  
+    
     
     return YES;
 }

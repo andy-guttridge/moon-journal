@@ -12,7 +12,7 @@
 
 @property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
 @property (strong, nonatomic) WWFuserDataManager *sharedUserDataManager;
-@property WWFcoloursManager *sharedColoursManager;
+@property (strong, nonatomic) WWFcoloursManager *sharedColoursManager;
 
 
 @end
@@ -32,6 +32,13 @@
     
     self.tabBar.tintColor = self.sharedColoursManager.selectableColour; //Set colour of the selected tab bar item using a colour from the sharedColoursManager.
     self.tabBar.barTintColor = self.sharedColoursManager.backgroundColour; //Set the background colour of the tab bar using the background colour from sharedColoursManager
+    
+    NSDictionary *barItemSelectedAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize: 20.0f], NSForegroundColorAttributeName : self.sharedColoursManager.highlightColour}; //Create a dictionary containting string attributes for our UITabBar items in the selected state;
+    [[UITabBarItem appearance] setTitleTextAttributes:barItemSelectedAttributes forState:UIControlStateSelected]; //Assign the font attributes to the tab bar items, for both the selected state.
+    
+    NSDictionary *barItemUnselectedAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize: 20.0f], NSForegroundColorAttributeName : self.sharedColoursManager.selectableColour}; //Create a dictionary containting string attributes for our UITabBar items in the unselected state;
+    [[UITabBarItem appearance] setTitleTextAttributes:barItemUnselectedAttributes forState:UIControlStateNormal]; //Assign the font attributes to the tab bar items, for both normal unselected states.
+    
 }
 
 - (void)didReceiveMemoryWarning {

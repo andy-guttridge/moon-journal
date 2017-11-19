@@ -43,7 +43,7 @@
                                 <rect key="frame" x="16" y="103" width="343" height="549"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
                                     <outlet property="delegate" destination="WWw-Xg-vDF" id="vlg-DT-D70"/>
@@ -112,11 +112,20 @@
                         <outlet property="journalTextView" destination="qua-0l-WW5" id="E50-Yi-4tx"/>
                         <outlet property="letItGoButton" destination="J9h-Pd-6PO" id="diX-ZH-QL4"/>
                         <outlet property="moonTypeLabel" destination="WLF-U7-wlq" id="auV-Kd-hOQ"/>
+                        <segue destination="seM-cf-2Jb" kind="presentation" identifier="avplayerviewsegue" id="GDX-Uw-HWO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zeL-YT-RUg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2621.5999999999999" y="-252.32383808095955"/>
+        </scene>
+        <!--AV Player View Controller-->
+        <scene sceneID="OQY-xm-vCc">
+            <objects>
+                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="seM-cf-2Jb" customClass="WWFAVViewController" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gAJ-V0-79q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3391" y="-252"/>
         </scene>
         <!--Info-->
         <scene sceneID="DYg-xg-5jd">
@@ -166,24 +175,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings will go here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gae-bF-fAn">
-                                <rect key="frame" x="110" y="323" width="155" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibP-hV-ulS">
+                                <rect key="frame" x="16" y="28" width="343" height="30"/>
+                                <state key="normal" title="Clear all journal entries"/>
+                                <connections>
+                                    <action selector="clearJournalButtonPressed:" destination="HS3-S3-hwA" eventType="touchUpInside" id="ryg-ni-Gy3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Gae-bF-fAn" firstAttribute="centerX" secondItem="50E-AU-TWD" secondAttribute="centerX" id="Q9w-NR-3mZ"/>
-                            <constraint firstItem="Gae-bF-fAn" firstAttribute="centerY" secondItem="50E-AU-TWD" secondAttribute="centerY" id="oX4-dc-MJh"/>
+                            <constraint firstItem="ibP-hV-ulS" firstAttribute="top" secondItem="0e9-XM-Ho9" secondAttribute="bottom" constant="8" id="Qvp-cT-oS1"/>
+                            <constraint firstItem="ibP-hV-ulS" firstAttribute="leading" secondItem="50E-AU-TWD" secondAttribute="leadingMargin" id="n5T-WL-X1q"/>
+                            <constraint firstItem="ibP-hV-ulS" firstAttribute="trailing" secondItem="50E-AU-TWD" secondAttribute="trailingMargin" id="zk0-99-cnf"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" id="FbC-As-EbN"/>
+                    <connections>
+                        <outlet property="clearJournalButton" destination="ibP-hV-ulS" id="XXX-eM-beI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BWh-C8-1bw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="524" y="1309"/>
+            <point key="canvasLocation" x="524" y="1308.3958020989505"/>
         </scene>
         <!--Ftab Bar Controller-->
         <scene sceneID="LnQ-kC-UJp">
