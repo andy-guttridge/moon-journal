@@ -94,9 +94,7 @@
         
         //Schedule notifications
         
-        //If this version of the app is running for the first time, then we want to schedule all of the notifications (the scheduleNotifications method also deletes existing notifications).
-        //Updates to the list of moon events will be included in updates, and at those times the notifications will need to be rescheduled as there will be new dates further into the future included.
-        //We hard code a version number and store this using NSUserDefaults, so that we can then do a comparison and see if the hard coded and the stored version numbers match. If they don't then we know our app has been updated and we need to schedule the notifications.
+        //We reschedule notifications every time the app is run. This makes sure that old notifications are not rescheduled, and that  notifications that were not scheduled previously because they were beyond the maximum number of 64 allowed notifications will be scheduled this time, up to the maximum.
         
         NSInteger currentVersion = 0; //This needs to be incremented with each new version of the app. A value of zero will always cause notifications to be scheduled and is to be used for testing purposes.
         
@@ -331,7 +329,7 @@
     
     NSDate *todaysDate = [NSDate date]; //Create an NSDate using the current date and time for use in a comparison below.
     
-    //Iterate through the array of NSDates in the moonDatesDictionary, and schedule a notification for each one.
+    //Iterate through the array of NSDates in the moonDatesDictionary, and schedule a notification for each one, as long as the moon date is not in the past.
     NSUInteger i = 0; //An integer we increment with each iteration, and use to create unique notification identifiers.
     
     for (NSMutableDictionary *moonDatesDictionary in self.moonDatesArray)
@@ -491,6 +489,7 @@
     NSUInteger i = 0; //If the date is a moon date, we will use this integer to find and return the index of the moon date in the moon dates dictionary.
     NSUInteger type = 0; //If the date is a moon date, we will use this integer to return the type of moon date, i.e. full moon or new moon.
     BOOL letItGo = NO; //This BOOL will tell us whether the moon date is within the 'letItGo' range of the current date, within which the moon ritual can be performed.
+    BOOL released = NO; //This BOOL will tell us whether the ritual has been performed for a specific journal entry.
   
     
     NSCalendar *theCalendar = [NSCalendar currentCalendar]; //Create a reference to the user's current calendar to create dates
@@ -516,6 +515,7 @@
             
             isMoonDate = YES; //Return a BOOL value of YES to show that this is a moon date.
             type = [[moonDatesDictionary objectForKey:@"Type"] integerValue]; //Get the type of moon date from the moon dates dictionary.
+            released = [[moonDatesDictionary objectForKey:@"Released"] boolValue]; //Retrieve the information on whether the ritual has been performed for this journal entry.
             
             NSTimeInterval intervalSinceMoonDate = [[moonDatesDictionary objectForKey:@"MoonDate"] timeIntervalSinceNow]; //Get the amount of time since the relevant moon event.
             
@@ -545,11 +545,13 @@
         NSNumber *index = [NSNumber numberWithUnsignedInteger:i];
         NSNumber *moonDateType = [NSNumber numberWithUnsignedInteger:type];
         NSNumber *canLetItGo = [NSNumber numberWithBool:letItGo];
+        NSNumber *hasBeenReleased = [NSNumber numberWithBool:released];
+        
        
         
-        NSArray *info = @[isAMoonDate, index, moonDateType, canLetItGo, date];
+        NSArray *info = @[isAMoonDate, index, moonDateType, canLetItGo, date, hasBeenReleased];
          // We include the date that was passed in and used to retrieve the info, as other parts of the app need to perform a comparison to see whether the info on this date needs to be refreshed.
-        NSArray *keys = @[@"isMoonDate", @"index", @"type", @"canLetItGo", @"date"];
+        NSArray *keys = @[@"isMoonDate", @"index", @"type", @"canLetItGo", @"date", @"released"];
         NSDictionary *moonDateInfoDictionary = [NSDictionary dictionaryWithObjects:info forKeys:keys];
         
         return moonDateInfoDictionary;
@@ -561,12 +563,25 @@
         NSNumber *index = [NSNumber numberWithUnsignedInteger:NSNotFound];
         NSNumber *moonDateType = [NSNumber numberWithInt:0];
         NSNumber *canLetItGo = [NSNumber numberWithBool:NO];
+        NSNumber *hasBeenReleased = [NSNumber numberWithBool:released];
         
-        NSArray *info = @[isAMoonDate, index, moonDateType, canLetItGo, date];
-        NSArray *keys = @[@"isMoonDate", @"index", @"type", @"canLetItGo", @"date"];
+        NSArray *info = @[isAMoonDate, index, moonDateType, canLetItGo, date, hasBeenReleased];
+        NSArray *keys = @[@"isMoonDate", @"index", @"type", @"canLetItGo", @"date", @"released"];
         NSDictionary *moonDateInfoDictionary = [NSDictionary dictionaryWithObjects:info forKeys:keys];
         
         return moonDateInfoDictionary;
+    }
+}
+
+-(void) clearAllJournalEntries
+//Clear all journal entries in the moon dates dictionary
+
+{
+    for (NSMutableDictionary *moonDatesDictionary in self.moonDatesArray)
+        //Iterate through the whole moon dates array.
+    {
+        NSString *emptyString = @""; //Intialise an empty string.
+        [moonDatesDictionary setObject:emptyString forKey:@"JournalText"];//Put the empty string into the journal entry.
     }
 }
 

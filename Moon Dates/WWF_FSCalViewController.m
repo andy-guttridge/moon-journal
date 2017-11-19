@@ -12,7 +12,7 @@
 
 @property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager; //Used to hold a reference to the shared moon dates manager.
 @property NSUInteger journalIndex; //We use this integer to hold an index for the moon dates array to access the correct journal entry.
-@property NSDictionary *moonDateInfo; //We use this to hold a dictionary containing information about a specific moon date, which is used to inform the FSCalendar of how to format each date cell.
+@property (copy) NSDictionary *moonDateInfo; //We use this to hold a dictionary containing information about a specific moon date, which is used to inform the FSCalendar of how to format each date cell.
 
 
 @end
@@ -28,6 +28,8 @@
     
     //Here we register to received UIApplicationWillEnterForegroundNotification and call the [self redrawCalendar] method, to ensure that the calendar is redrawn if the user switches back to our app having been using a different app, locked their device etc.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector (redrawCalendar) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    //Set up display properties of our calendar, e.g. colours, scroll direction etc.
     
     self.theCalendarView.scrollDirection = FSCalendarScrollDirectionVertical;
     
@@ -66,6 +68,20 @@
     [self.theCalendarView deselectDate:[self.sharedMoonDatesManager.moonDatesArray [self.journalIndex] objectForKey:@"MoonDate"]]; //Here we ask the calendar to deselect the date corresponding to the current moon date array index stored within this object. This ensures that the moon date is deselected in the calendar when we return from another view, e.g. the journal view.
 }
 
+- (NSDate *)minimumDateForCalendar:(FSCalendar *)calendar
+//Here the calendar asks for the end date for the calendar
+{
+    NSDate *startDate = [NSDate dateWithTimeIntervalSinceReferenceDate:kCalendarStartDate];
+    return startDate;
+}
+
+- (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar
+//Here the calendar asks for the end date for the calendar
+{
+    NSDate *endDate = [NSDate dateWithTimeIntervalSinceReferenceDate:kCalendarEndDate];
+    return endDate;
+}
+
 - (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition;
     //This calendar method is called when the calendar wants to know if the user should be permitted to select a specific date. We use the sharedMoonDatesManager to get a dictionary containing information on whether the date is a moon date, and if so what the index of the moon date is in the moon date array. If the selected date is a moon date then we should allow the user to select the date. The index of the moon date is stored in the journal index property and passed to the journal view controller in the prepareForSegue:segue sender:sender method.
 {
@@ -101,7 +117,7 @@
 -(nullable UIImage *) calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date
 //FSCalendar uses this method to ask for an image for each date cell. If the date is a new moon or full moon, then we return an appropriate image to use as an icon, otherwise we return nil.
 {
-    
+    //Check that the moon date info currently stored in the calendar view controller relates to the date passed in by the calendar. If note, ask the moon dates manager for the info for the correct date. We do this to ensure that each FSCalendar delegate method that requires this information only asks for it if it is needed, otherwise if every method asks for the information for every calendar cell, the performance of the calendar view is negatively impacted.
     if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
     {
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
@@ -109,31 +125,54 @@
     
     NSUInteger type = [[self.moonDateInfo objectForKey:@"type"] integerValue]; //If the date is a moon date get the type, if not then the value will be 0.
     BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Find out whether the date is within the Let It Go range witin which the ritual can be performed.
+    BOOL released = [[self.moonDateInfo objectForKey:@"released"] boolValue]; //Find out whether the journal entry for this date has been performed.
     
-    
-    
-    if ((type == kFullMoon) && (canLetItGo == NO)) //If the moon date is a full moon and the date is not within the Let It Go range, then return the standard full moon icon to display on the calendar.
+    if ((type == kFullMoon) && (!canLetItGo)) //If the moon date is a full moon and the date is not within the Let It Go range, then return the standard full moon icon to display on the calendar.
     {
         UIImage *image = [UIImage imageNamed:@"FullMoonIcon"];
         return image;
     }
     
-    else if ((type ==kFullMoon) && (canLetItGo == YES)) //If the moon date is a full moon and the date is  within the Let It Go range, then return the inverse full moon icon to display on the calendar.
+    else if ((type ==kFullMoon) && (canLetItGo)) //If the moon date is a full moon and the date is  within the Let It Go range then we need to find out whether the ritual has been performed for the corresponding journal entry.
     {
-        UIImage *image = [UIImage imageNamed: @"FullMoonInverseIcon"];
-        return image;
+        if (!released)
+        {
+            //If the journal entry for this date hasn't been released yet, then the cell will be highlighted and we will need to return the inverse icon image.
+            UIImage *image = [UIImage imageNamed: @"FullMoonInverseIcon"];
+            return image;
+        }
+        
+        else
+        {
+            //Otherwise the journal entry has been been released and we return the standard full moon icon image.
+            UIImage *image = [UIImage imageNamed: @"FullMoonIcon"];
+            return image;
+        }
     }
     
-    else if ((type == kNewMoon) && (canLetItGo == NO)) //If the moon date is a new moon and the date is not within the Let It Go range, then return the standard new moon icon to display on the calendar.
+    else if ((type == kNewMoon) && (!canLetItGo)) //If the moon date is a new moon and the date is not within the Let It Go range, then return the standard new moon icon to display on the calendar.
     {
         UIImage *image = [UIImage imageNamed:@"NewMoonIcon"];
         return image;
     }
     
-    else if ((type == kNewMoon) && (canLetItGo == YES)) //If the moon date is a new moon and the date is  within the Let It Go range, then return the inverse new moon icon to display on the calendar.
+    else if ((type == kNewMoon) && (canLetItGo)) //If the moon date is a new moon and the date is  within the Let It Go range then we need to find out whether the ritual has been performed for the corresponding journal entry.
+
     {
-        UIImage *image = [UIImage imageNamed:@"NewMoonInverseIcon"];
-        return image;
+        if (!released)
+        {
+            //If the journal entry for this date hasn't been released yet, then the cell will be highlighted and we will need to return the inverse icon image.
+            UIImage *image = [UIImage imageNamed:@"NewMoonInverseIcon"];
+            return image;
+        }
+        
+        else
+        
+        {
+            //Otherwise return the standard icon.
+            UIImage *image = [UIImage imageNamed:@"NewMoonIcon"];
+            return image;
+        }
     }
     
     else
@@ -156,20 +195,25 @@
     //Here the calendar asks for a default fill colour for dates
     
     if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+        //Check that the moon date info currently stored in the calendar view controller relates to the date passed in by the calendar. If note, ask the moon dates manager for the info for the correct date. We do this to ensure that each FSCalendar delegate method that requires this information only asks for it if it is needed, otherwise if every method asks for the information for every calendar cell, the performance of the calendar view is negatively impacted.
     {
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
     }
     
     BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
+    BOOL released = [[self.moonDateInfo objectForKey:@"released"] boolValue]; //Extract the information on whether the ritual has been performed for this journal entry.
     
-    if (canLetItGo) //If we are within the Let It Go range, then return our highlighted colour to indicate that the ritual can be performed
+    NSLog (@"%d", released);
+    
+    if ((canLetItGo) && (!released)) //If we are within the Let It Go range, and the journal entry as not been released, then return our highlighted colour to indicate that the ritual can be performed
     {
         return self.sharedColoursManager.highlightColour;
     }
     
-    else
+    else //If the date is not within the Let It Go range, then return the standard background colour.
     {
         return self.sharedColoursManager.backgroundColour;
+        
     }
     
     
@@ -204,16 +248,18 @@
 
 - (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(nonnull NSDate *)date
 {
-    //Here the calendar asks for the default text colour for dates. If the date is within the Let It Go range, then we return the background colour so that the text stands out against the highlighted cell. Otherwise we return our standard text colour.
+    //Here the calendar asks for the default text colour for dates. If the date is within the Let It Go range AND the journal entry for this date has not been released, then we return the background colour so that the text stands out against the highlighted cell. Otherwise we return our standard text colour.
     
     if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+        //Check that the moon date info currently stored in the calendar view controller relates to the date passed in by the calendar. If note, ask the moon dates manager for the info for the correct date. We do this to ensure that each FSCalendar delegate method that requires this information only asks for it if it is needed, otherwise if every method asks for the information for every calendar cell, the performance of the calendar view is negatively impacted.
     {
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
     }
     
     BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
+    BOOL released = [[self.moonDateInfo objectForKey:@"released"] boolValue]; //Find out whether the moon date ritual has already been performed for this date.
     
-    if (canLetItGo) //If we are within the Let It Go range, then return our standard background colour
+    if ((canLetItGo) && (!released)) //If we are within the Let It Go range, and the journal entry for this date has not been released, then return our standard background colour
     {
         return self.sharedColoursManager.backgroundColour;
     }
@@ -277,6 +323,7 @@
     
     
     if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO)
+        //Check that the moon date info currently stored in the calendar view controller relates to the date passed in by the calendar. If note, ask the moon dates manager for the info for the correct date. We do this to ensure that each FSCalendar delegate method that requires this information only asks for it if it is needed, otherwise if every method asks for the information for every calendar cell, the performance of the calendar view is negatively impacted.
     {
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
     }
@@ -313,7 +360,7 @@
     //Here the calendar asks for the offset for the image for a specific date cell.
     
     CGRect theFrame = [self.theCalendarView frameForDate:date]; //Get the frame for our date cell
-    CGPoint offsetForImage = CGPointMake(0, (theFrame.size.height /3.5) * -1); //Here we take the height of the date cell, and use it to calculate a negative offset for the image, to position it within the selectable date area.
+    CGPoint offsetForImage = CGPointMake(0, (theFrame.size.height /3.3) * -1); //Here we take the height of the date cell, and use it to calculate a negative offset for the image, to position it within the selectable date area.
     
     return offsetForImage;
 }

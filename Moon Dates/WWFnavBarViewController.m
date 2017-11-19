@@ -28,6 +28,12 @@
     self.navigationBar.titleTextAttributes = titleTextAttributes; //Assign the text attributes to the navigation bar title.
     
     
+    NSDictionary *barItemSelectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.0f], NSFontAttributeName, self.sharedColoursManager.highlightColour,NSForegroundColorAttributeName,nil]; //Create a dictionary containting string attributes for our UITabBar items in the slected state;
+    [[UITabBarItem appearance] setTitleTextAttributes:barItemSelectedAttributes forState:UIControlStateSelected]; //Assign the font and colour attributes to the tab bar items, for the selected state.
+    
+    NSDictionary *barItemUnselectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.0f], NSFontAttributeName, self.sharedColoursManager.selectableColour,NSForegroundColorAttributeName,nil]; //Create a dictionary containting string attributes for our UITabBar items in the slected state;
+    [[UITabBarItem appearance] setTitleTextAttributes:barItemUnselectedAttributes forState:UIControlStateNormal]; //Assign the font and colour attributes to the tab bar items, for the selected state.
+   
 }
 
 - (void)didReceiveMemoryWarning {

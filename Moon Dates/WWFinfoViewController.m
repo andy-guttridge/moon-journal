@@ -7,10 +7,12 @@
 //
 
 #import "WWFinfoViewController.h"
+#import "WWFcoloursManager.h"
 
 @interface WWFinfoViewController ()
 
 @property IBOutlet UITextView *infoView; //The UITextView used to display instructions for the app
+@property (weak,nonatomic) WWFcoloursManager *sharedColoursManager; //The shared colours manager
 
 @end
 
@@ -37,7 +39,13 @@
     [textForInfoView appendAttributedString:appVersionandBuildNumbers]; //Append the attributed string with the build and version numbers to the main attributed string containing the instructions for the app.
     
     self.infoView.attributedText = textForInfoView; //Set our UITextViews attributedText property to our NSMutableAttributedString containing the text from our RTF.
-    
+
+    self.sharedColoursManager = [WWFcoloursManager sharedColoursManager]; //Get a reference to the shared colours manager.
+
+    self.infoView.backgroundColor = self.sharedColoursManager.backgroundColour; //Set the background colour of our text view to the standard background colour
+    self.infoView.textColor = self.sharedColoursManager.nonSelectableColour; //Set the text colour to our non-selectable colour.
+    self.infoView.superview.backgroundColor = self.sharedColoursManager.backgroundColour; //Set the background colour of the superview of the text view to the standard background colour.
+
 }
 
 - (void)didReceiveMemoryWarning {

@@ -32,4 +32,8 @@ typedef enum {kNoMoonEvent, kFullMoon, kNewMoon} moonType;
 
 #define kTestDataDateString "2016-08-20 13:00:00" //A string to use with an NSDateFormatter to generate an NSDate from a string, when generating test data.
 
+#define kCalendarStartDate 504835200 //The start date for our calendar - 31/12/2016 in number of seconds from 1/1/2001
+#define kCalendarEndDate 757382400 //The end date for our calendar - 1/1/2025 in number of seconds from 1/1/2001
+
+
 #endif /* Constants_h */
