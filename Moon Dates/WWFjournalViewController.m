@@ -82,7 +82,7 @@
         self.journalTextView.textColor = self.sharedColoursManager.textColour;
     }
     
-    self.journalTextView.tag = 1; //We set the journalTextView tag to 1, to indicate that the textview holds text entered by the user. This is for the benefit of the textViewShouldBeginEditing: and textViewDidChange: methods, which use this tag to determine whether to show some placeholder text.
+    self.journalTextView.tag = 1; //We set the journalTextView tag to 1, to indicate that the textview holds text entered by the user. This is for the benefit of the textViewShouldBeginEditing: method, which sets up the colour of the text depending on whether it is placeholder or user entered text.
     
     //Check to see if the journal text is empty (or already holds the placeholder text), because if it is we want to retain the default text for the text view, which is a placeholder to show where to enter text. If the text view is locked (i.e. uneditable) then the moon date has already passed and text cannot be edited, so we show a different placeholder message. 
     
@@ -229,17 +229,6 @@
     }
     
     return YES;
-}
-
--(void) textViewDidChange:(UITextView *)textView
-// If the textview's text has changed, and the length of the string is zero, we know it is empty, so we change the text to display the placeholder, colour the text using our non-selectable colour, and change the tag to zero, so that textViewShouldBeginEditing: knows that the textview does not contain any text entered by the user.
-{
-    if ([textView.text length] == 0)
-    {
-        textView.text = @"Enter journal text here";
-        textView.textColor = self.sharedColoursManager.nonSelectableColour;
-        textView.tag = 0;
-    }
 }
 
 - (void)keyboardWasShown:(NSNotification*)notification
