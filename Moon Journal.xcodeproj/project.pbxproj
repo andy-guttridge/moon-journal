@@ -19,10 +19,12 @@
 		A10577611CFAFD6300951A27 /* WWFsettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577601CFAFD6300951A27 /* WWFsettingsViewController.m */; };
 		A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */; };
 		A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10577651CFB06E500951A27 /* MoonDatesData.plist */; };
-		A10A24521E3E378800DEF328 /* mj_app_instructions.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A10A24511E3E378800DEF328 /* mj_app_instructions.rtf */; };
 		A11F28E81F8BF79800533AAB /* WWFnavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A11F28E71F8BF79800533AAB /* WWFnavBarViewController.m */; };
 		A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A145CB0A1CFB63B700670E79 /* UserData.plist */; };
 		A145CB0E1CFB652400670E79 /* WWFuserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */; };
+		A158B4AD1FFBEACF009709D1 /* full_moon_img.png in Resources */ = {isa = PBXBuildFile; fileRef = A158B4AA1FFBEACF009709D1 /* full_moon_img.png */; };
+		A158B4AE1FFBEACF009709D1 /* mj_instructions_html.html in Resources */ = {isa = PBXBuildFile; fileRef = A158B4AB1FFBEACF009709D1 /* mj_instructions_html.html */; };
+		A158B4AF1FFBEACF009709D1 /* new_moon_img.png in Resources */ = {isa = PBXBuildFile; fileRef = A158B4AC1FFBEACF009709D1 /* new_moon_img.png */; };
 		A1743E601D15D11100DE328B /* WWFjournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */; };
 		A1A0C2C91F76D9D100E29DFD /* FSCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2AA1F76D9D100E29DFD /* FSCalendar.m */; };
 		A1A0C2CA1F76D9D100E29DFD /* FSCalendar+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2AB1F76D9D100E29DFD /* FSCalendar+Deprecated.m */; };
@@ -87,13 +89,15 @@
 		A10577621CFAFD7900951A27 /* WWFmoonDatesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFmoonDatesManager.h; sourceTree = "<group>"; };
 		A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFmoonDatesManager.m; sourceTree = "<group>"; };
 		A10577651CFB06E500951A27 /* MoonDatesData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MoonDatesData.plist; sourceTree = "<group>"; };
-		A10A24511E3E378800DEF328 /* mj_app_instructions.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = mj_app_instructions.rtf; sourceTree = "<group>"; };
 		A11F28E61F8BF79800533AAB /* WWFnavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFnavBarViewController.h; sourceTree = "<group>"; };
 		A11F28E71F8BF79800533AAB /* WWFnavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFnavBarViewController.m; sourceTree = "<group>"; };
 		A145CB061CFB4D3D00670E79 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A145CB0A1CFB63B700670E79 /* UserData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserData.plist; sourceTree = "<group>"; };
 		A145CB0C1CFB652400670E79 /* WWFuserDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFuserDataManager.h; sourceTree = "<group>"; };
 		A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFuserDataManager.m; sourceTree = "<group>"; };
+		A158B4AA1FFBEACF009709D1 /* full_moon_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = full_moon_img.png; sourceTree = "<group>"; };
+		A158B4AB1FFBEACF009709D1 /* mj_instructions_html.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = mj_instructions_html.html; sourceTree = "<group>"; };
+		A158B4AC1FFBEACF009709D1 /* new_moon_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_moon_img.png; sourceTree = "<group>"; };
 		A1743E5E1D15D11100DE328B /* WWFjournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFjournalViewController.h; sourceTree = "<group>"; };
 		A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFjournalViewController.m; sourceTree = "<group>"; };
 		A1A0C2A91F76D9D100E29DFD /* FSCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendar.h; sourceTree = "<group>"; };
@@ -186,10 +190,12 @@
 		A10577251CFAFBCE00951A27 /* Moon Dates */ = {
 			isa = PBXGroup;
 			children = (
+				A158B4AA1FFBEACF009709D1 /* full_moon_img.png */,
+				A158B4AB1FFBEACF009709D1 /* mj_instructions_html.html */,
+				A158B4AC1FFBEACF009709D1 /* new_moon_img.png */,
 				A10577291CFAFBCE00951A27 /* AppDelegate.h */,
 				A105772A1CFAFBCE00951A27 /* AppDelegate.m */,
 				A105772F1CFAFBCE00951A27 /* Main.storyboard */,
-				A10A24511E3E378800DEF328 /* mj_app_instructions.rtf */,
 				A10577321CFAFBCE00951A27 /* Assets.xcassets */,
 				A10577341CFAFBCE00951A27 /* LaunchScreen.storyboard */,
 				A145CB061CFB4D3D00670E79 /* Constants.h */,
@@ -393,9 +399,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10A24521E3E378800DEF328 /* mj_app_instructions.rtf in Resources */,
+				A158B4AD1FFBEACF009709D1 /* full_moon_img.png in Resources */,
 				A10577361CFAFBCE00951A27 /* LaunchScreen.storyboard in Resources */,
 				A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */,
+				A158B4AE1FFBEACF009709D1 /* mj_instructions_html.html in Resources */,
+				A158B4AF1FFBEACF009709D1 /* new_moon_img.png in Resources */,
 				A10577331CFAFBCE00951A27 /* Assets.xcassets in Resources */,
 				A10577311CFAFBCE00951A27 /* Main.storyboard in Resources */,
 				A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */,

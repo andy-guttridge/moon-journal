@@ -119,7 +119,10 @@
     dateFormatterForTime.dateStyle = NSDateFormatterNoStyle;
     dateFormatterForTime.timeStyle = NSDateFormatterShortStyle;
     
+    [dateFormatterForTime setTimeZone:[NSTimeZone localTimeZone]];
+    [dateFormatterForDate setTimeZone:[NSTimeZone localTimeZone]];
     
+    NSLog (@"%@", dateFormatterForDate.timeZone);
     NSDictionary *moonDatesInfo = [self.sharedMoonDatesManager moonDateInfo:theMoonDate]; //Get information on the moon date from the sharedMoonDatesManager, which we will use to display the moon date in the text label in the journal view, and later to determine whether the ritual can be performed for the current moon date.
     
     NSString *moonDateDayString = [dateFormatterForDate stringFromDate:theMoonDate]; //Get a date string from the moon date.
@@ -149,13 +152,18 @@
             break;
     }
     
-    NSDate *ritualDeadline = [[NSDate alloc] initWithTimeInterval: labs (kAllowedLetItGoInterval) sinceDate:theMoonDate]; //Get the date by which the ritual must be performed. This is used to populate the detail text of the cell to inform the user by when the ritual must be completed. We use the C labs function to convert the letItGoAllowedInterval to an unsigned double.
+    NSDate *ritualDeadline = [[NSDate alloc] initWithTimeInterval: labs (kAllowedLetItGoInterval) sinceDate:theMoonDate]; //Get the date by which the ritual must be performed. This is used to populate the information provided in the journal view to inform the user by when the ritual must be completed. We use the C labs function to convert the letItGoAllowedInterval to an unsigned double.
+    
+    NSDate *canDoRitualDate = [[NSDate alloc] initWithTimeInterval:(kpreMoonDateLetItGoInterval * -1) sinceDate:theMoonDate]; //Get the date from which the moon date can be performedd, again used to populate the information provided in the journal view. We multiply the kpreMoonDateLetItGoInterval constant by -1 to convert to a negative value.
     
     NSString *ritualDeadlineDateString = [dateFormatterForDate stringFromDate:ritualDeadline]; //Get a date string from the ritual deadline date.
     NSString *ritualDeadlineTimeString = [dateFormatterForTime stringFromDate:ritualDeadline]; //Get a time string from the ritual deadline date.
     
-    NSString *ritualDeadlineText = [NSString stringWithFormat:@"You have until %@ on %@ to perform the ritual for this journal entry.", ritualDeadlineTimeString, ritualDeadlineDateString]; //Put together a statement of when the moon ritual must be performed using the time and date strings.
+    NSString *canDoRitualDateString = [dateFormatterForDate stringFromDate:canDoRitualDate]; //Get a date string from the canDoRitual date.
+    NSString *canDoRitualTimeString = [dateFormatterForTime stringFromDate:canDoRitualDate]; //Get a time string from the canDoRitual date.
     
+    NSString *ritualDeadlineText = [NSString stringWithFormat:@"You have until %@ on %@ to perform the ritual for this journal entry, and you will be able to perform the ritual from %@ on %@.", ritualDeadlineTimeString, ritualDeadlineDateString, canDoRitualTimeString, canDoRitualDateString]; //Put together a statement of when the moon ritual must be performed and when from using the time and date strings.
+
     NSString *textForMoonTypeLabel = [NSString stringWithFormat:@"%@ \n \n%@", moonTypeSpecificLabelText, ritualDeadlineText]; //Create the complete string to display in moonTypeLabel, using the Moon Date Type specific text and the ritual deadline text we have now created.
     
     self.moonTypeLabel.text = textForMoonTypeLabel;
@@ -164,6 +172,7 @@
     
     NSLog(@"The moon date in journal view is %@", theMoonDate);
     NSLog(@"%@", moonDatesInfo);
+    NSLog(@"%@ The actual moon date is ", theMoonDate);
     if (([[moonDatesInfo objectForKey:@"canLetItGo"] boolValue] == YES) && hasBeenReleased == NO)
     {
         self.letItGoButton.enabled = YES;

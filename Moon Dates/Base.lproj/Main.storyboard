@@ -138,30 +138,13 @@
                     <view key="view" contentMode="scaleToFill" id="d5A-hM-yjJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YHj-R2-gdM">
-                                <rect key="frame" x="16" y="28" width="343" height="582"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <attributedString key="attributedText"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="YHj-R2-gdM" firstAttribute="leading" secondItem="d5A-hM-yjJ" secondAttribute="leadingMargin" id="G2S-69-icg"/>
-                            <constraint firstItem="YHj-R2-gdM" firstAttribute="top" secondItem="fTJ-qX-vM6" secondAttribute="bottom" constant="8" symbolic="YES" id="UpV-6T-R5u"/>
-                            <constraint firstItem="YHj-R2-gdM" firstAttribute="trailing" secondItem="d5A-hM-yjJ" secondAttribute="trailingMargin" id="XaQ-1n-wZL"/>
-                            <constraint firstItem="aiq-IF-FEH" firstAttribute="top" secondItem="YHj-R2-gdM" secondAttribute="bottom" constant="8" symbolic="YES" id="YMX-K1-2HY"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Info" id="t0d-QC-wn9"/>
-                    <connections>
-                        <outlet property="infoView" destination="YHj-R2-gdM" id="XTX-Bi-sCo"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j1H-T3-Jge" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1026.4000000000001" y="635.53223388305855"/>
+            <point key="canvasLocation" x="1268" y="555"/>
         </scene>
         <!--Settings-->
         <scene sceneID="75p-1z-t4c">
@@ -176,7 +159,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibP-hV-ulS">
-                                <rect key="frame" x="16" y="28" width="343" height="30"/>
+                                <rect key="frame" x="16" y="28" width="343" height="611"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Clear all journal entries"/>
                                 <connections>
                                     <action selector="clearJournalButtonPressed:" destination="HS3-S3-hwA" eventType="touchUpInside" id="ryg-ni-Gy3"/>
@@ -185,7 +169,9 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="ibP-hV-ulS" firstAttribute="centerY" secondItem="50E-AU-TWD" secondAttribute="centerY" id="MCq-GO-iIG"/>
                             <constraint firstItem="ibP-hV-ulS" firstAttribute="top" secondItem="0e9-XM-Ho9" secondAttribute="bottom" constant="8" id="Qvp-cT-oS1"/>
+                            <constraint firstItem="ibP-hV-ulS" firstAttribute="centerX" secondItem="50E-AU-TWD" secondAttribute="centerX" id="WBI-23-Wou"/>
                             <constraint firstItem="ibP-hV-ulS" firstAttribute="leading" secondItem="50E-AU-TWD" secondAttribute="leadingMargin" id="n5T-WL-X1q"/>
                             <constraint firstItem="ibP-hV-ulS" firstAttribute="trailing" secondItem="50E-AU-TWD" secondAttribute="trailingMargin" id="zk0-99-cnf"/>
                         </constraints>
