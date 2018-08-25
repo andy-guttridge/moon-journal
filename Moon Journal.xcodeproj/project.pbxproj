@@ -20,12 +20,14 @@
 		A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */; };
 		A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A10577651CFB06E500951A27 /* MoonDatesData.plist */; };
 		A11F28E81F8BF79800533AAB /* WWFnavBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A11F28E71F8BF79800533AAB /* WWFnavBarViewController.m */; };
+		A125534E21259A3800F4DDA0 /* letitgo_vid.m4v in Resources */ = {isa = PBXBuildFile; fileRef = A125534D21259A3700F4DDA0 /* letitgo_vid.m4v */; };
 		A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */ = {isa = PBXBuildFile; fileRef = A145CB0A1CFB63B700670E79 /* UserData.plist */; };
 		A145CB0E1CFB652400670E79 /* WWFuserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */; };
 		A158B4AD1FFBEACF009709D1 /* full_moon_img.png in Resources */ = {isa = PBXBuildFile; fileRef = A158B4AA1FFBEACF009709D1 /* full_moon_img.png */; };
 		A158B4AE1FFBEACF009709D1 /* mj_instructions_html.html in Resources */ = {isa = PBXBuildFile; fileRef = A158B4AB1FFBEACF009709D1 /* mj_instructions_html.html */; };
 		A158B4AF1FFBEACF009709D1 /* new_moon_img.png in Resources */ = {isa = PBXBuildFile; fileRef = A158B4AC1FFBEACF009709D1 /* new_moon_img.png */; };
 		A1743E601D15D11100DE328B /* WWFjournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */; };
+		A19F8E1321259C9100E32982 /* FS Calendar LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = A19F8E1221259C9100E32982 /* FS Calendar LICENSE.txt */; };
 		A1A0C2C91F76D9D100E29DFD /* FSCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2AA1F76D9D100E29DFD /* FSCalendar.m */; };
 		A1A0C2CA1F76D9D100E29DFD /* FSCalendar+Deprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2AB1F76D9D100E29DFD /* FSCalendar+Deprecated.m */; };
 		A1A0C2CB1F76D9D100E29DFD /* FSCalendarAppearance.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2AD1F76D9D100E29DFD /* FSCalendarAppearance.m */; };
@@ -45,7 +47,8 @@
 		A1A0C2DC1F76E37900E29DFD /* WWF_FSCalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2DB1F76E37900E29DFD /* WWF_FSCalViewController.m */; };
 		A1A851011F7FFF7F005B4874 /* WWFcoloursManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A851001F7FFF7F005B4874 /* WWFcoloursManager.m */; };
 		A1D71A101FAE5AFD004F85A3 /* WWFAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D71A0F1FAE5AFD004F85A3 /* WWFAVViewController.m */; };
-		A1D71A121FAE5DE6004F85A3 /* letitgo_vid.m4v in Resources */ = {isa = PBXBuildFile; fileRef = A1D71A111FAE5DE6004F85A3 /* letitgo_vid.m4v */; };
+		A1D9F5032125C8C900DBB11B /* WWFaboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D9F5022125C8C900DBB11B /* WWFaboutViewController.m */; };
+		A1D9F5052125CC2100DBB11B /* about_text.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A1D9F5042125CC2000DBB11B /* about_text.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +94,7 @@
 		A10577651CFB06E500951A27 /* MoonDatesData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MoonDatesData.plist; sourceTree = "<group>"; };
 		A11F28E61F8BF79800533AAB /* WWFnavBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFnavBarViewController.h; sourceTree = "<group>"; };
 		A11F28E71F8BF79800533AAB /* WWFnavBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFnavBarViewController.m; sourceTree = "<group>"; };
+		A125534D21259A3700F4DDA0 /* letitgo_vid.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = letitgo_vid.m4v; sourceTree = "<group>"; };
 		A145CB061CFB4D3D00670E79 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		A145CB0A1CFB63B700670E79 /* UserData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserData.plist; sourceTree = "<group>"; };
 		A145CB0C1CFB652400670E79 /* WWFuserDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFuserDataManager.h; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 		A158B4AC1FFBEACF009709D1 /* new_moon_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_moon_img.png; sourceTree = "<group>"; };
 		A1743E5E1D15D11100DE328B /* WWFjournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFjournalViewController.h; sourceTree = "<group>"; };
 		A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFjournalViewController.m; sourceTree = "<group>"; };
+		A19F8E1221259C9100E32982 /* FS Calendar LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "FS Calendar LICENSE.txt"; sourceTree = "<group>"; };
 		A1A0C2A91F76D9D100E29DFD /* FSCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendar.h; sourceTree = "<group>"; };
 		A1A0C2AA1F76D9D100E29DFD /* FSCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendar.m; sourceTree = "<group>"; };
 		A1A0C2AB1F76D9D100E29DFD /* FSCalendar+Deprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FSCalendar+Deprecated.m"; sourceTree = "<group>"; };
@@ -138,7 +143,9 @@
 		A1A851001F7FFF7F005B4874 /* WWFcoloursManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFcoloursManager.m; sourceTree = "<group>"; };
 		A1D71A0E1FAE5AFD004F85A3 /* WWFAVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFAVViewController.h; sourceTree = "<group>"; };
 		A1D71A0F1FAE5AFD004F85A3 /* WWFAVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFAVViewController.m; sourceTree = "<group>"; };
-		A1D71A111FAE5DE6004F85A3 /* letitgo_vid.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = letitgo_vid.m4v; sourceTree = "<group>"; };
+		A1D9F5012125C8C900DBB11B /* WWFaboutViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWFaboutViewController.h; sourceTree = "<group>"; };
+		A1D9F5022125C8C900DBB11B /* WWFaboutViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WWFaboutViewController.m; sourceTree = "<group>"; };
+		A1D9F5042125CC2000DBB11B /* about_text.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = about_text.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,12 +197,17 @@
 		A10577251CFAFBCE00951A27 /* Moon Dates */ = {
 			isa = PBXGroup;
 			children = (
+				A1D9F5042125CC2000DBB11B /* about_text.rtf */,
+				A19F8E1221259C9100E32982 /* FS Calendar LICENSE.txt */,
+				A125534D21259A3700F4DDA0 /* letitgo_vid.m4v */,
 				A158B4AA1FFBEACF009709D1 /* full_moon_img.png */,
 				A158B4AB1FFBEACF009709D1 /* mj_instructions_html.html */,
 				A158B4AC1FFBEACF009709D1 /* new_moon_img.png */,
 				A10577291CFAFBCE00951A27 /* AppDelegate.h */,
 				A105772A1CFAFBCE00951A27 /* AppDelegate.m */,
 				A105772F1CFAFBCE00951A27 /* Main.storyboard */,
+				A1D9F5012125C8C900DBB11B /* WWFaboutViewController.h */,
+				A1D9F5022125C8C900DBB11B /* WWFaboutViewController.m */,
 				A10577321CFAFBCE00951A27 /* Assets.xcassets */,
 				A10577341CFAFBCE00951A27 /* LaunchScreen.storyboard */,
 				A145CB061CFB4D3D00670E79 /* Constants.h */,
@@ -222,7 +234,6 @@
 				A10577371CFAFBCE00951A27 /* Info.plist */,
 				A10577651CFB06E500951A27 /* MoonDatesData.plist */,
 				A145CB0A1CFB63B700670E79 /* UserData.plist */,
-				A1D71A111FAE5DE6004F85A3 /* letitgo_vid.m4v */,
 				A1A0C2D91F76D9EC00E29DFD /* FSCalendar Files */,
 				A10577261CFAFBCE00951A27 /* Supporting Files */,
 			);
@@ -404,10 +415,12 @@
 				A10577661CFB06E500951A27 /* MoonDatesData.plist in Resources */,
 				A158B4AE1FFBEACF009709D1 /* mj_instructions_html.html in Resources */,
 				A158B4AF1FFBEACF009709D1 /* new_moon_img.png in Resources */,
+				A125534E21259A3800F4DDA0 /* letitgo_vid.m4v in Resources */,
 				A10577331CFAFBCE00951A27 /* Assets.xcassets in Resources */,
 				A10577311CFAFBCE00951A27 /* Main.storyboard in Resources */,
+				A19F8E1321259C9100E32982 /* FS Calendar LICENSE.txt in Resources */,
 				A145CB0B1CFB63B700670E79 /* UserData.plist in Resources */,
-				A1D71A121FAE5DE6004F85A3 /* letitgo_vid.m4v in Resources */,
+				A1D9F5052125CC2100DBB11B /* about_text.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +473,7 @@
 				A1A0C2D21F76D9D100E29DFD /* FSCalendarDelegationProxy.m in Sources */,
 				A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */,
 				A1A0C2DC1F76E37900E29DFD /* WWF_FSCalViewController.m in Sources */,
+				A1D9F5032125C8C900DBB11B /* WWFaboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

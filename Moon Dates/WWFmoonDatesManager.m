@@ -160,20 +160,21 @@
 {
     
 //Use the following chunk of code to generate a single item of test data based on the current date
-
+/*
     NSDate *todaysDatePlus60seconds = [NSDate dateWithTimeIntervalSinceNow: 60];
     NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon];
     NSString *newMoonDateJournalString = @"";
     NSNumber *released = [NSNumber numberWithBool:NO];
     NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:todaysDatePlus60seconds, @"MoonDate", newMoonDateType, @"Type", newMoonDateJournalString, @"JournalText", released, @"Released", nil];
     [self.moonDatesArray addObject:newMoonDateDictionary];
-
+*/
+    
 // Use the following chunk of code to generate some test events that are only minutes apart for quick and immediate testing
  
 // ________________________________________________________________________________________________________________________________________________________________
  
 //Get todays date plus 60 seconds, and use this to generate and add some test dates to some Dictionaries, set the "Type" key to new moon (just for the sake of having some test data), add a BOOL with the key 'Released' (this is used to keep a record of whether the journal entry has been 'released') and then add the Dictionaries to our moonDatesArray. The notification dates will be generated in the init method, and if we have the notification interval set to the default three days, then we end up with some very convenient notification dates for testing purposes.
-/*
+
 {
     NSDate *todaysDatePlus60seconds = [NSDate dateWithTimeIntervalSinceNow: 60]; //259200 is the number of seconds in three 24 hour days.
     
@@ -188,7 +189,7 @@
     }
     
 }
-*/
+
     
 //__________________________________________________________________________________________________________________________________________________________________
 

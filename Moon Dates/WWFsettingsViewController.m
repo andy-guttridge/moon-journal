@@ -30,6 +30,7 @@
     
     self.view.backgroundColor = self.sharedColoursManager.backgroundColour; //Set the background colour of our view to the standard background colour.
     [self.clearJournalButton setTitleColor:self.sharedColoursManager.selectableColour forState:UIControlStateNormal]; //Set the text colour for the clear journal entries button in the normal state.
+    [self.aboutButton setTitleColor:self.sharedColoursManager.selectableColour forState:UIControlStateNormal]; //Set the text colour for the clear journal entries button in the normal state.
 }
 
 - (void)didReceiveMemoryWarning {

@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/andy/Developer/Moon Dates/Moon Journal.xcodeproj">
+      location = "group:/Users/andy/Developer/Moon Dates/Moon Dates/letitgo_vid.m4v">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
