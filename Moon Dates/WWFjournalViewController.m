@@ -18,6 +18,8 @@
 @property (weak, nonatomic) WWFuserDataManager *sharedUserDataManager;
 @property (weak, nonatomic) WWFcoloursManager *sharedColoursManager;
 
+@property NSString *textForMoonTypeLabel; //A string to hold the text for the moonTypeLabel.
+
 @end
 
 @implementation WWFjournalViewController
@@ -164,9 +166,9 @@
     
     NSString *ritualDeadlineText = [NSString stringWithFormat:@"You have until %@ on %@ to perform the ritual for this journal entry, and you will be able to perform the ritual from %@ on %@.", ritualDeadlineTimeString, ritualDeadlineDateString, canDoRitualTimeString, canDoRitualDateString]; //Put together a statement of when the moon ritual must be performed and when from using the time and date strings.
 
-    NSString *textForMoonTypeLabel = [NSString stringWithFormat:@"%@ \n \n%@", moonTypeSpecificLabelText, ritualDeadlineText]; //Create the complete string to display in moonTypeLabel, using the Moon Date Type specific text and the ritual deadline text we have now created.
+    self.textForMoonTypeLabel = [NSString stringWithFormat:@"%@ \n \n%@", moonTypeSpecificLabelText, ritualDeadlineText]; //Create the complete string to display in moonTypeLabel, using the Moon Date Type specific text and the ritual deadline text we have now created.
     
-    self.moonTypeLabel.text = textForMoonTypeLabel;
+    self.moonTypeLabel.text = self.textForMoonTypeLabel;
     
     //Enable letItGoButton if the relevant moon event date has passed if we are within kAllowedLetItGoInterval of the moon event having passed, or if we are within the kpreMoonLetItGo interval before the moon event date, and if the journal entry has not already been released.
     
@@ -192,6 +194,8 @@
     NSString *newJournalText = self.journalTextView.text;
     [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:newJournalText forKey:@"JournalText"];
     [self.sharedMoonDatesManager saveMoonDatesData];
+    
+    self.moonTypeLabel.text = self.textForMoonTypeLabel; //Reinstate the moonTypeLabel text, now that editing has ended.
 }
 
 - (IBAction)releaseJournalEntryButtonPressed: (id)sender
@@ -236,6 +240,8 @@
         
         textView.tag = 1;
     }
+    
+    self.moonTypeLabel.text = @""; //Change the text of the moonTypeLabel to an empty string, so that the journal text view resizes itself to start at the top of the screen. This ensures that the journal text isn't hidden under the keyboard on iPhones with small screens.
     
     return YES;
 }

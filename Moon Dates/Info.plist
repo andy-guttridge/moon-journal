@@ -48,6 +48,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>WWF Generate Test Data</key>
-	<true/>
+	<false/>
 </dict>
 </plist>
