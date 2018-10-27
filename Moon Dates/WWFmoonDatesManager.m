@@ -69,6 +69,7 @@
             [self generateTestData];
         }
         
+        
         //Use the sharedUserDataManager to retrieve the time offset for user notification of moon events. Then iterate through the array of moonDatesArray of dictionaries, and create a new NSDate for the notification time for each of them based on the time offset. Insert each of these NSDate objects into the moonDatesArray with the key "NotificationDate". This method also replaces all of the NSDictionaries within the array with mutable copies, otherwise we would not be able to add the notification times to them.
         
         //Even if we move the code to offset the notifications and stop storing them in the dictionary, we will still need to load the notification offset from the plist file, as it is used elsewhere.
@@ -91,6 +92,13 @@
             [copyOfMoonDatesArray replaceObjectAtIndex:i withObject:mutableMoonDatesDictionary];
         }
         self.moonDatesArray = [copyOfMoonDatesArray mutableCopy]; //Copy the contents of copyOfMoonDates array back into the proper version of the array.
+        
+        //Create a NSSortDescriptor, add to an array and use it to ensure the moonDatesArray is sorted in ascending order of moon dates within the MoonDatesDictionary.
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"MoonDate" ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        [self.moonDatesArray sortUsingDescriptors:sortDescriptors];
+        
+        //NSLog (@"Moon dates array after sorting: %@", [self.moonDatesArray description]);
         
         //Schedule notifications
         
@@ -161,16 +169,18 @@
     
 //Use the following chunk of code to generate a single item of test data based on the current date
 /*
-    NSDate *todaysDatePlus60seconds = [NSDate dateWithTimeIntervalSinceNow: 60];
+ 
+    NSDate *todaysDatePlus120seconds = [NSDate dateWithTimeIntervalSinceNow: 120];
     NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon];
     NSString *newMoonDateJournalString = @"";
     NSNumber *released = [NSNumber numberWithBool:NO];
-    NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:todaysDatePlus60seconds, @"MoonDate", newMoonDateType, @"Type", newMoonDateJournalString, @"JournalText", released, @"Released", nil];
+    NSDictionary *newMoonDateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:todaysDatePlus120seconds, @"MoonDate", newMoonDateType, @"Type", newMoonDateJournalString, @"JournalText", released, @"Released", nil];
     [self.moonDatesArray addObject:newMoonDateDictionary];
 */
     
 // Use the following chunk of code to generate some test events that are only minutes apart for quick and immediate testing
- 
+
+
 // ________________________________________________________________________________________________________________________________________________________________
  
 //Get todays date plus 60 seconds, and use this to generate and add some test dates to some Dictionaries, set the "Type" key to new moon (just for the sake of having some test data), add a BOOL with the key 'Released' (this is used to keep a record of whether the journal entry has been 'released') and then add the Dictionaries to our moonDatesArray. The notification dates will be generated in the init method, and if we have the notification interval set to the default three days, then we end up with some very convenient notification dates for testing purposes.
@@ -190,7 +200,7 @@
     
 }
 
-    
+ 
 //__________________________________________________________________________________________________________________________________________________________________
 
 //Use the following chunk of code to generate some test events that are one hour apart for more realistic testing. The first event will be 15 minutes from the current time.
@@ -255,14 +265,15 @@
         secondsFromBaseDate = secondsFromBaseDate + (kNumberOfSecondsInADay * 4); //Increment secondsFromBaseDate ready for calculating the next new moon.
         
     }
+ 
  */
-    
 
 //  ________________________________________________________________________________________________________________________________________________________________
     
     
-// Use the following chunk of code to generate alternating new moon and full moon test dates from a fixed base date. Full moons and new moons will be at a fixed time on alternating days.
-/*
+    // Use the following chunk of code to generate alternating new moon and full moon test dates from a fixed base date. Full moons and new moons will be at a fixed time on alternating days.
+    
+ /*
     
     //Set up a date formatter which we use to create a date from a string.
     NSDateFormatter *aDateFormatter = [[NSDateFormatter alloc] init];
@@ -272,6 +283,8 @@
     
     NSString *baseTestDateString = @kTestDataDateString; //A string to use to create an NSDate which will be the base date used to calculate the test dates.
     NSDate *baseTestDate = [aDateFormatter dateFromString:baseTestDateString]; //Use the NSDateFormatter to create a base date from a string.
+    
+
     
     NSNumber *released = [NSNumber numberWithBool:NO]; //Create an NSNumber containing a Bool set to No, for adding to our moon date dictionaries that will hold the test dates.
     NSNumber *newMoonDateType = [NSNumber numberWithInt:kNewMoon]; //Create an NSNumber containing an integer denoting a new moon, for adding to our moon date dictionaries that will hold the test dates.
@@ -296,9 +309,10 @@
         [self.moonDatesArray addObject:nextFullMoonTestDateDictionary];
         
         secondsFromBaseDate = secondsFromBaseDate + (kNumberOfSecondsInADay); //Increment secondsFromBaseDate ready for calculating the next new moon.
-        
+        NSLog (@"Did test data loop again");
     }
-
+    NSLog (@"%@", [self.moonDatesArray description]);
+ 
 //  ________________________________________________________________________________________________________________________________________________________________
 */
 
@@ -307,12 +321,22 @@
 
 -(void) scheduleNotifications
 {
-    NSLog (@"scheduleNotifications called");
+    //NSLog (@"scheduleNotifications called");
     
     UNUserNotificationCenter *notificationCenter = [UNUserNotificationCenter currentNotificationCenter]; //Get a reference to the global notification center
     
     //Not sure whether we will end up cancelling all local notifications in the final app. We may end up removing individual notifications after they have occurred.
     [notificationCenter removeAllPendingNotificationRequests];
+    
+    /*[notificationCenter getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests)
+    {
+       NSLog (@"Notifications currently scheduled after calling removeAllPendingNotificationRequests:");
+        for (UNNotificationRequest *request in requests)
+        {
+            NSLog(@"%@", request.content.body);
+        }
+        ;
+    }];*/
     
     /* Creat two NSDateFormatters, one will be used to extract the date from an NSDate in the form of a string, while the other will be used to extract the time from the NSDate. */
     NSDateFormatter *dateFormatterForDate = [[NSDateFormatter alloc] init];
@@ -332,6 +356,7 @@
     
     //Iterate through the array of NSDates in the moonDatesDictionary, and schedule a notification for each one, as long as the moon date is not in the past.
     NSUInteger i = 0; //An integer we increment with each iteration, and use to create unique notification identifiers.
+    NSUInteger n = 0; //We use this integer to count how many notifications have actually been scheduled, as there is a max of 64.
     
     for (NSMutableDictionary *moonDatesDictionary in self.moonDatesArray)
         
@@ -340,10 +365,14 @@
         //Compare the moon event date with today's date, and only execute the code to register notifications if the moon event has not already occurred.
         //Registering notifications for moon dates that have already occurred would end up cluttering the user's notificaitons screen with notifications for events that have alread passed.
         
+            //NSLog (@"Current moon date in array: %@", [[moonDatesDictionary objectForKey:@"MoonDate"]description]);
+            
         NSComparisonResult dateComparison = [[moonDatesDictionary objectForKey:@"MoonDate"] compare:todaysDate];
         if (dateComparison != NSOrderedAscending)
         {
             //Create a string to describe the type of moon event, for use in the notification text.
+            
+             //NSLog(@"This moon date is after todays date.");
             
             NSString *moonEventTypeText = [[NSString alloc]init];
             switch ([[moonDatesDictionary objectForKey:@"Type"]intValue])
@@ -436,11 +465,29 @@
                  }
              }];
             
-            i++;
+            n++; //Increment this to count the number of notifications that have been scheduled.
+            //NSLog (@"Sheduled a notification for %@ and n = %d", [actualNotificationRequest description], (unsigned long) n);
+            
+            if (n==31) //Break out of the for...in loop if we have been around more than 31 times. iOS can only schedule a maximum of 64 notifications for us; each time around the for loop we schedule two notifications, so this ensures we do not exceed the maximum.
+            {
+                break;
+            }
             
         }
-   
+            
+        
+            i++;
     }
+    
+    /*[notificationCenter getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests)
+     {
+         NSLog (@"Notifications currently scheduled at end of -scheduleNotifications:");
+         for (UNNotificationRequest *request in requests)
+         {
+             NSLog(@"%@", request.content.body);
+         }
+         ;
+     }];*/
 }
 
 - (void) saveMoonDatesData

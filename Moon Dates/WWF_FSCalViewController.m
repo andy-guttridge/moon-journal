@@ -203,7 +203,7 @@
     BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue]; //Extract the information on whether the date is within the 'Let It Go' range within which the ritual can be performed.
     BOOL released = [[self.moonDateInfo objectForKey:@"released"] boolValue]; //Extract the information on whether the ritual has been performed for this journal entry.
     
-    NSLog (@"%d", released);
+    //NSLog (@"%d", released);
     
     if ((canLetItGo) && (!released)) //If we are within the Let It Go range, and the journal entry as not been released, then return our highlighted colour to indicate that the ritual can be performed
     {
