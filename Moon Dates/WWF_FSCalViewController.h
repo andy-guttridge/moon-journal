@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVKit/AVKit.h>
-#import "constants.h"
+#import "Constants.h"
 #import "FSCalendar.h"
 #import "WWFmoonDatesManager.h"
 #import "WWFjournalViewController.h"

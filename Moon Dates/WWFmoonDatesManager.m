@@ -355,8 +355,7 @@
     NSDate *todaysDate = [NSDate date]; //Create an NSDate using the current date and time for use in a comparison below.
     
     //Iterate through the array of NSDates in the moonDatesDictionary, and schedule a notification for each one, as long as the moon date is not in the past.
-    NSUInteger i = 0; //An integer we increment with each iteration, and use to create unique notification identifiers.
-    NSUInteger n = 0; //We use this integer to count how many notifications have actually been scheduled, as there is a max of 64.
+    NSUInteger i = 0; //An integer we increment with each iteration, and use to create unique notification identifiers, and to count how many notifications have actually been scheduled, as there is a max of 64.
     
     for (NSMutableDictionary *moonDatesDictionary in self.moonDatesArray)
         
@@ -465,18 +464,16 @@
                  }
              }];
             
-            n++; //Increment this to count the number of notifications that have been scheduled.
-            //NSLog (@"Sheduled a notification for %@ and n = %d", [actualNotificationRequest description], (unsigned long) n);
+            i++; //Increment this to count the number of notifications that have been scheduled and give each notification of each type (pre- and actual) a unique reference number.
+            //NSLog (@"Sheduled a notification for %@ and i = %d", [actualNotificationRequest description], (unsigned long) n);
             
-            if (n==31) //Break out of the for...in loop if we have been around more than 31 times. iOS can only schedule a maximum of 64 notifications for us; each time around the for loop we schedule two notifications, so this ensures we do not exceed the maximum.
+            if (i==31) //Break out of the for...in loop if we have been around more than 31 times. iOS can only schedule a maximum of 64 notifications for us; each time around the for loop we schedule two notifications, so this ensures we do not exceed the maximum.
             {
                 break;
             }
             
         }
             
-        
-            i++;
     }
     
     /*[notificationCenter getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests)
