@@ -98,7 +98,7 @@
 
 }
 
--(void) userNotificationCenter:(UNUserNotificationCenter *)notificationCenter didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+-(void) userNotificationCenter:(UNUserNotificationCenter *)notificationCenter didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler
 
 {
     //In this method, which is implemented as part of the UNNotificationCenter protocol, if the user has selected a notification from outside the app, then we ask the calendar to select and scroll to the date for which the notification was received.
