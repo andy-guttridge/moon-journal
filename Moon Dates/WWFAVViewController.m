@@ -16,6 +16,7 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     self.showsPlaybackControls = NO; //Ensure that playback controls are not shown. Called in this method to ensure this is dealt with before the view appears, because changing this property while the view is displayed destroys UI controls.
     
 }
