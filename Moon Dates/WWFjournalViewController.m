@@ -10,11 +10,15 @@
 
 @interface WWFjournalViewController ()
 
-@property IBOutlet UILabel *moonTypeLabel;
-@property IBOutlet UITextView *journalTextView;
-@property IBOutlet UIBarButtonItem *letItGoButton;
+@property (weak,nonatomic) IBOutlet UILabel *moonTypeLabel;
+@property (weak, nonatomic) IBOutlet UITextView *journalTextView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *letItGoButton;
+
 @property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
 @property (weak, nonatomic) WWFuserDataManager *sharedUserDataManager;
+@property (weak, nonatomic) WWFcoloursManager *sharedColoursManager;
+
+@property NSString *textForMoonTypeLabel; //A string to hold the text for the moonTypeLabel.
 
 @end
 
@@ -22,10 +26,23 @@
 
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
     
     //Get a reference to the shared Moon Dates Manager.
     self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager];
+    
+    //Get a reference to the shared colours manager.
+    self.sharedColoursManager = [WWFcoloursManager sharedColoursManager];
+    
+    //Set colours of various UI elements using colours from our shared colours manager
+    self.moonTypeLabel.textColor = self.sharedColoursManager.headerColour;
+    self.moonTypeLabel.backgroundColor = self.sharedColoursManager.backgroundColour;
+    self.journalTextView.textColor = self.sharedColoursManager.textColour;
+    self.journalTextView.backgroundColor = self.sharedColoursManager.backgroundColour;
+    self.view.backgroundColor = self.sharedColoursManager.backgroundColour;
+    self.navigationController.navigationBar.tintColor = self.sharedColoursManager.selectableColour;
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.headerColour forKey:NSForegroundColorAttributeName];
     
     //Ensure text is displayed at the very top of the UITextView
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -57,17 +74,17 @@
     //Retrieve any journal text already entered for the current date and display it in the journalTextView
     
     self.journalTextView.text = [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"JournalText"];
-    if (self.journalTextView.editable == NO) //Colour the text grey if we have made the textview uneditable (because the moon date has already passed).
+    if (self.journalTextView.editable == NO) //Colour the text usin the global unselectable colour if we have made the textview uneditable (because the moon date has already passed).
     {
-        self.journalTextView.textColor = [UIColor lightGrayColor];
+        self.journalTextView.textColor = self.sharedColoursManager.nonSelectableColour;
     }
     
-    else //Otherwise, colour the text black.
+    else //Otherwise, colour the text using the standard text colour
     {
-        self.journalTextView.textColor = [UIColor blackColor];
+        self.journalTextView.textColor = self.sharedColoursManager.textColour;
     }
     
-    self.journalTextView.tag = 1; //We set the journalTextView tag to 1, to indicate that the textview holds text entered by the user. This is for the benefit of the textViewShouldBeginEditing: and textViewDidChange: methods, which use this tag to determine whether to show some placeholder text.
+    self.journalTextView.tag = 1; //We set the journalTextView tag to 1, to indicate that the textview holds text entered by the user. This is for the benefit of the textViewShouldBeginEditing: method, which sets up the colour of the text depending on whether it is placeholder or user entered text.
     
     //Check to see if the journal text is empty (or already holds the placeholder text), because if it is we want to retain the default text for the text view, which is a placeholder to show where to enter text. If the text view is locked (i.e. uneditable) then the moon date has already passed and text cannot be edited, so we show a different placeholder message. 
     
@@ -82,7 +99,7 @@
         {
             self.journalTextView.text = @"Enter journal text here";
         }
-        self.journalTextView.textColor = [UIColor lightGrayColor];
+        self.journalTextView.textColor = self.sharedColoursManager.nonSelectableColour;
         self.journalTextView.tag = 0;
         NSLog(@"Set journal text to default");
     }
@@ -91,29 +108,6 @@
     
     //moonTypeSpecificLabelText is the for the moonTypeLabel which is dependent on the type of moon event.
     
-    NSString *moonTypeSpecificLabelText = [[NSString alloc]init];
-    switch ([[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"Type"]intValue])
-    {
-        case kNoMoonEvent:
-            moonTypeSpecificLabelText = @"No moon event";
-            self.letItGoButton.title =@"No event";
-            break;
-            
-        case kNewMoon:
-            moonTypeSpecificLabelText = @"New Moon: the time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.";
-            self.letItGoButton.title =@"Set intention";
-            break;
-            
-        case kFullMoon:
-            moonTypeSpecificLabelText = @"Full Moon: the time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.";
-            self.letItGoButton.title =@"Release";
-            break;
-            
-        default:
-            moonTypeSpecificLabelText = @"Invalid moon event type";
-            self.letItGoButton.title =@"Error";
-            break;
-    }
     
     /* Creat two NSDateFormatters, one will be used to extract the date from an NSDate in the form of a string, while the other will be used to extract the time from the NSDate. */
     NSDateFormatter *dateFormatterForDate = [[NSDateFormatter alloc] init];
@@ -127,26 +121,68 @@
     dateFormatterForTime.dateStyle = NSDateFormatterNoStyle;
     dateFormatterForTime.timeStyle = NSDateFormatterShortStyle;
     
-    NSDate *ritualDeadline = [[NSDate alloc] initWithTimeInterval: labs (kAllowedLetItGoInterval) sinceDate:theMoonDate]; //Get the date by which the ritual must be performed. This is used to populate the detail text of the cell to inform the user by when the ritual must be completed. We use the C labs function to convert the letItGoAllowedInterval to an unsigned double.
+    [dateFormatterForTime setTimeZone:[NSTimeZone localTimeZone]];
+    [dateFormatterForDate setTimeZone:[NSTimeZone localTimeZone]];
+    
+    NSLog (@"%@", dateFormatterForDate.timeZone);
+    NSDictionary *moonDatesInfo = [self.sharedMoonDatesManager moonDateInfo:theMoonDate]; //Get information on the moon date from the sharedMoonDatesManager, which we will use to display the moon date in the text label in the journal view, and later to determine whether the ritual can be performed for the current moon date.
+    
+    NSString *moonDateDayString = [dateFormatterForDate stringFromDate:theMoonDate]; //Get a date string from the moon date.
+    NSString *moonDateTimeString = [dateFormatterForTime stringFromDate:theMoonDate]; //Get a time string from the moon date.
+    
+    NSString *moonTypeSpecificLabelText = [[NSString alloc]init];
+    switch ([[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"Type"]intValue])
+    {
+        case kNoMoonEvent:
+            moonTypeSpecificLabelText = @"No moon event";
+            self.letItGoButton.title =@"No event";
+            break;
+            
+        case kNewMoon:
+            moonTypeSpecificLabelText = [NSString stringWithFormat: @"New Moon at %@ on %@. \n\nThe time leading up to the new moon is the time to focus on hopes and dreams that you would like to manifest in your life. Use the journal to note your clear intentions.", moonDateTimeString, moonDateDayString];
+            self.letItGoButton.title =@"Set intention";
+            break;
+            
+        case kFullMoon:
+            moonTypeSpecificLabelText = [NSString stringWithFormat: @"Full Moon at %@ on %@. \n\nThe time leading up to the full moon is the time to release and let go of the things that are no longer serving you. Use the journal to note these.", moonDateTimeString, moonDateDayString];
+            self.letItGoButton.title =@"Release";
+            break;
+            
+        default:
+            moonTypeSpecificLabelText = @"Invalid moon event type";
+            self.letItGoButton.title =@"Error";
+            break;
+    }
+    
+    NSDate *ritualDeadline = [[NSDate alloc] initWithTimeInterval: labs (kAllowedLetItGoInterval) sinceDate:theMoonDate]; //Get the date by which the ritual must be performed. This is used to populate the information provided in the journal view to inform the user by when the ritual must be completed. We use the C labs function to convert the letItGoAllowedInterval to an unsigned double.
+    
+    NSDate *canDoRitualDate = [[NSDate alloc] initWithTimeInterval:(kpreMoonDateLetItGoInterval * -1) sinceDate:theMoonDate]; //Get the date from which the moon date can be performedd, again used to populate the information provided in the journal view. We multiply the kpreMoonDateLetItGoInterval constant by -1 to convert to a negative value.
     
     NSString *ritualDeadlineDateString = [dateFormatterForDate stringFromDate:ritualDeadline]; //Get a date string from the ritual deadline date.
     NSString *ritualDeadlineTimeString = [dateFormatterForTime stringFromDate:ritualDeadline]; //Get a time string from the ritual deadline date.
     
-    NSString *ritualDeadlineText = [NSString stringWithFormat:@"You have until %@ on %@ to perform the ritual for this journal entry.", ritualDeadlineTimeString, ritualDeadlineDateString]; //Put together a statement of when the moon ritual must be performed using the time and date strings.
+    NSString *canDoRitualDateString = [dateFormatterForDate stringFromDate:canDoRitualDate]; //Get a date string from the canDoRitual date.
+    NSString *canDoRitualTimeString = [dateFormatterForTime stringFromDate:canDoRitualDate]; //Get a time string from the canDoRitual date.
     
-    NSString *textForMoonTypeLabel = [NSString stringWithFormat:@"%@ \n \n%@", moonTypeSpecificLabelText, ritualDeadlineText]; //Create the complete string to display in moonTypeLabel, using the Moon Date Type specific text and the ritual deadline text we have now created.
+    NSString *ritualDeadlineText = [NSString stringWithFormat:@"You have until %@ on %@ to perform the ritual for this journal entry, and you will be able to perform the ritual from %@ on %@.", ritualDeadlineTimeString, ritualDeadlineDateString, canDoRitualTimeString, canDoRitualDateString]; //Put together a statement of when the moon ritual must be performed and when from using the time and date strings.
+
+    self.textForMoonTypeLabel = [NSString stringWithFormat:@"%@ \n \n%@", moonTypeSpecificLabelText, ritualDeadlineText]; //Create the complete string to display in moonTypeLabel, using the Moon Date Type specific text and the ritual deadline text we have now created.
     
-    self.moonTypeLabel.text = textForMoonTypeLabel;
+    self.moonTypeLabel.text = self.textForMoonTypeLabel;
     
     //Enable letItGoButton if the relevant moon event date has passed if we are within kAllowedLetItGoInterval of the moon event having passed, or if we are within the kpreMoonLetItGo interval before the moon event date, and if the journal entry has not already been released.
     
-    NSTimeInterval intervalSinceMoonDate = [[self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] objectForKey:@"MoonDate"] timeIntervalSinceNow]; //Get the amount of time since the relevant moon event.
-    
-    NSLog(@"Interval since moon date in the journal view is: %f", intervalSinceMoonDate);
-    
-    if (((intervalSinceMoonDate >= kAllowedLetItGoInterval && intervalSinceMoonDate < 0) || (intervalSinceMoonDate <= kpreMoonDateLetItGoInterval && intervalSinceMoonDate > 0)) && hasBeenReleased == NO)
+    NSLog(@"The moon date in journal view is %@", theMoonDate);
+    NSLog(@"%@", moonDatesInfo);
+    NSLog(@"%@ The actual moon date is ", theMoonDate);
+    if (([[moonDatesInfo objectForKey:@"canLetItGo"] boolValue] == YES) && hasBeenReleased == NO)
     {
         self.letItGoButton.enabled = YES;
+        NSLog (@"Enable Let It Go button");
+    }
+    
+    else{
+        NSLog (@"Did not enable Let It Go button");
     }
     
 }
@@ -158,6 +194,8 @@
     NSString *newJournalText = self.journalTextView.text;
     [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:newJournalText forKey:@"JournalText"];
     [self.sharedMoonDatesManager saveMoonDatesData];
+    
+    self.moonTypeLabel.text = self.textForMoonTypeLabel; //Reinstate the moonTypeLabel text, now that editing has ended.
 }
 
 - (IBAction)releaseJournalEntryButtonPressed: (id)sender
@@ -171,20 +209,13 @@
     
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) //OK action to add to the UIAlertController. The handler code deals with performing the moon ritual for this journal entry, as the user has stated that they wish to perform the action. We specify UIActionAlertStyleDestructive, as this action deletes the journal entry and is non-reversible.
     {
+        [self performSegueWithIdentifier:@"avplayerviewsegue" sender:self];
         self.journalTextView.text = @"The sacred ritual has been completed."; //Update the text in the journal text view.
         [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:@"The sacred ritual has been completed." forKey:@"JournalText"]; //Update the text in the Moon Dates dictionary.
         [self.sharedMoonDatesManager.moonDatesArray [self.indexForMoonDatesArray] setObject:[NSNumber numberWithBool:YES] forKey: @"Released"]; //Set the Released flag in the moonDatesArray to YES so that we know this journal entry has now been releasd, and the LetItGoButton will now not be enabled.
         [self.sharedMoonDatesManager saveMoonDatesData]; //Save the updated journal entry.
         self.journalTextView.editable = NO; //Now make the journal view uneditable.
         
-        //Next, configure and show an alert message with an OK button.
-        
-        NSString *letItGoMessage = @"This sacred ritual is now complete";
-        
-        UIAlertController *letItGoAlertController = [UIAlertController alertControllerWithTitle:@"Ritual Complete" message:letItGoMessage preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
-        [letItGoAlertController addAction:OKAction];
-        [self presentViewController:letItGoAlertController animated:YES completion:nil];
         self.letItGoButton.enabled = NO; //Disable the letItGoButton, now that the journal entry has been released.
         [UIApplication sharedApplication].applicationIconBadgeNumber = 0; //Here we set the application badge icon number to zero, as the ritual has been performed and therefore there will now be no pending rituals to notify the user of, until the next moon date occurs.
     }];
@@ -200,27 +231,19 @@
 }
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
-//If the textview's tag = 0, we know it didn't contain user text. Now the user has started editing, we clear the text view (to get rid of the placeholder text), turn the text black and change the tag to 1 so that we know it contains the user's text.
+//If the textview's tag = 0, we know it didn't contain user text. Now the user has started editing, we clear the text view (to get rid of the placeholder text), colour the text with our standard text colour and change the tag to 1 so that we know it contains the user's text.
 {
     if(textView.tag == 0)
     {
         textView.text=@"";
-        textView.textColor = [UIColor blackColor];
+        textView.textColor = self.sharedColoursManager.textColour;
+        
         textView.tag = 1;
     }
     
+    self.moonTypeLabel.text = @""; //Change the text of the moonTypeLabel to an empty string, so that the journal text view resizes itself to start at the top of the screen. This ensures that the journal text isn't hidden under the keyboard on iPhones with small screens.
+    
     return YES;
-}
-
--(void) textViewDidChange:(UITextView *)textView
-// If the textview's text has changed, and the length of the string is zero, we know it is empty, so we change the text to display the placeholder, make the text grey, and change the tag to zero, so that textViewShouldBeginEditing: knows that the textview does not contain any text entered by the user.
-{
-    if ([textView.text length] == 0)
-    {
-        textView.text = @"Enter journal text here";
-        textView.textColor = [UIColor lightGrayColor];
-        textView.tag = 0;
-    }
 }
 
 - (void)keyboardWasShown:(NSNotification*)notification

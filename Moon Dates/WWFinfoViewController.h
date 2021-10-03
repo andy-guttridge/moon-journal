@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
-@interface WWFinfoViewController : UIViewController
+@interface WWFinfoViewController : UIViewController <WKNavigationDelegate>
 
 @end

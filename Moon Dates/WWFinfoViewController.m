@@ -7,10 +7,11 @@
 //
 
 #import "WWFinfoViewController.h"
+#import "WWFcoloursManager.h"
 
 @interface WWFinfoViewController ()
 
-@property IBOutlet UITextView *infoView; //The UITextView used to display instructions for the app
+@property (weak,nonatomic) WWFcoloursManager *sharedColoursManager; //The shared colours manager
 
 @end
 
@@ -19,25 +20,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"mj_app_instructions" ofType:@"rtf"]; //Find the path to the RTF file containing the instructions for the app
-    NSData *instructionsRTF = [NSData dataWithContentsOfFile:path]; //Load the RTF file into an NSData object
-    NSDictionary *attributesForInitialisingNSAttributedString = @{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType}; //Create a NSDictionary containing an atributes dictionary for use when creating an NSAttributedString. The attribute within this NSDictionary tells NSAttributedString that we are creating an attributed string from a RTF document.
-    
-    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]; //Extract version number of the app from info.plist
-    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]; //Extract build number of the app from info.plist
-    
-    NSString * appVersionAndBuildStringWithHeadings = [NSString stringWithFormat:@"\n \n Version: %@ \n \n Build Number: %@", appVersionString, appBuildString]; //Create a formatted string to display the version and build numbers.
-    
-    NSMutableAttributedString *textForInfoView = [[NSMutableAttributedString alloc] initWithData: instructionsRTF options:attributesForInitialisingNSAttributedString documentAttributes:NULL error:NULL]; //Create an NSMutableAttributedString from the RTF.
-    
-    NSAttributedString *appVersionandBuildNumbers = [[NSAttributedString alloc]initWithString:appVersionAndBuildStringWithHeadings]; //Create an attributed string from the formatted version and build numbers string.
-    
-    [textForInfoView appendAttributedString:appVersionandBuildNumbers]; //Append the attributed string with the build and version numbers to the main attributed string containing the instructions for the app.
-    
-    self.infoView.attributedText = textForInfoView; //Set our UITextViews attributedText property to our NSMutableAttributedString containing the text from our RTF.
-    
+    //Here we load and display the instructions, which are saved as an HTML file within the app bundle.
+    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init]; //Create a configuration object for our web view.
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration]; //Create a new webview, using the frame of our UIView to do so.
+    webView.navigationDelegate = self; //Set this view controller as the navigation delegate for the web view (though none of the delegate methods are implemented as they are unnecessary for this use case).
+    NSURL *instructionsURL = [[NSBundle mainBundle] URLForResource:@"mj_instructions_html" withExtension:@"html"];//Find the file path for the HTML file in the app bundle.
+    NSURLRequest *request = [NSURLRequest requestWithURL:instructionsURL]; //Create a URL request using the file path to the HTML file.
+    [webView loadRequest:request]; //Ask the web view to load the HTML file.
+    webView.scrollView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0); //Ensure the top of the web view is inset so as not to overlap with the status bar.
+    [self.view addSubview:webView]; //Display the HTML file by adding the web view to our UIView.
+
 }
 
 - (void)didReceiveMemoryWarning {

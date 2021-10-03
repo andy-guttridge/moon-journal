@@ -22,5 +22,7 @@
 -(void) scheduleNotifications;
 -(void) saveMoonDatesData;
 -(void) removeOldNotificationBadge;
+-(NSDictionary *) moonDateInfo: (NSDate *) date;
+-(void) clearAllJournalEntries;
 
 @end
