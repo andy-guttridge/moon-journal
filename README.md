@@ -19,3 +19,6 @@ An iOS calendar based app to enable a virtual version of a 'moon ritual', in whi
 
 <p>The text entered into the journal will be cleared after the ritual has been performed.</p>
 
+<p>This app makes use of the FSCalendar library, courtesy of Wenchao Ding.</p>
+
+<p>Copyright (c) 2013-2016 FSCalendar (https://github.com/WenchaoD/FSCalendar)</p>
