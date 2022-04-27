@@ -1,11 +1,13 @@
 # moon-journal
-An iOS calendar based app to enable a virtual version of a 'moon ritual', in which the user releases their hopes/dreams and intentions at the time of a new or full moon.
+An iOS calendar based app to enable a virtual version of a 'moon ritual', in which the user releases their hopes/dreams and sets their intentions at the time of a new or full moon.
 
  
 <b>Harness the power of the moon!</b>
 <p>The new moon is a time to focus on manifesting our hopes and dreams, and the full moon is a time to let go of the baggage that no longer serves us in our lives.</p>
   
  <p>The Moon Journal app allows the user to perform a virtual version of an ancient ritual. They can use the Moon Journal app to note their innermost thoughts and feelings around the time of a new moon or a full moon, and perform a sacred ritual to harness the influence of the new or full moon.</p>
+ 
+ <p>In the real-world ritual, you write down your intentions and goals at the time of a new moon, or the negative baggage that you want to release at the time of a full moon, and burn the piece of paper to perform the ritual. The app allows you to perform a virtual version of a ritual - very handy if you live in a flat, for example!</p>
 
 <b>How to use the app</b>
 
