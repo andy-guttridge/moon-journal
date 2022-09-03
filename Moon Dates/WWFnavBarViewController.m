@@ -19,36 +19,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // Color the navigation bar
+    self.sharedColoursManager = [WWFcoloursManager sharedColoursManager];
+    self.navigationBar.barTintColor = self.sharedColoursManager.backgroundColour;
     
-    self.sharedColoursManager = [WWFcoloursManager sharedColoursManager]; //Get a reference to the shared colours manager
-    self.navigationBar.barTintColor = self.sharedColoursManager.backgroundColour; //Colour the navigation bar with the standard background colour from the shared colours manager.
+    //Create a dictionary with text attributes for the navigation bar title and assign text attributes to the nav bar title.
+    NSDictionary *titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.headerColour forKey:NSForegroundColorAttributeName];
+    self.navigationBar.titleTextAttributes = titleTextAttributes;
     
-    NSDictionary *titleTextAttributes = [NSDictionary dictionaryWithObject:self.sharedColoursManager.headerColour forKey:NSForegroundColorAttributeName]; //Create a dictionary with text attributes for the navigation bar title.
-    self.navigationBar.titleTextAttributes = titleTextAttributes; //Assign the text attributes to the navigation bar title.
+    //Create attributes for UITabBar items in the selected state and assign to the tab bar items for the selected state
+    NSDictionary *barItemSelectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.0f], NSFontAttributeName, self.sharedColoursManager.highlightColour,NSForegroundColorAttributeName,nil];
+    [[UITabBarItem appearance] setTitleTextAttributes:barItemSelectedAttributes forState:UIControlStateSelected];
     
-    
-    NSDictionary *barItemSelectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.0f], NSFontAttributeName, self.sharedColoursManager.highlightColour,NSForegroundColorAttributeName,nil]; //Create a dictionary containting string attributes for our UITabBar items in the slected state;
-    [[UITabBarItem appearance] setTitleTextAttributes:barItemSelectedAttributes forState:UIControlStateSelected]; //Assign the font and colour attributes to the tab bar items, for the selected state.
-    
-    NSDictionary *barItemUnselectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.0f], NSFontAttributeName, self.sharedColoursManager.selectableColour,NSForegroundColorAttributeName,nil]; //Create a dictionary containting string attributes for our UITabBar items in the slected state;
-    [[UITabBarItem appearance] setTitleTextAttributes:barItemUnselectedAttributes forState:UIControlStateNormal]; //Assign the font and colour attributes to the tab bar items, for the selected state.
-   
+    //Create attributes and assign to the tab bar items for the unselected state.
+    NSDictionary *barItemUnselectedAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.0f], NSFontAttributeName, self.sharedColoursManager.selectableColour,NSForegroundColorAttributeName,nil];
+    [[UITabBarItem appearance] setTitleTextAttributes:barItemUnselectedAttributes forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
