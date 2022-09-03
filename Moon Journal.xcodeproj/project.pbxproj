@@ -13,8 +13,6 @@
 		A10577311CFAFBCE00951A27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A105772F1CFAFBCE00951A27 /* Main.storyboard */; };
 		A10577331CFAFBCE00951A27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10577321CFAFBCE00951A27 /* Assets.xcassets */; };
 		A10577361CFAFBCE00951A27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A10577341CFAFBCE00951A27 /* LaunchScreen.storyboard */; };
-		A10577411CFAFBCF00951A27 /* Moon_DatesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577401CFAFBCF00951A27 /* Moon_DatesTests.m */; };
-		A105774C1CFAFBCF00951A27 /* Moon_DatesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A105774B1CFAFBCF00951A27 /* Moon_DatesUITests.m */; };
 		A105775E1CFAFD3300951A27 /* WWFinfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A105775D1CFAFD3300951A27 /* WWFinfoViewController.m */; };
 		A10577611CFAFD6300951A27 /* WWFsettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577601CFAFD6300951A27 /* WWFsettingsViewController.m */; };
 		A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */; };
@@ -80,11 +78,7 @@
 		A10577351CFAFBCE00951A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A10577371CFAFBCE00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A105773C1CFAFBCF00951A27 /* Moon JournalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon JournalTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A10577401CFAFBCF00951A27 /* Moon_DatesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Moon_DatesTests.m; sourceTree = "<group>"; };
-		A10577421CFAFBCF00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A10577471CFAFBCF00951A27 /* Moon JournalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon JournalUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A105774B1CFAFBCF00951A27 /* Moon_DatesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Moon_DatesUITests.m; sourceTree = "<group>"; };
-		A105774D1CFAFBCF00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A105775C1CFAFD3300951A27 /* WWFinfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFinfoViewController.h; sourceTree = "<group>"; };
 		A105775D1CFAFD3300951A27 /* WWFinfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFinfoViewController.m; sourceTree = "<group>"; };
 		A105775F1CFAFD6300951A27 /* WWFsettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFsettingsViewController.h; sourceTree = "<group>"; };
@@ -177,8 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				A10577251CFAFBCE00951A27 /* Moon Dates */,
-				A105773F1CFAFBCF00951A27 /* Moon DatesTests */,
-				A105774A1CFAFBCF00951A27 /* Moon DatesUITests */,
 				A10577241CFAFBCE00951A27 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -246,24 +238,6 @@
 				A10577271CFAFBCE00951A27 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		A105773F1CFAFBCF00951A27 /* Moon DatesTests */ = {
-			isa = PBXGroup;
-			children = (
-				A10577401CFAFBCF00951A27 /* Moon_DatesTests.m */,
-				A10577421CFAFBCF00951A27 /* Info.plist */,
-			);
-			path = "Moon DatesTests";
-			sourceTree = "<group>";
-		};
-		A105774A1CFAFBCF00951A27 /* Moon DatesUITests */ = {
-			isa = PBXGroup;
-			children = (
-				A105774B1CFAFBCF00951A27 /* Moon_DatesUITests.m */,
-				A105774D1CFAFBCF00951A27 /* Info.plist */,
-			);
-			path = "Moon DatesUITests";
 			sourceTree = "<group>";
 		};
 		A1A0C2D91F76D9EC00E29DFD /* FSCalendar Files */ = {
@@ -390,6 +364,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -481,7 +456,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10577411CFAFBCF00951A27 /* Moon_DatesTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,7 +463,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A105774C1CFAFBCF00951A27 /* Moon_DatesUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
