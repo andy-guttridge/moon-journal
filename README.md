@@ -18,6 +18,7 @@ An iOS calendar based app to enable a virtual version of a 'moon ritual', in whi
  <img src="readme-assets/new-moon-entry2.png" height="400">
  <img src="readme-assets/full-moon-entry2.png" height="400">
  <img src="readme-assets/are-you-sure.png" height="400">
+ <img src="readme-assets/fire.png" height="400">
  <img src="readme-assets/ritual-complete.png" height="400">
 </p>
 
