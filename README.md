@@ -10,7 +10,7 @@ An iOS calendar based app to enable a virtual version of a 'moon ritual', in whi
  <p>In the real-world ritual, you write down your intentions and goals at the time of a new moon, or the negative baggage that you want to release at the time of a full moon, and burn the piece of paper to perform the ritual. The app allows you to perform a virtual version of a ritual - very handy if you live in a flat, for example!</p>
 
 <b>How to use the app</b>
-<p>
+<p align="center">
  <img src="readme-assets/start-screen.png" height="400">
  <img src="readme-assets/calendar.png" height="400">
  <img src="readme-assets/notification-1.png" height="400">
