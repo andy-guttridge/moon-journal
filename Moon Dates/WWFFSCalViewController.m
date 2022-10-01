@@ -6,9 +6,9 @@
 //  Copyright © 2017 Andy Guttridge. All rights reserved.
 //
 
-#import "WWF_FSCalViewController.h"
+#import "WWFFSCalViewController.h"
 
-@interface WWF_FSCalViewController ()
+@interface WWFFSCalViewController ()
 
 //Reference to shared moon dates manager
 @property (weak, nonatomic) WWFmoonDatesManager *sharedMoonDatesManager;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation WWF_FSCalViewController
+@implementation WWFFSCalViewController
 
 - (void)viewDidLoad{
     [super viewDidLoad];

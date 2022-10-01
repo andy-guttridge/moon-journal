@@ -42,7 +42,7 @@
 		A1A0C2D61F76D9D100E29DFD /* FSCalendarStickyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2C41F76D9D100E29DFD /* FSCalendarStickyHeader.m */; };
 		A1A0C2D71F76D9D100E29DFD /* FSCalendarTransitionCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2C61F76D9D100E29DFD /* FSCalendarTransitionCoordinator.m */; };
 		A1A0C2D81F76D9D100E29DFD /* FSCalendarWeekdayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2C81F76D9D100E29DFD /* FSCalendarWeekdayView.m */; };
-		A1A0C2DC1F76E37900E29DFD /* WWF_FSCalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2DB1F76E37900E29DFD /* WWF_FSCalViewController.m */; };
+		A1A0C2DC1F76E37900E29DFD /* WWFFSCalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A0C2DB1F76E37900E29DFD /* WWFFSCalViewController.m */; };
 		A1A851011F7FFF7F005B4874 /* WWFcoloursManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A1A851001F7FFF7F005B4874 /* WWFcoloursManager.m */; };
 		A1D71A101FAE5AFD004F85A3 /* WWFAVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D71A0F1FAE5AFD004F85A3 /* WWFAVViewController.m */; };
 		A1D9F5032125C8C900DBB11B /* WWFaboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A1D9F5022125C8C900DBB11B /* WWFaboutViewController.m */; };
@@ -131,8 +131,8 @@
 		A1A0C2C61F76D9D100E29DFD /* FSCalendarTransitionCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarTransitionCoordinator.m; sourceTree = "<group>"; };
 		A1A0C2C71F76D9D100E29DFD /* FSCalendarWeekdayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarWeekdayView.h; sourceTree = "<group>"; };
 		A1A0C2C81F76D9D100E29DFD /* FSCalendarWeekdayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarWeekdayView.m; sourceTree = "<group>"; };
-		A1A0C2DA1F76E37900E29DFD /* WWF_FSCalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWF_FSCalViewController.h; sourceTree = "<group>"; };
-		A1A0C2DB1F76E37900E29DFD /* WWF_FSCalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWF_FSCalViewController.m; sourceTree = "<group>"; };
+		A1A0C2DA1F76E37900E29DFD /* WWFFSCalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFFSCalViewController.h; sourceTree = "<group>"; };
+		A1A0C2DB1F76E37900E29DFD /* WWFFSCalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFFSCalViewController.m; sourceTree = "<group>"; };
 		A1A850FF1F7FFF7F005B4874 /* WWFcoloursManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFcoloursManager.h; sourceTree = "<group>"; };
 		A1A851001F7FFF7F005B4874 /* WWFcoloursManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFcoloursManager.m; sourceTree = "<group>"; };
 		A1D71A0E1FAE5AFD004F85A3 /* WWFAVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFAVViewController.h; sourceTree = "<group>"; };
@@ -207,8 +207,8 @@
 				A105772D1CFAFBCE00951A27 /* WWFtabBarController.m */,
 				A11F28E61F8BF79800533AAB /* WWFnavBarViewController.h */,
 				A11F28E71F8BF79800533AAB /* WWFnavBarViewController.m */,
-				A1A0C2DA1F76E37900E29DFD /* WWF_FSCalViewController.h */,
-				A1A0C2DB1F76E37900E29DFD /* WWF_FSCalViewController.m */,
+				A1A0C2DA1F76E37900E29DFD /* WWFFSCalViewController.h */,
+				A1A0C2DB1F76E37900E29DFD /* WWFFSCalViewController.m */,
 				A1D71A0E1FAE5AFD004F85A3 /* WWFAVViewController.h */,
 				A1D71A0F1FAE5AFD004F85A3 /* WWFAVViewController.m */,
 				A105775C1CFAFD3300951A27 /* WWFinfoViewController.h */,
@@ -447,7 +447,7 @@
 				A145CB0E1CFB652400670E79 /* WWFuserDataManager.m in Sources */,
 				A1A0C2D21F76D9D100E29DFD /* FSCalendarDelegationProxy.m in Sources */,
 				A10577641CFAFD7900951A27 /* WWFmoonDatesManager.m in Sources */,
-				A1A0C2DC1F76E37900E29DFD /* WWF_FSCalViewController.m in Sources */,
+				A1A0C2DC1F76E37900E29DFD /* WWFFSCalViewController.m in Sources */,
 				A1D9F5032125C8C900DBB11B /* WWFaboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

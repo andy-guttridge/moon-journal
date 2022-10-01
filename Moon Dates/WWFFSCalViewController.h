@@ -14,7 +14,7 @@
 #import "WWFjournalViewController.h"
 #import "WWFcoloursManager.h"
 
-@interface WWF_FSCalViewController : UIViewController
+@interface WWFFSCalViewController : UIViewController
 <FSCalendarDataSource, FSCalendarDelegate, FSCalendarDelegateAppearance>
 
 @property (weak, nonatomic) IBOutlet FSCalendar *theCalendarView;

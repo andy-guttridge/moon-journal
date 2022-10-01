@@ -69,7 +69,7 @@
         
         NSString *classOfViewController = NSStringFromClass([theCurrentViewController class]);
         if ([classOfViewController  isEqual: @"WWF_FSCalViewController"]){
-            WWF_FSCalViewController *theCalendarViewController = (WWF_FSCalViewController *) theCurrentViewController;
+            WWFFSCalViewController *theCalendarViewController = (WWFFSCalViewController *) theCurrentViewController;
             //Ask the calendar to select and scroll to the moon date we have received a notification for.
             [theCalendarViewController.theCalendarView selectDate:notificationMoonDate scrollToDate:YES];
             NSLog(@"Calendar scrolled to notification moon date");
@@ -114,7 +114,7 @@
             NSString *classOfViewController = NSStringFromClass([theCurrentViewController class]);
             
             if ([classOfViewController  isEqual: @"WWF_FSCalViewController"]){
-                WWF_FSCalViewController *theCalendarViewController = (WWF_FSCalViewController *) theCurrentViewController;
+                WWFFSCalViewController *theCalendarViewController = (WWFFSCalViewController *) theCurrentViewController;
                 //Ask the calendar to select and scroll to the moon date associated with the notification, and to reload its data (this prevents some occasional bugs)
                 [theCalendarViewController.theCalendarView selectDate:notificationMoonDate scrollToDate:YES];
                 [theCalendarViewController.theCalendarView reloadData];

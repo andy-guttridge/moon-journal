@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nQt-UU-tVP">
-    <device id="retina5_5" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nQt-UU-tVP">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -36,11 +31,11 @@
                         <viewControllerLayoutGuide type="bottom" id="8Ea-11-Ijf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="170-JD-HBb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLF-U7-wlq">
-                                <rect key="frame" x="20" y="72" width="374" height="18"/>
+                                <rect key="frame" x="20" y="58" width="560" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="c3U-a2-RHL"/>
                                 </constraints>
@@ -54,7 +49,7 @@
                                 </variation>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Enter journal text here" translatesAutoresizingMaskIntoConstraints="NO" id="qua-0l-WW5">
-                                <rect key="frame" x="20" y="98" width="374" height="569"/>
+                                <rect key="frame" x="20" y="84" width="560" height="447"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="17"/>
@@ -136,7 +131,7 @@
                         <viewControllerLayoutGuide type="bottom" id="aiq-IF-FEH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="d5A-hM-yjJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -155,17 +150,17 @@
                         <viewControllerLayoutGuide type="bottom" id="ahe-GU-EoM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ORs-s5-9eD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CLP-wK-B4T">
-                                <rect key="frame" x="28" y="28" width="374" height="627"/>
+                                <rect key="frame" x="28" y="8" width="560" height="491"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <attributedString key="attributedText"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3A-mY-nQZ">
-                                <rect key="frame" x="186" y="663" width="43" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c3A-mY-nQZ">
+                                <rect key="frame" x="278.5" y="507" width="43" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Done"/>
                                 <connections>
@@ -204,19 +199,19 @@
                         <viewControllerLayoutGuide type="bottom" id="dXu-44-zdV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="50E-AU-TWD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibP-hV-ulS">
-                                <rect key="frame" x="20" y="28" width="374" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibP-hV-ulS">
+                                <rect key="frame" x="20" y="8" width="560" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Clear all journal entries"/>
                                 <connections>
                                     <action selector="clearJournalButtonPressed:" destination="HS3-S3-hwA" eventType="touchUpInside" id="ryg-ni-Gy3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NJR-i9-7oe">
-                                <rect key="frame" x="148" y="82" width="118" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NJR-i9-7oe">
+                                <rect key="frame" x="241" y="62" width="118" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="About this app"/>
                                 <connections>
@@ -265,17 +260,17 @@
         <!--Cal View Controller-->
         <scene sceneID="kM1-1n-2aU">
             <objects>
-                <viewController id="Y1I-FE-36R" userLabel="Cal View Controller" customClass="WWF_FSCalViewController" sceneMemberID="viewController">
+                <viewController id="Y1I-FE-36R" userLabel="Cal View Controller" customClass="WWFFSCalViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uqI-JT-ST5"/>
                         <viewControllerLayoutGuide type="bottom" id="kOE-2h-clI"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jbe-kN-hAV">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RFw-BC-Scr" customClass="FSCalendar">
-                                <rect key="frame" x="20" y="72" width="374" height="607"/>
+                                <rect key="frame" x="20" y="58" width="560" height="485"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Y1I-FE-36R" id="3Vn-qL-Pxp"/>
                                     <outlet property="delegate" destination="Y1I-FE-36R" id="zFT-D5-gtw"/>
