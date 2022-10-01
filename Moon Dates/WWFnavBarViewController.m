@@ -17,7 +17,7 @@
 
 @implementation WWFnavBarViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad{
     [super viewDidLoad];
     // Color the navigation bar
     self.sharedColoursManager = [WWFcoloursManager sharedColoursManager];
@@ -36,7 +36,7 @@
     [[UITabBarItem appearance] setTitleTextAttributes:barItemUnselectedAttributes forState:UIControlStateNormal];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

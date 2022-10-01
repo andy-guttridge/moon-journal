@@ -18,12 +18,12 @@
 
 @implementation WWFtabBarController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    //The shared manager objects are 'owned' by this view controller, as it is the root view controller and both manager objects are required all of the time the app is running, therefore it makes sense to instantiate them here with strong references. 
+    //The shared manager objects are 'owned' by this view controller, as it is the root view controller and both manager objects are required all of the time the app is running,
+    //so instantiate with strong references.
     
     self.sharedMoonDatesManager = [WWFmoonDatesManager sharedMoonDatesManager];
     self.sharedUserDataManager = [WWFuserDataManager sharedUserDataManager];
@@ -32,7 +32,7 @@
     self.tabBar.tintColor = self.sharedColoursManager.selectableColour;
     self.tabBar.barTintColor = self.sharedColoursManager.backgroundColour;
     
-    //Create a dictionary containting string attributes for our UITabBar items in the selected state;
+    //Create dictionary containting string attributes for UITabBar items in the selected state;
     NSDictionary *barItemSelectedAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize: 20.0f], NSForegroundColorAttributeName : self.sharedColoursManager.highlightColour};
     
     //Assign the font attributes to the tab bar items, for both the selected state.
@@ -42,28 +42,28 @@
     [[UITabBarItem appearance] setTitleTextAttributes:barItemUnselectedAttributes forState:UIControlStateNormal];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
--(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options)) completionHandler
-//This method which is implemented as part of the UNNotificationCenter protocol handles notifications that are received while the app is running.
- 
-{
-    //Run completion handler provided by the system, specifying that we only want the system to provide an alert sound (not to display the alert - we have our own custom response instead.
-    completionHandler (UNNotificationPresentationOptionSound);
+-(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options)) completionHandler{
+    //Method implemented as part of the UNNotificationCenter protocol.
+    //Handles notifications that are received while the app is running.
+    //Run completion handler provided by the system, specifying that we only want the system to provide an alert sound
+    //We display our own alert instead of the system's we have our own custom response instead.
+    completionHandler(UNNotificationPresentationOptionSound);
     
     //Grab a reference to the UINavigationController that displays our calendar and journal views.
     UINavigationController *calendarViewNavigationController = self.viewControllers [0];
     
     //Make calendar view visible and scroll the table view to ensure that the appropriate moon date is visible.
     NSDate *notificationMoonDate;
-    //Get the moon date from the local notification object.
+    //Get moon date from the local notification object.
     if ((notificationMoonDate = [notification.request.content.userInfo objectForKey:@"MoonDate"])){
         //Ensure the calendar view is selected.
         self.selectedIndex = 0;
-        //Make sure the calendar view is displayed (rather than the journal view), then get a reference to the view controller currently at the top of the UINavigationController stack.
+        //Make sure calendar view is displayed (rather than the journal view), then get a reference to the view controller currently at the top of the UINavigationController stack.
         [calendarViewNavigationController popToRootViewControllerAnimated:YES];
         UIViewController *theCurrentViewController = calendarViewNavigationController.topViewController;
         
@@ -76,7 +76,7 @@
         }
     }
     
-    //Show an alert to indicate that a notification has been received.
+    //Show alert to indicate that a notification has been received.
     NSString *title = notification.request.content.title;
     NSString *message = notification.request.content.body;
     
