@@ -51,39 +51,40 @@
     // Dispose of any resources that can be recreated.
 }
 
+//This method refreshes the calendar data.
 -(void) redrawCalendar{
-    //This method refreshes the calendar data.
     [self.theCalendarView reloadData];
 }
 
+//This method ensures the calendar view is refreshed if the user returns to the calendar from another view.
 - (void) viewWillAppear:(BOOL)animated{
-    //This method ensures the calendar view is refreshed if the user returns to the calendar from another view.
     NSLog(@"WWF_FSCalViewController viewWillAppear called.");
     [super viewWillAppear:animated];
     [self redrawCalendar];
+    
     //Ask calendar to deselect the date corresponding to the current moon date array index stored within this object.
     //Ensures moon date is deselected in the calendar when we return from another view, e.g. the journal view.
     [self.theCalendarView deselectDate:[self.sharedMoonDatesManager.moonDatesArray [self.journalIndex] objectForKey:@"MoonDate"]];
 }
 
+//Give calendar its start date.
 - (NSDate *)minimumDateForCalendar:(FSCalendar *)calendar{
-    //Give calendar its start date.
     NSDate *startDate = [NSDate dateWithTimeIntervalSinceReferenceDate:kCalendarStartDate];
     return startDate;
 }
 
+//Give calendar its end date.
 - (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar{
-    //Give calendar its end date.
     NSDate *endDate = [NSDate dateWithTimeIntervalSinceReferenceDate:kCalendarEndDate];
     return endDate;
 }
 
+//This method is called when the calendar wants to know if the user should be permitted to select a specific date.
 - (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition{
-    //This method is called when the calendar wants to know if the user should be permitted to select a specific date.
     //Get dictionary from sharedMoonDatesManager, use this to determine if the date is a moon date and its index in the moon dates array.
     //If selected date is a moon date allow the user to select the date.
     //Index of the moon date is stored in the journal index property and passed to the journal view controller in the prepareForSegue:segue sender:sender method.
-    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO){
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO) {
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
     }
     
@@ -97,25 +98,24 @@
     return isMoonDate;
 }
 
-
--(void) calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition{
-    //If a date was selected on the calender, perform a segue to the journal view controller to display the journal entry.
+//If a date was selected on the calender, perform a segue to the journal view controller to display the journal entry.
+-(void) calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
     //Reference to the appropriate journal entry is passed to the journal view controller in - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender .
     [self performSegueWithIdentifier:@"journalsegue" sender:self];
 }
 
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //Get a reference to the journal view controller via the segue which is passed to this method.
     WWFjournalViewController *journalViewController = (WWFjournalViewController *) [segue destinationViewController];
     //Pass the index for the journal entry to the journal view controller.
     journalViewController.indexForMoonDatesArray = self.journalIndex;
 }
 
--(nullable UIImage *) calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date{
+-(nullable UIImage *) calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date {
     //If the date is a new moon or full moon, return an appropriate image to use as an icon, otherwise return nil.
     //Check moon date info currently stored in calendar view controller relates to the date passed in by the calendar.
     //If not, ask the moon dates manager for info for the correct date. This ensures each FSCalendar delegate method that requires this information only asks for it if it is needed.
-    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO){
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO) {
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
     }
     
@@ -127,31 +127,31 @@
     BOOL released = [[self.moonDateInfo objectForKey:@"released"] boolValue];
     
     //If moon date is a full moon and the date is not within the Let It Go range, return the standard full moon icon to display on the calendar.
-    if ((type == kFullMoon) && (!canLetItGo)){
+    if ((type == kFullMoon) && (!canLetItGo)) {
         UIImage *image = [UIImage imageNamed:@"FullMoonIcon"];
         return image;
-    } else if ((type ==kFullMoon) && (canLetItGo)){
+    } else if ((type ==kFullMoon) && (canLetItGo)) {
         //If moon date is a full moon and date is within the Let It Go range, find out whether the ritual has been performed for the corresponding journal entry.
-        if (!released){
+        if (!released) {
             //If journal entry for this date hasn't been released yet, then the cell will be highlighted and we need to return the inverse icon image.
             UIImage *image = [UIImage imageNamed: @"FullMoonInverseIcon"];
             return image;
-        } else{
+        } else {
             //Otherwise the journal entry has been been released, so return the standard full moon icon image.
             UIImage *image = [UIImage imageNamed: @"FullMoonIcon"];
             return image;
         }
-    } else if ((type == kNewMoon) && (!canLetItGo)){
+    } else if ((type == kNewMoon) && (!canLetItGo)) {
         //If moon date is a new moon and date is not within the Let It Go range, then return the standard new moon icon to display on the calendar.
         UIImage *image = [UIImage imageNamed:@"NewMoonIcon"];
         return image;
-    } else if ((type == kNewMoon) && (canLetItGo)){
+    } else if ((type == kNewMoon) && (canLetItGo)) {
         //If moon date is a new moon and the date is within the Let It Go range, we need to find out whether the ritual has been performed for the corresponding journal entry.
-        if (!released){
+        if (!released) {
             //If journal entry for this date hasn't been released yet, then the cell will be highlighted and we return the inverse icon image.
             UIImage *image = [UIImage imageNamed:@"NewMoonInverseIcon"];
             return image;
-        } else{
+        } else {
             //Otherwise return the standard icon.
             UIImage *image = [UIImage imageNamed:@"NewMoonIcon"];
             return image;
@@ -163,8 +163,8 @@
     
 }
 
-- (IBAction)goToToday:(id)sender{
-    //This method is called when the today button on the calendar is pressed.
+//This method is called when the today button on the calendar is pressed.
+- (IBAction)goToToday:(id)sender {
     //Select and scroll to the current date, and ensure it appears deselected.
     NSDate *today = [NSDate date]; //Get today's date
     [self.theCalendarView selectDate:today scrollToDate:YES];
@@ -173,7 +173,7 @@
 
 - (nullable UIColor*) calendar: (FSCalendar *) calendar appearance:(nonnull FSCalendarAppearance *)appearance fillDefaultColorForDate:(nonnull NSDate *)date{
     //Return default colour for date cells.
-    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO){
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO) {
         //Check moon date info currently stored in the calendar view controller matches date passed in by the calendar,
         //or ask the moon dates manager for the info for the correct date.
         //Ensures each FSCalendar delegate method that requires this information only asks for it if it is needed, and improves performance.
@@ -186,44 +186,40 @@
     BOOL released = [[self.moonDateInfo objectForKey:@"released"] boolValue];
     
     //If within the Let It Go range and the journal entry as not been released, return highlighted colour to indicate that the ritual can be performed
-    if ((canLetItGo) && (!released)){
+    if ((canLetItGo) && (!released)) {
         return self.sharedColoursManager.highlightColour;
-    }
-    
-    //If the date is not within the Let It Go range, then return the standard background colour.
-    else{
+    } else {
+        //If the date is not within the Let It Go range, then return the standard background colour.
         return self.sharedColoursManager.backgroundColour;
     }
 }
 
-- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance borderDefaultColorForDate:(NSDate *)date{
-    //Method returns default border colour for date cells.
-    //Get todays date.
+//Method returns default border colour for date cells.
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance borderDefaultColorForDate:(NSDate *)date {
+    //Get todays date, components of date without time, reconstitite date without time.
+    //Then do the same for the date passed in by the  calendar.
+    //NOTE - this code to get the date without the time should be pulled into its own method, as it's repeated a few times.
     NSDate *today = [NSDate date];
-    //Get components of todays date without the time units so that we can recompose it without the time included and Create new NSDate from the components of today's date.
     NSDateComponents *todayComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:today];
     NSDate *todayWithoutTime = [[NSCalendar currentCalendar] dateFromComponents:todayComponents];
-    
-    //Get components of the date passed in by the calendar without the time units so that we can recompose it without the time included and
-    //create a new NSDate from the components of the date passed in by the calendar.
     NSDateComponents *calendarDateComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
     NSDate *calendarDateWithoutTime = [[NSCalendar currentCalendar] dateFromComponents:calendarDateComponents];
     
     //If date passed in by calendar is today's date, return standard header colour from the shared colours manager.
-    if ([todayWithoutTime isEqualToDate:calendarDateWithoutTime]){
+    if ([todayWithoutTime isEqualToDate:calendarDateWithoutTime]) {
         return self.sharedColoursManager.headerColour;
-    } else{
+    } else {
         //Otherwise return standard background colour from shared colours manager so that the date cell appears with no border.
         return self.sharedColoursManager.backgroundColour;
     }
 }
 
-- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(nonnull NSDate *)date{
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleDefaultColorForDate:(nonnull NSDate *)date {
     //Return default text colour for dates. If date is within the Let It Go range and the journal entry for this date has not been released
     //return the background colour so that the text stands out against the highlighted cell. Otherwise we return standard text colour.
     
-    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO){
-        //Check moon date info currently stored in the calendar view controller relates to the date passed in by the calendar.
+    //Check moon date info currently stored in the calendar view controller relates to the date passed in by the calendar.
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO) {
         //If not ask moon dates manager for the info for the correct date. Ensures each FSCalendar delegate method that requires this information only asks for it if it is needed, improves performance.
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
     }
@@ -233,7 +229,7 @@
     BOOL released = [[self.moonDateInfo objectForKey:@"released"] boolValue];
     
     //If within the Let It Go range and journal entry for this date has not been released, return standard background colour.
-    if ((canLetItGo) && (!released)){
+    if ((canLetItGo) && (!released)) {
         return self.sharedColoursManager.backgroundColour;
     }
     
@@ -245,46 +241,45 @@
     NSDateComponents *datePassedInComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth| NSCalendarUnitYear fromDate:date];
     NSDate *datePassedInWithoutTime = [[NSCalendar currentCalendar] dateFromComponents:datePassedInComponents];
     
-    if ([datePassedInWithoutTime isEqualToDate: todayWithoutTime]){
+    if ([datePassedInWithoutTime isEqualToDate: todayWithoutTime]) {
     //If date passed in by the calendar is todays date then return the highlight colour.
         return self.sharedColoursManager.highlightColour;
-     } else{
+     } else {
         return self.sharedColoursManager.textColour; //Otherwise return the standard text colour
      }
 }
 
-- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance borderSelectionColorForDate:(NSDate *)date{
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance borderSelectionColorForDate:(NSDate *)date {
     //Return background colour as the border colour for selected date cells.
     return self.sharedColoursManager.backgroundColour;
 }
 
-- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance fillSelectionColorForDate:(NSDate *)date{
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance fillSelectionColorForDate:(NSDate *)date {
     //If date is not within the Let It Go range return standard selectable item colour for cell border, if within the Let It Go range return highlight colour.
-    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO){
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO) {
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
     }
     
     //Find out whether the date is within the range within which the ritual can be performed and return highlighted colour if it is.
     BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue];
-    if (canLetItGo){
+    if (canLetItGo)  {
         return self.sharedColoursManager.highlightColour;
-    } else{
+    } else {
         return self.sharedColoursManager.selectableColour;
     }
 }
 
-- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleSelectionColorForDate:(NSDate *)date{
+- (nullable UIColor*) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance titleSelectionColorForDate:(NSDate *)date {
     //Return standard background colour if date is within 'Let It Go' range, the highlighted colour if the date is today, otherwise return standard text colour.
-    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO){
-        //Check moon date info currently stored in the calendar view controller relates to the date passed in by the calendar.
+    //Check moon date info currently stored in the calendar view controller relates to the date passed in by the calendar.
+    if (([[self.moonDateInfo objectForKey:@"date"] isEqualToDate:date]) == NO) {
         //If not ask moon dates manager for the info for the correct date. Ensures each FSCalendar delegate method that requires this information only asks for it if it is needed, improves performance.
         self.moonDateInfo = [self.sharedMoonDatesManager moonDateInfo:date];
     }
     
     //Find out whether the date is within the range within which the ritual can be performed and return stanard background colour if it is
     BOOL canLetItGo = [[self.moonDateInfo objectForKey:@"canLetItGo"] boolValue];
-    
-    if (canLetItGo){
+    if (canLetItGo) {
         return self.sharedColoursManager.backgroundColour;
     }
     
@@ -296,25 +291,24 @@
     NSDateComponents *datePassedInComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth| NSCalendarUnitYear fromDate:date];
     NSDate *datePassedInWithoutTime = [[NSCalendar currentCalendar] dateFromComponents:datePassedInComponents];
     
-    if ([datePassedInWithoutTime isEqualToDate: todayWithoutTime]){
+    if ([datePassedInWithoutTime isEqualToDate: todayWithoutTime]) {
         //If date passed in by the calendar is todays date then return the highlight colour, otherwise return standard text colour
         return self.sharedColoursManager.highlightColour;
-    } else{
+    } else {
     return self.sharedColoursManager.textColour;
     }
 }
 
 
-- (CGPoint) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance imageOffsetForDate:(NSDate *)date{
+- (CGPoint) calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance imageOffsetForDate:(NSDate *)date {
     //Return image offset for date cell.
     //Get the frame for our date cell
     CGRect theFrame = [self.theCalendarView frameForDate:date];
+    
     //Calculate a negative offset for the image, to position it within the selectable date area.
     CGPoint offsetForImage = CGPointMake(0, (theFrame.size.height /3.3) * -1);
     return offsetForImage;
 }
-
-
 
 /*
 #pragma mark - Navigation

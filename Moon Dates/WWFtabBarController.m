@@ -18,7 +18,7 @@
 
 @implementation WWFtabBarController
 
-- (void)viewDidLoad{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
@@ -35,23 +35,24 @@
     //Create dictionary containting string attributes for UITabBar items in the selected state;
     NSDictionary *barItemSelectedAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize: 20.0f], NSForegroundColorAttributeName : self.sharedColoursManager.highlightColour};
     
-    //Assign the font attributes to the tab bar items, for both the selected state.
+    //Assign font attributes to the tab bar items, for both the selected state.
     [[UITabBarItem appearance] setTitleTextAttributes:barItemSelectedAttributes forState:UIControlStateSelected];
     NSDictionary *barItemUnselectedAttributes = @{NSFontAttributeName : [UIFont systemFontOfSize: 20.0f], NSForegroundColorAttributeName : self.sharedColoursManager.selectableColour};
-    //Assign the font attributes to the tab bar items, for both normal unselected states.
+    
+    //Assign font attributes to the tab bar items, for both normal unselected states.
     [[UITabBarItem appearance] setTitleTextAttributes:barItemUnselectedAttributes forState:UIControlStateNormal];
 }
 
-- (void)didReceiveMemoryWarning{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
--(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options)) completionHandler{
-    //Method implemented as part of the UNNotificationCenter protocol.
-    //Handles notifications that are received while the app is running.
-    //Run completion handler provided by the system, specifying that we only want the system to provide an alert sound
-    //We display our own alert instead of the system's we have our own custom response instead.
+//This method is implemented as part of the UNNotificationCenter protocol.
+//Handles notifications that are received while the app is running.
+//Run completion handler provided by the system, specifying that we only want the system to provide an alert sound
+//We display our own alert instead of the system's we have our own custom response instead.
+-(void) userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options)) completionHandler {
     completionHandler(UNNotificationPresentationOptionSound);
     
     //Grab a reference to the UINavigationController that displays our calendar and journal views.
@@ -59,16 +60,18 @@
     
     //Make calendar view visible and scroll the table view to ensure that the appropriate moon date is visible.
     NSDate *notificationMoonDate;
+
     //Get moon date from the local notification object.
-    if ((notificationMoonDate = [notification.request.content.userInfo objectForKey:@"MoonDate"])){
+    if ((notificationMoonDate = [notification.request.content.userInfo objectForKey:@"MoonDate"])) {
         //Ensure the calendar view is selected.
         self.selectedIndex = 0;
-        //Make sure calendar view is displayed (rather than the journal view), then get a reference to the view controller currently at the top of the UINavigationController stack.
+        
+        //Make sure calendar view is displayed (rather than the journal view), then get reference to the view controller currently at the top of the UINavigationController stack.
         [calendarViewNavigationController popToRootViewControllerAnimated:YES];
         UIViewController *theCurrentViewController = calendarViewNavigationController.topViewController;
         
         NSString *classOfViewController = NSStringFromClass([theCurrentViewController class]);
-        if ([classOfViewController  isEqual: @"WWF_FSCalViewController"]){
+        if ([classOfViewController  isEqual: @"WWF_FSCalViewController"]) {
             WWFFSCalViewController *theCalendarViewController = (WWFFSCalViewController *) theCurrentViewController;
             //Ask the calendar to select and scroll to the moon date we have received a notification for.
             [theCalendarViewController.theCalendarView selectDate:notificationMoonDate scrollToDate:YES];
@@ -85,21 +88,21 @@
     [notificationAlertController addAction:OKAction];
     
     //Need to make sure we are not already presenting an alert.
-    if (self.presentedViewController == nil){
+    if (self.presentedViewController == nil) {
         [self presentViewController:notificationAlertController animated:YES completion:nil];
     }
 }
 
--(void) userNotificationCenter:(UNUserNotificationCenter *)notificationCenter didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler
-{
-    //Method implemented as part of the UNNotificationCenter protocol.
-    //If user has selected a notification from outside the app, then we ask the calendar to select and scroll to the date for which the notification was received.
-    completionHandler (); //Call the completion handler supplied by UNUserNotificationCenter
+//Method implemented as part of the UNNotificationCenter protocol.
+//If user has selected a notification from outside the app, then we ask the calendar to select and scroll to the date for which the notification was received.
+-(void) userNotificationCenter:(UNUserNotificationCenter *)notificationCenter didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+    //Call the completion handler supplied by UNUserNotificationCenter
+    completionHandler ();
     
+    //Handle notification if user selected it
     if ([response.actionIdentifier isEqualToString:UNNotificationDefaultActionIdentifier]){
-        //Handle notification if user selected it
-        //Retrieve delivered notifications that are still displayed in the notification centre. The most recent one will be the one we are interested in. Provide a completion handler block to the getDeliveredNotificationsWithCompletionHandler method.
-        
+        //Retrieve delivered notifications that are still displayed in the notification centre. The most recent one will be the one we are interested in.
+        //Provide a completion handler block to the getDeliveredNotificationsWithCompletionHandler method.
         [notificationCenter getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> * _Nonnull notifications){
             UNNotification *theNotification = [notifications lastObject];
             NSDate *notificationMoonDate = [theNotification.request.content.userInfo objectForKey:@"MoonDate"];

@@ -10,24 +10,18 @@
 
 @implementation WWFcoloursManager
 
-+(instancetype)sharedColoursManager
-
 //Create a single instance of WWFmoonDatesManager and return this if it has not been created already. If it has, do not create again and return the single instance already created.
-{
++(instancetype)sharedColoursManager {
     static WWFcoloursManager *coloursManager = nil;
     static dispatch_once_t onceToken;
-    
     dispatch_once (&onceToken, ^{coloursManager = [[self alloc]init];});
-    
     return coloursManager;
 }
 
--(instancetype)init
-{
+-(instancetype)init {
     self = [super init];
     
-    //Next we create our UIColor objects that can be accessed from other classes
-       
+    //Create UIColor objects that can be accessed from other classes.
     self.backgroundColour = [UIColor colorWithRed:0.14 green:0.14 blue:0.25 alpha:1];
     self.textColour = [UIColor colorWithRed:0.91 green:0.85 blue:1 alpha:1];
     self.selectableColour = [UIColor colorWithRed:0.49 green:0.58 blue:1 alpha:1];
@@ -36,10 +30,7 @@
     self.highlightColour = [UIColor colorWithRed:1 green:0.98 blue:0.55 alpha:1];
     self.todayColour = [UIColor colorWithRed:0.67 green:0.31 blue:0.7 alpha:1];
     self.headerColour = [UIColor colorWithRed:0.72 green:0.55 blue:1 alpha:1];
-    
     return  self;
-    
 }
-
 
 @end

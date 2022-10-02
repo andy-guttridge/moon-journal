@@ -96,6 +96,7 @@
 		A158B4AA1FFBEACF009709D1 /* full_moon_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = full_moon_img.png; sourceTree = "<group>"; };
 		A158B4AB1FFBEACF009709D1 /* mj_instructions_html.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = mj_instructions_html.html; sourceTree = "<group>"; };
 		A158B4AC1FFBEACF009709D1 /* new_moon_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = new_moon_img.png; sourceTree = "<group>"; };
+		A16378BC28E9CD2300DA22D3 /* Testing code alternatives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Testing code alternatives.h"; sourceTree = "<group>"; };
 		A1743E5E1D15D11100DE328B /* WWFjournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFjournalViewController.h; sourceTree = "<group>"; };
 		A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WWFjournalViewController.m; sourceTree = "<group>"; };
 		A19F8E1221259C9100E32982 /* FS Calendar LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "FS Calendar LICENSE.txt"; sourceTree = "<group>"; };
@@ -219,6 +220,7 @@
 				A1743E5F1D15D11100DE328B /* WWFjournalViewController.m */,
 				A10577621CFAFD7900951A27 /* WWFmoonDatesManager.h */,
 				A10577631CFAFD7900951A27 /* WWFmoonDatesManager.m */,
+				A16378BC28E9CD2300DA22D3 /* Testing code alternatives.h */,
 				A145CB0C1CFB652400670E79 /* WWFuserDataManager.h */,
 				A145CB0D1CFB652400670E79 /* WWFuserDataManager.m */,
 				A1A850FF1F7FFF7F005B4874 /* WWFcoloursManager.h */,

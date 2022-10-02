@@ -14,48 +14,44 @@
 
 @implementation WWFAVViewController
 
-- (void) viewWillAppear:(BOOL)animated
-{
+- (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.showsPlaybackControls = NO; //Ensure that playback controls are not shown. Called in this method to ensure this is dealt with before the view appears, because changing this property while the view is displayed destroys UI controls.
-    
+    //Ensure playback controls not shown.
+    self.showsPlaybackControls = NO;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    //Do any additional setup after loading the view.
+    //Get references to app bundle and video file URL
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    NSURL *videoURL = [mainBundle URLForResource:@"letitgo_vid" withExtension:@"m4v"];
     
+    //Create AVAsset containing video and AVPlayerItem to play it.
+    AVAsset *letItGoVid = [AVAsset assetWithURL:videoURL];
+    AVPlayerItem *letItGoVidItem = [AVPlayerItem playerItemWithAsset:letItGoVid];
     
+    //Request notification when the video finishes playing, and call the letItGoVidDidReachEnd method when this happens.
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(letItGoVidDidReachEnd) name: AVPlayerItemDidPlayToEndTimeNotification object: letItGoVidItem];
     
-    NSBundle *mainBundle = [NSBundle mainBundle]; //Get a reference to the app bundle.
-    NSURL *videoURL = [mainBundle URLForResource:@"letitgo_vid" withExtension:@"m4v"]; //Get the URL for our video file.
-    AVAsset *letItGoVid = [AVAsset assetWithURL:videoURL]; //Create an AVAsset containing our Let It Go video.
-    AVPlayerItem *letItGoVidItem = [AVPlayerItem playerItemWithAsset:letItGoVid]; //Create an AVPlayerItem for our AVAsset.
-    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(letItGoVidDidReachEnd) name: AVPlayerItemDidPlayToEndTimeNotification object: letItGoVidItem]; //Request a notification when the video finishes playing, and call the letItGoVidDidReachEnd method when this happens.
-    AVPlayer *thePlayer = [AVPlayer playerWithPlayerItem:letItGoVidItem]; //Create an AVPlayer for our AVPlayerItem.
-    self.player = thePlayer; //Assign our player to the player property of the view controller.
-    [thePlayer play]; //Play our video.
+    //Create AVPlayer for our AVPlayerItem, assign to view controller and play.
+    AVPlayer *thePlayer = [AVPlayer playerWithPlayerItem:letItGoVidItem];
+    self.player = thePlayer;
+    [thePlayer play];
 }
 
--(void) letItGoVidDidReachEnd
-{
+-(void) letItGoVidDidReachEnd {
     NSLog (@"Video Reached End");
-    //Next, configure and show an alert message with an OK button.
     
+    //Configure and show an alert message with an OK button. Returns to journal view when the alert is dismissed.
     NSString *letItGoMessage = @"This sacred ritual is now complete";
     
     UIAlertController *letItGoAlertController = [UIAlertController alertControllerWithTitle:@"Ritual Complete" message:letItGoMessage preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self dismissViewControllerAnimated:YES completion: nil];
-    }
-    ];
+    }];
     [letItGoAlertController addAction:OKAction];
     [self presentViewController:letItGoAlertController animated:YES completion:nil];
-    
-   //Return to the journal view.
-    
-    
 }
 
 - (void)didReceiveMemoryWarning {

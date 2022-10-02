@@ -17,20 +17,22 @@
 
 @implementation WWFinfoViewController
 
-- (void)viewDidLoad
-{
+//Load and display the instructions, which are saved as an HTML file within the app bundle.
+- (void)viewDidLoad {
     [super viewDidLoad];
+    //Create configuration object for web view, create new webview and set this view controller as the navigation delegate for the web view.
+    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
+    WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration];
+    webView.navigationDelegate = self;
     
-    //Here we load and display the instructions, which are saved as an HTML file within the app bundle.
-    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init]; //Create a configuration object for our web view.
-    WKWebView *webView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration]; //Create a new webview, using the frame of our UIView to do so.
-    webView.navigationDelegate = self; //Set this view controller as the navigation delegate for the web view (though none of the delegate methods are implemented as they are unnecessary for this use case).
-    NSURL *instructionsURL = [[NSBundle mainBundle] URLForResource:@"mj_instructions_html" withExtension:@"html"];//Find the file path for the HTML file in the app bundle.
-    NSURLRequest *request = [NSURLRequest requestWithURL:instructionsURL]; //Create a URL request using the file path to the HTML file.
-    [webView loadRequest:request]; //Ask the web view to load the HTML file.
-    webView.scrollView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0); //Ensure the top of the web view is inset so as not to overlap with the status bar.
-    [self.view addSubview:webView]; //Display the HTML file by adding the web view to our UIView.
-
+    //Get file path for HTML file, create URL request and ask web view to load the HTML.
+    NSURL *instructionsURL = [[NSBundle mainBundle] URLForResource:@"mj_instructions_html" withExtension:@"html"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:instructionsURL];
+    [webView loadRequest:request];
+    
+    //Ensure top of web view is inset so it doesn't overlap with the status bar, and display the webview.
+    webView.scrollView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+    [self.view addSubview:webView];
 }
 
 - (void)didReceiveMemoryWarning {
