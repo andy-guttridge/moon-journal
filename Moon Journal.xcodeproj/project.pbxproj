@@ -76,7 +76,7 @@
 		A10577301CFAFBCE00951A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A10577321CFAFBCE00951A27 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A10577351CFAFBCE00951A27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		A10577371CFAFBCE00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A10577371CFAFBCE00951A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = moon_dates_code/Info.plist; sourceTree = SOURCE_ROOT; };
 		A105773C1CFAFBCF00951A27 /* Moon JournalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon JournalTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10577471CFAFBCF00951A27 /* Moon JournalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Moon JournalUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A105775C1CFAFD3300951A27 /* WWFinfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWFinfoViewController.h; sourceTree = "<group>"; };
@@ -172,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				A10577251CFAFBCE00951A27 /* Moon Dates */,
+				A14B4BBD28EAD5E600F4A1DD /* FS Calendar Files */,
 				A10577241CFAFBCE00951A27 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -228,10 +229,10 @@
 				A10577371CFAFBCE00951A27 /* Info.plist */,
 				A10577651CFB06E500951A27 /* MoonDatesData.plist */,
 				A145CB0A1CFB63B700670E79 /* UserData.plist */,
-				A1A0C2D91F76D9EC00E29DFD /* FSCalendar Files */,
 				A10577261CFAFBCE00951A27 /* Supporting Files */,
 			);
-			path = "Moon Dates";
+			name = "Moon Dates";
+			path = moon_dates_code;
 			sourceTree = "<group>";
 		};
 		A10577261CFAFBCE00951A27 /* Supporting Files */ = {
@@ -242,7 +243,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A1A0C2D91F76D9EC00E29DFD /* FSCalendar Files */ = {
+		A14B4BBD28EAD5E600F4A1DD /* FS Calendar Files */ = {
 			isa = PBXGroup;
 			children = (
 				A1A0C2A91F76D9D100E29DFD /* FSCalendar.h */,
@@ -278,7 +279,8 @@
 				A1A0C2C71F76D9D100E29DFD /* FSCalendarWeekdayView.h */,
 				A1A0C2C81F76D9D100E29DFD /* FSCalendarWeekdayView.m */,
 			);
-			name = "FSCalendar Files";
+			name = "FS Calendar Files";
+			path = moon_dates_code/fs_calendar_code;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -612,7 +614,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = S7KGP8RV4Q;
-				INFOPLIST_FILE = "Moon Dates/Info.plist";
+				INFOPLIST_FILE = "/Volumes/Storage/Users/andy/Developer/Moon Dates/Moon Dates Master/moon_dates_code/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ACG.Moon-Dates";
@@ -629,7 +631,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = S7KGP8RV4Q;
-				INFOPLIST_FILE = "Moon Dates/Info.plist";
+				INFOPLIST_FILE = "/Volumes/Storage/Users/andy/Developer/Moon Dates/Moon Dates Master/moon_dates_code/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ACG.Moon-Dates";
